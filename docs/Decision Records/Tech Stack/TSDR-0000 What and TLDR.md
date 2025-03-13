@@ -8,3 +8,7 @@ An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of t
 
 - All Decisions from wetesa-0
   - These will be pulled into example 1 later. Once that example is "finished".
+- TSDR-1001 ORM
+  - **PENDING**
+- TSDR-1002 DB migrations
+  - **PENDING**

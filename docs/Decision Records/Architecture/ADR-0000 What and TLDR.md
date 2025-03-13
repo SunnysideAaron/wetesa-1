@@ -6,7 +6,10 @@ See "../Tech Stack/TSDR-0000 What and TLDR.md"
 
 ## TL;DR of decisions
 
-
+- All Decisions from wetesa-0
+  - These will be pulled into example 1 later. Once that example is "finished".
+- ADR-1001 Cryptography
+  - Will not roll our own. **PENDING** decide which packages to use.
 
 ## TODO 
 
