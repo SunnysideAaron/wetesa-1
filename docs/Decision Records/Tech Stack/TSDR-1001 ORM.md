@@ -12,6 +12,8 @@ I hate ORMs. Avoid if possible. We did think about them.
 
 sqlc?
 
+Squirrel or sqrl. for more complex queries?
+
 jet? 
   - https://www.reddit.com/r/golang/comments/1j6fzsz/we_made_writing_typesafe_sql_queries_in_go_even/
   - https://github.com/go-jet/jet
