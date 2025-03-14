@@ -10,15 +10,19 @@ I hate ORMs. Avoid if possible. We did think about them.
 
 ## Decision
 
-sqlc
+sqlc?
+
+jet? 
+  https://www.reddit.com/r/golang/comments/1j6fzsz/we_made_writing_typesafe_sql_queries_in_go_even/
 
 
 
+### sqlc
 https://sqlc.dev/
 
 https://dev.to/eminetto/creating-an-api-using-go-and-sqlc-364o
 
-https://brojonat.com/posts/go-postgres-sqlc-atlas/ Bringing it Together: Go, SQL, Code Gen
+[Bringing it Together: Go, SQL, Code Gen](https://brojonat.com/posts/go-postgres-sqlc-atlas/)
 
 https://conroy.org/introducing-sqlc
 

@@ -20,9 +20,11 @@ We do not want:
 Options:
 - Angular
 - Flutter
+  - https://www.reddit.com/r/FlutterDev/comments/1j2vmxj/develop_the_business_logic_first_approach/
 - React
 - React Native
 - Svelt
+  - https://www.reddit.com/r/sveltejs/comments/1j2h7du/is_there_anything_what_you_dont_like_in_sveltekit/
 - Svelt Native
 - tmple - htmx
   - htmx is a javascript library for go? allows replacement of parts of page. 
@@ -56,6 +58,11 @@ UI Website login
 ### go's html/template package
 
 https://stackoverflow.com/questions/36617949/how-to-use-base-template-file-for-golang-html-template
+
+### Other options
+
+- https://www.reddit.com/r/golang/comments/1j1kvl1/any_golang_libraries_to_build_simple_crud_uis/
+- https://www.reddit.com/r/Frontend/comments/1j9g6f8/all_frontend_developers_lets_make_the_most/
 
 ## Decision
 

@@ -12,6 +12,7 @@ Choose how and what to document.
 - https://passo.uno/seven-action-model/
 - code docs??
 - db chart ?scrutinizer? spelling
+  - https://www.reddit.com/r/dataengineering/comments/1iy3z19/can_anyone_tell_me_what_tool_was_used_to_produced/
 - Hype for documentation?
   - https://github.com/gopherguides/hype?tab=readme-ov-file
   - is there a book about? or they used it to write books?

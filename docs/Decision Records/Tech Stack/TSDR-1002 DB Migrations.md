@@ -26,6 +26,7 @@ Possibilities:
 - [Tern](https://github.com/jackc/tern)
   - From the person behind pgx
 - Goose
+- https://github.com/golang-migrate/migrate
 
 Not an option:
 - [Bun](https://bun.uptrace.dev/guide/)
