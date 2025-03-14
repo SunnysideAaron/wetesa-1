@@ -21,6 +21,8 @@ Choose how and what to document.
 ## Decision
 
 - Will use wiki on redmine as a catch all for what doesn't get documented in the above.
+- code comments should answer **why** "foo manages foo" is worthless.
+- when documenting CLIs include full flags in examples. Single letter cli flags are not descriptive enough.
 
 ## Why / Notes
 

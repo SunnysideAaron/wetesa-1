@@ -20,6 +20,8 @@ we don't need event driven architecture until we do micro-services.
 
 Micro-services add complexity and are very costly in developer time and support. They are easy to implement poorly.
 
+Micro-services are an organizational solution not a technical solution.
+
 ## Consequences
 
 

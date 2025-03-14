@@ -10,18 +10,31 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 We want:
 - Web UI
+  - Safari (mac)
+  - Chrome
+  - Firefox
+  - Edge
+  - Internet Explorer
+  - Others?
 - Mobile Web UI
 - Android App
 - Apple App
 
 We do not want:
 - Desktop app
+  - Windows
+  - Mac
+  - Linux
+
+Typescript for Javascript??
+include versions of browser / operationg system / phone version in list
 
 Options:
 - Angular
 - Flutter
   - https://www.reddit.com/r/FlutterDev/comments/1j2vmxj/develop_the_business_logic_first_approach/
 - React
+  - https://github.com/alan2207/bulletproof-react
 - React Native
 - Svelt
   - https://www.reddit.com/r/sveltejs/comments/1j2h7du/is_there_anything_what_you_dont_like_in_sveltekit/
