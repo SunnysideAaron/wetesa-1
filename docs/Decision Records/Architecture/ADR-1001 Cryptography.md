@@ -1,4 +1,4 @@
-# ADR-002 Cryptography
+# ADR-1001 Cryptography
 
 ## Status
 

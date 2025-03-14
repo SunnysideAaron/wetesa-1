@@ -12,3 +12,13 @@ An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of t
   - **PENDING**
 - TSDR-1002 DB migrations
   - **PENDING**
+- TSDR-1003 CSS
+  - **PENDING**  
+- TSDR-1004 UI Framework
+  - **PENDING**  
+- TSDR-1005 Limited Javascript
+  - **PENDING**  
+- TSDR-1006 Documentation
+  - **PENDING**  
+- TSDR-1007 UI Design - Theme
+  - **PENDING**  

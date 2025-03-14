@@ -1,5 +1,4 @@
-# ADR-00: 
-# TSDR-00:  
+# TSDR-1003 CSS
 
 ## Status
 

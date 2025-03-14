@@ -1,0 +1,32 @@
+# ADR-1002 Micro-services
+
+## Status
+
+Accepted
+
+## Context
+
+At very large scales micro-services are a standard way to split concerns and more importantly handle the work load.
+
+## Decision
+
+We will **not** implement micro-services until we are forced to in order to meet scale.
+
+When we implement micro-services we will first find a set of guidelines to follow. (perhaps a book) we will research the cons of those guidelines as well.
+
+we don't need event driven architecture until we do micro-services.
+
+## Why / Notes
+
+Micro-services add complexity and are very costly in developer time and support. They are easy to implement poorly.
+
+## Consequences
+
+
+
+## Other Options
+
+Possibilities:
+
+Not an option:
+
