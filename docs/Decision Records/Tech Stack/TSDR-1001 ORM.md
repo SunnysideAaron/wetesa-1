@@ -13,9 +13,11 @@ I hate ORMs. Avoid if possible. We did think about them.
 sqlc?
 
 jet? 
-  https://www.reddit.com/r/golang/comments/1j6fzsz/we_made_writing_typesafe_sql_queries_in_go_even/
+  - https://www.reddit.com/r/golang/comments/1j6fzsz/we_made_writing_typesafe_sql_queries_in_go_even/
+  - https://github.com/go-jet/jet
 
-
+Comparing database/sql, GORM, sqlx, and sqlc
+https://blog.jetbrains.com/go/2023/04/27/comparing-db-packages/
 
 ### sqlc
 https://sqlc.dev/

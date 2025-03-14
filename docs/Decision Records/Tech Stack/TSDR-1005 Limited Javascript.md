@@ -14,9 +14,12 @@ Other reasons?
 
 There are specs from govs on what a site should be
 
+Look up United Kingdoms GDS departments website access guidlines
+	?must work without javascript?
+    
 Typescript for Javascript we do use?
     https://www.reddit.com/r/typescript/comments/1j59khs/boss_refuses_to_adopt_typescript_whats_the_next/
-    
+
 
 ## Decision
 

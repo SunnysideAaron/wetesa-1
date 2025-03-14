@@ -10,6 +10,8 @@ https://www.reddit.com/r/ycombinator/comments/1ipm8jw/how_is_everyone_designing_
 
 https://www.reddit.com/r/webdev/comments/1iigrug/after_12_years_of_selling_web_mobile_templates/
 
+look up google safe html package. (built in style)
+
 ## Decision
 
 

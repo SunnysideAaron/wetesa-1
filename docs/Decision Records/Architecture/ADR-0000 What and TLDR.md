@@ -12,3 +12,6 @@ See "../Tech Stack/TSDR-0000 What and TLDR.md"
   - Will not roll our own. **PENDING** decide which packages to use.
 - ADR-1002 Microservices
   - We will **not** implement micro-services until we are forced to in order to meet scale.
+- ADR-1003
+  - Dates will always be presented in YYYY-MMM-DD format. Leading 0s on DD.  YEAR-MM-DD is allowable for data entry
+
