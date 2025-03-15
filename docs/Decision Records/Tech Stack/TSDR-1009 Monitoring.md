@@ -7,7 +7,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Context
 
-
+telemetry is different than monitoring
 
 ## Decision
 
