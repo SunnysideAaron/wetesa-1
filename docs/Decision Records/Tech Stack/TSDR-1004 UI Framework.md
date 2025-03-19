@@ -8,6 +8,15 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Context
 
+AS of 2022-MAR-19 we want 3 UIs used 6 places.
+- Bare HTML - No JS no CSS (limited small CSS so just basic pretty. WORKS IF CSS OFF)
+  - for low bandwidth, low power machines
+- full js or htmx or typescript site
+- mobile app
+
+- sites have to work on desktops and mobile
+- mobile has to work on android and apple.
+
 We want:
 - Web UI
   - Safari (mac)
@@ -20,6 +29,7 @@ We want:
 - Android App
 - Apple App
 
+
 We do not want:
 - Desktop app
   - Windows
@@ -30,9 +40,12 @@ Typescript for Javascript??
 include versions of browser / operationg system / phone version in list
 
 Options:
+https://www.reddit.com/r/webdev/comments/mfnxnj/why_your_website_should_work_without_javascript/
+
 - Angular
 - Flutter
   - https://www.reddit.com/r/FlutterDev/comments/1j2vmxj/develop_the_business_logic_first_approach/
+  - https://www.reddit.com/r/FlutterDev/comments/1jayrqx/the_final_word_on_flutter_architecture/
 - React
   - https://github.com/alan2207/bulletproof-react
 - React Native
@@ -46,7 +59,7 @@ Options:
   - is not json?
   - is htmx on mobile app? no?
 - Vue
-
+- https://www.reddit.com/r/htmx/comments/1jbqdm2/dont_sleep_on_daisyui_especially_for_htmx/
 
 UI Website login
 	Which UI?
