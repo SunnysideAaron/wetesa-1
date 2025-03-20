@@ -9,6 +9,11 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 telemetry is different than monitoring
 
+Grafana IRM 
+
+Grafana Cloud is the easiest way to get started with metrics, logs, traces, dashboards, and more. We have a generous forever-free tier and plans for every use case.
+
+
 ## Decision
 
 
