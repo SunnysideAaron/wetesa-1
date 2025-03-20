@@ -24,7 +24,7 @@ Micro-services are an organizational solution not a technical solution.
 
 ## Consequences
 
-
+Incurs technical debt when we have to refactor. Our application might struggle to handle scale for a bit until we implement.
 
 ## Other Options
 

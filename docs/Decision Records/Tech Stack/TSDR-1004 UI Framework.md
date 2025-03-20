@@ -14,6 +14,14 @@ AS of 2022-MAR-19 we want 3 UIs used 6 places.
 - full js or htmx or typescript site
 - mobile app
 
+Why a no Javascript no CSS site?
+- employees away from infrastructure. ie low bandwidth
+- using older machines
+
+- ******** SEE ME!!!
+- https://digitallytailored.github.io/Classless.css/
+  - https://www.reddit.com/r/webdev/comments/1je2diy/made_a_dropin_css_framework_that_transforms_bare/
+
 - sites have to work on desktops and mobile
 - mobile has to work on android and apple.
 
@@ -42,6 +50,8 @@ include versions of browser / operationg system / phone version in list
 Options:
 https://www.reddit.com/r/webdev/comments/mfnxnj/why_your_website_should_work_without_javascript/
 
+- https://fyne.io/
+- wails io
 - Angular
 - Flutter
   - https://www.reddit.com/r/FlutterDev/comments/1j2vmxj/develop_the_business_logic_first_approach/
