@@ -9,10 +9,13 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 telemetry is different than monitoring
 
-Grafana IRM 
+https://www.reddit.com/r/devops/comments/1jcym3x/k8s_monitoring_costs_is_exploding_at_my_startup/
+
+https://www.reddit.com/user/honeycombio/comments/1j58dxy/why_do_observability_costs_keep_exploding_lets/?p=1&impressionid=4817690181194853274
+
+Grafana monitoring
 
 Grafana Cloud is the easiest way to get started with metrics, logs, traces, dashboards, and more. We have a generous forever-free tier and plans for every use case.
-
 
 ## Decision
 
