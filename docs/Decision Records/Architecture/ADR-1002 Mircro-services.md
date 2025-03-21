@@ -30,5 +30,7 @@ Incurs technical debt when we have to refactor. Our application might struggle t
 
 Possibilities:
 
+- [go-zero](https://github.com/zeromicro/go-zero)
+
 Not an option:
 

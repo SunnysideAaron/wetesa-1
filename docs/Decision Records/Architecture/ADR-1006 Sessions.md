@@ -21,7 +21,10 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 
 
-## Other Possible Options
+## Other Options
 
-## Not an Option
+Possibilities:
+- https://github.com/alexedwards/scs
+
+Not an option:
 

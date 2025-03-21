@@ -21,7 +21,9 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 
 
-## Other Possible Options
+## Other Options
 
-## Not an Option
+Possibilities:
+
+Not an option:
 

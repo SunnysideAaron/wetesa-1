@@ -22,7 +22,7 @@ We will have to push database changes to production. How?
 
 ## Other Options
 
-Possibilities:
+- [Awesome Go - Database](https://github.com/avelino/awesome-go?tab=readme-ov-file#database)
 - [Tern](https://github.com/jackc/tern)
   - From the person behind pgx
 - Goose

@@ -115,6 +115,15 @@ https://stackoverflow.com/questions/36617949/how-to-use-base-template-file-for-g
 ## Other Options
 
 Possibilities:
+- htmx
+  - [FULL Introduction To HTMX Using Golang](https://www.youtube.com/watch?v=x7v6SNIgJpE) by ThePrimeagen
+  - specifically says he just started in go. Take with grain of salt.
+- https://github.com/avelino/awesome-go?tab=readme-ov-file#template-engines
+
+
+
 
 Not an option:
 
+Desktop GUI
+- https://github.com/avelino/awesome-go?tab=readme-ov-file#gui

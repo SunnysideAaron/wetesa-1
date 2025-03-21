@@ -45,3 +45,4 @@ Possibilities:
 - [Bun](https://bun.uptrace.dev/)
 - GORM
 - [ent.](https://entgo.io/)
+- https://github.com/avelino/awesome-go?tab=readme-ov-file#orm
