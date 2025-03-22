@@ -10,7 +10,7 @@ At very large scales micro-services are a standard way to split concerns and mor
 
 ## Decision
 
-We will **not** implement micro-services until we are forced to in order to meet scale.
+We will **not** implement micro-services until we are forced to in order to meet scale or break up team responsibilities. If the only reason is team responsibilities then consider the creation of external packages.
 
 When we implement micro-services we will first find a set of guidelines to follow. (perhaps a book) we will research the cons of those guidelines as well.
 
