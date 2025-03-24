@@ -9,6 +9,11 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 https://www.reddit.com/r/golang/comments/1j4lt7o/production_ready_auth_server_examples/
 - https://www.reddit.com/r/golang/comments/1jch2ts/sessionbased_authentication_in_go/
 
+https://www.reddit.com/r/softwarearchitecture/comments/ne01eg/why_do_many_applications_sometimes_have_separate/
+
+https://www.reddit.com/r/webdev/comments/1fsg4z6/is_a_login_system_still_a_taboo_for_amateur/
+
+
 ## Decision
 
 

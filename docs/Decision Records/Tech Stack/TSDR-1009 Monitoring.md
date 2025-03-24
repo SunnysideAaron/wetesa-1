@@ -17,6 +17,8 @@ Grafana monitoring
 
 Grafana Cloud is the easiest way to get started with metrics, logs, traces, dashboards, and more. We have a generous forever-free tier and plans for every use case.
 
+https://www.reddit.com/r/golang/comments/1iw07rm/what_is_your_logging_monitoring_observability/
+
 ## Decision
 
 
