@@ -15,3 +15,8 @@ See "../Tech Stack/TSDR-0000 What and TLDR.md"
 - ADR-1003
   - Dates will always be presented in YYYY-MMM-DD format. Leading 0s on DD.  YEAR-MM-DD is allowable for data entry
 
+TODO
+
+https://www.moesif.com/blog/api-analytics/api-strategy/API-Logs/
+Performance Logs
+Security Logs
