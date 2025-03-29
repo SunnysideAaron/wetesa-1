@@ -22,3 +22,7 @@ An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of t
   - **PENDING**  
 - TSDR-1007 UI Design - Theme
   - **PENDING**  
+
+
+TODO
+ - simplerr?, other error handling packages
