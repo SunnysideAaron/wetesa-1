@@ -26,3 +26,4 @@ An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of t
 
 TODO
  - simplerr?, other error handling packages
+
