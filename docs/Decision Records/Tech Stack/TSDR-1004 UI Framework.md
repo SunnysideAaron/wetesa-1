@@ -50,6 +50,13 @@ include versions of browser / operationg system / phone version in list
 Options:
 https://www.reddit.com/r/webdev/comments/mfnxnj/why_your_website_should_work_without_javascript/
 
+https://www.reddit.com/r/golang/comments/1hwlxeq/faq_whats_the_best_way_to_do_html_templating/
+
+https://www.reddit.com/r/golang/comments/1g1k03p/i_found_the_best_web_dev_stack_for_golang/
+
+
+
+- https://github.com/cogentcore/core
 -  [Gio](https://gioui.org/)
 - https://fyne.io/
     -https://www.reddit.com/r/golang/comments/1jh60pr/we_are_developing_a_fyne_crud_gui_generator/

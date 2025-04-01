@@ -25,6 +25,8 @@ https://www.reddit.com/r/webdev/comments/1fsg4z6/is_a_login_system_still_a_taboo
 
 idea: auth and no auth route groups so harder to mix up.
 
+https://www.reddit.com/r/golang/comments/1gfnijj/faq_what_are_the_best_authentication_and/
+
 
 ## Other Options
 
