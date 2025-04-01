@@ -6,6 +6,16 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Context
 
+## Decision
+
+
+
+## Why / Notes
+
+https://www.reddit.com/r/learnprogramming/comments/1ji07q2/whats_a_simple_feature_that_requires_a_lot_of/
+
+## Consequences
+
 https://www.reddit.com/r/golang/comments/1j4lt7o/production_ready_auth_server_examples/
 - https://www.reddit.com/r/golang/comments/1jch2ts/sessionbased_authentication_in_go/
 
@@ -13,17 +23,7 @@ https://www.reddit.com/r/softwarearchitecture/comments/ne01eg/why_do_many_applic
 
 https://www.reddit.com/r/webdev/comments/1fsg4z6/is_a_login_system_still_a_taboo_for_amateur/
 
-
-## Decision
-
-
-
-## Why / Notes
-
-
-
-## Consequences
-
+idea: auth and no auth route groups so harder to mix up.
 
 
 ## Other Options

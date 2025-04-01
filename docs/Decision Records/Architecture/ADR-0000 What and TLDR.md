@@ -20,3 +20,7 @@ TODO
 https://www.moesif.com/blog/api-analytics/api-strategy/API-Logs/
 Performance Logs
 Security Logs
+
+
+https://www.reddit.com/r/devops/comments/1jkgdiq/how_much_do_you_spend_on_cicd/
+

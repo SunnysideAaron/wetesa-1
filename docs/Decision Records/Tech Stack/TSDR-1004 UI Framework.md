@@ -50,7 +50,9 @@ include versions of browser / operationg system / phone version in list
 Options:
 https://www.reddit.com/r/webdev/comments/mfnxnj/why_your_website_should_work_without_javascript/
 
+-  [Gio](https://gioui.org/)
 - https://fyne.io/
+    -https://www.reddit.com/r/golang/comments/1jh60pr/we_are_developing_a_fyne_crud_gui_generator/
 - wails io
 - Angular
 - Flutter
@@ -61,6 +63,7 @@ https://www.reddit.com/r/webdev/comments/mfnxnj/why_your_website_should_work_wit
 - React Native
 - Svelt
   - https://www.reddit.com/r/sveltejs/comments/1j2h7du/is_there_anything_what_you_dont_like_in_sveltekit/
+  - https://www.reddit.com/r/sveltejs/comments/1jg56is/the_best_sveltekit_codebase_ive_ever_seen/
 - Svelt Native
 - tmple - htmx
   - htmx is a javascript library for go? allows replacement of parts of page. 
@@ -68,6 +71,8 @@ https://www.reddit.com/r/webdev/comments/mfnxnj/why_your_website_should_work_wit
   - fun to use?
   - is not json?
   - is htmx on mobile app? no?
+- gomponent
+  - alternative to templ. dev says it's stable. more use of go code. tmple more use of html
 - Vue
 - https://www.reddit.com/r/htmx/comments/1jbqdm2/dont_sleep_on_daisyui_especially_for_htmx/
 
@@ -90,6 +95,8 @@ UI Website login
 		
 	look up what HTMX is.
 		fast? use with templ, hotwire?
+
+https://www.reddit.com/r/webdev/comments/1jjfd32/whats_your_favorite_modern_web_development_stack/
 
 ### go's html/template package
 

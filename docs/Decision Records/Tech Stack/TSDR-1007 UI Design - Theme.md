@@ -18,7 +18,11 @@ look up google safe html package. (built in style)
 
 ## Why / Notes
 
+advice: develop for mobile screens first. then size up. easier
 
+Users don't like UI changes.
+
+https://www.reddit.com/r/Frontend/comments/1jlpg3v/why_is_responsive_web_design_so_hard/
 
 ## Consequences
 
