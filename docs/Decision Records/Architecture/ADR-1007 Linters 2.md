@@ -45,6 +45,11 @@ API Toolkit
 Look up United Kingdoms GDS departments website access guidlines
 	?must work without javascript?
 
+TODO
+Lint SQL
+  - [Postreges Wiki: Don't Do This](https://wiki.postgresql.org/wiki/Don't_Do_This)
+  - https://github.com/kristiandupont/schemalint
+
 ## Consequences
 
 
