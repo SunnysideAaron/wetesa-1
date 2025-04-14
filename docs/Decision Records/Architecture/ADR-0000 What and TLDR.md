@@ -38,3 +38,18 @@ ACID Compliant
 DB knows user logged in. Not just a general web log in.
 
 how to handle api breaking changes.
+
+
+
+- Alex Edwards’ book “Let’s Go Further”
+  - 6 sql migrations
+  - 8 Advanced crud
+    - partial updates
+    - optimistic concurancy (two updates to same records same time)
+    - sql query timeouts
+  - 11 rate limiting
+  - 13, 15-18 authentication and authorization
+  - 14 sending emails
+  - 19 metrics
+  - 20 QA, versioning
+  - 22 Appendices
