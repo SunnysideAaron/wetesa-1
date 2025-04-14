@@ -24,3 +24,17 @@ Security Logs
 
 https://www.reddit.com/r/devops/comments/1jkgdiq/how_much_do_you_spend_on_cicd/
 
+
+
+**PENDING**
+
+DB default encodings
+utf8 (other encodings?)
+
+UTC for server and db
+
+ACID Compliant
+
+DB knows user logged in. Not just a general web log in.
+
+how to handle api breaking changes.
