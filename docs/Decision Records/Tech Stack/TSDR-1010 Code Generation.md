@@ -14,6 +14,7 @@ We want code generation for (should include basic validation):
 - OpenAPI 3 (Swagger 1 and 2 are previous versions of OpenAPI)
 - Web Client use of API
 - Mobile Client use of API
+- Other SDKs of our clients
 
 ## Decision
 
@@ -64,12 +65,17 @@ short list of options:
   - [swaggest - rest](https://github.com/swaggest/rest)
   - [swaggest - openapi-go](https://github.com/swaggest/openapi-go)
 
+
+- [Prism](https://stoplight.io/open-source/prism)
+  - use for testing?
+
 ## Not an Option
 - swaggo/swag (OAS3 Beta)
   - **TRIED** supported frameworks:
   - gin, echo, buffalo, net/http (standard library), gorilla/mux, go-chi/chi,
     flamingo, fiber, atreugo, hertz
-- - [speakeasy](https://www.speakeasy.com/docs/languages/golang/oss-comparison-go) trying to sell speakeasy
+- [speakeasy](https://www.speakeasy.com/docs/languages/golang/oss-comparison-go) trying to sell speakeasy
+  - generates sdks
 
 
 

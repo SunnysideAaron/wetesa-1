@@ -50,6 +50,11 @@ Lint SQL
   - [Postreges Wiki: Don't Do This](https://wiki.postgresql.org/wiki/Don't_Do_This)
   - https://github.com/kristiandupont/schemalint
 
+I liked the uber or google style guide that said things with no consensus. good to mark that out.
+
+
+100 mistakes book to style guide / linter
+
 ## Consequences
 
 

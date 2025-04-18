@@ -28,6 +28,16 @@ idea: auth and no auth route groups so harder to mix up.
 https://www.reddit.com/r/golang/comments/1gfnijj/faq_what_are_the_best_authentication_and/
 
 
+hmac based one time passwords
+time based one time passwords
+
+hotp
+totp 
+
+both have IETF RC documents
+
+https://www.reddit.com/r/golang/comments/1jsqdnq/should_i_build_a_simple_auth_service_in_go/
+
 ## Other Options
 
 Possibilities:

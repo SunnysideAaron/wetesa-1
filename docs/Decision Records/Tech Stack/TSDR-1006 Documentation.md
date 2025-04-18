@@ -36,6 +36,10 @@ Uses C4 Modeling to document system.
 	https://github.com/goadesign/model
 		alternative to structurizr
 
+[Liam ERD](https://liambx.com/)
+  - db modeling
+
+https://doxygen.nl/
 
 ## Decision
 

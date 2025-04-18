@@ -27,3 +27,15 @@ An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of t
 TODO
  - simplerr?, other error handling packages
 
+customer id in route? or user login?
+
+pagination
+  - what if data changes between pages? / orginal query? ie data gets changed after initial pull. do we care?
+
+starting expensive work
+  then end point returns response "runing url" / status OK
+  then comes back with url to check status of process
+  so kicks off work. but doesn't do work.
+
+can all (err Error) returns be named so don't have initialize?
+

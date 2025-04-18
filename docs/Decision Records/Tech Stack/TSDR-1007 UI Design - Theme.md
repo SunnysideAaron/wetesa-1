@@ -32,5 +32,10 @@ https://www.reddit.com/r/Frontend/comments/1jlpg3v/why_is_responsive_web_design_
 
 Possibilities:
 
+https://www.reddit.com/r/Frontend/comments/1ju66te/how_do_i_make_my_frontend_not_look_like_shit/
+
+https://www.reddit.com/r/ChatGPTCoding/comments/1jzb7wz/vibe_coding_hack_use_websites_you_like_as_a/
+
+
 Not an option:
 

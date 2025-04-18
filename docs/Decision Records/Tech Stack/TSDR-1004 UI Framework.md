@@ -14,6 +14,16 @@ AS of 2022-MAR-19 we want 3 UIs used 6 places.
 - full js or htmx or typescript site
 - mobile app
 
+develop for small mobile screen first then scale up from there is much easier
+
+test on 
+- small phone (Iphone 5s? iOS 12) (lowest android?)
+- tablet
+- laptop
+- small desktop
+- med destop
+- massive screen.
+
 Why a no Javascript no CSS site?
 - employees away from infrastructure. ie low bandwidth
 - using older machines
@@ -46,6 +56,8 @@ We do not want:
 
 Typescript for Javascript??
 include versions of browser / operationg system / phone version in list
+- https://www.reddit.com/r/typescript/comments/1jrqmjl/once_you_learn_typescript_you_never_go_back_to/
+
 
 Options:
 https://www.reddit.com/r/webdev/comments/mfnxnj/why_your_website_should_work_without_javascript/
@@ -54,19 +66,41 @@ https://www.reddit.com/r/golang/comments/1hwlxeq/faq_whats_the_best_way_to_do_ht
 
 https://www.reddit.com/r/golang/comments/1g1k03p/i_found_the_best_web_dev_stack_for_golang/
 
+HTMX + Alpine.js
+  - seems to be a simi popluar combo
 
+Datastar instead of htmx?
+  - too new?
+
+htmx + tailwind?
+
+htmx
+https://www.reddit.com/r/htmx/comments/1jtv7m1/what_is_dead_may_never_die/
+https://www.reddit.com/r/htmx/comments/1jvrkjv/bootstrap_htmx_is_fucking_awesome/
+https://www.reddit.com/r/htmx/comments/1jvynk1/i_lost_sleep_reading_essays_on_the_htmx_website/
 
 - https://github.com/cogentcore/core
 -  [Gio](https://gioui.org/)
 - https://fyne.io/
     -https://www.reddit.com/r/golang/comments/1jh60pr/we_are_developing_a_fyne_crud_gui_generator/
 - wails io
+https://www.reddit.com/r/golang/comments/1k0t8y6/wails_is_it_still_gaining_momentum_for_go_desktop/
+
 - Angular
 - Flutter
   - https://www.reddit.com/r/FlutterDev/comments/1j2vmxj/develop_the_business_logic_first_approach/
   - https://www.reddit.com/r/FlutterDev/comments/1jayrqx/the_final_word_on_flutter_architecture/
+
+  https://www.reddit.com/r/FlutterDev/comments/1jtjliu/what_are_your_favorites_flutter_packages_that_you/
+  https://www.reddit.com/r/FlutterDev/comments/1jwm4nn/i_made_a_hidden_inapp_debug_view_for_flutter_apps/
+   https://www.reddit.com/r/FlutterDev/comments/1jxbf8q/whats_a_concept_you_understand_really_well_that/
+
 - React
   - https://github.com/alan2207/bulletproof-react
+  - https://www.reddit.com/r/FlutterDev/comments/1jrvde8/performance_showdown_flutter_vs_react_native_vs/
+  [React Native Isn't as Popular as You Think](https://www.youtube.com/watch?app=desktop&v=E3Yjx0fFeaA&t=1s)
+    - in end of vid has sources of where pulled some stats from. worth looking up
+
 - React Native
 - Svelt
   - https://www.reddit.com/r/sveltejs/comments/1j2h7du/is_there_anything_what_you_dont_like_in_sveltekit/
@@ -91,6 +125,13 @@ UI Website login
 		Fyne - material design, movern ui look feel
 		Wails - ? bridge between web and go desktop, rest / vue?
 		Flutter (tech stack from google)
+       https://www.reddit.com/r/FlutterDev/comments/1jspg4h/whats_flutter_like_for_a_ui_newbie/
+
+        https://www.reddit.com/r/FlutterDev/comments/1jv1iad/is_the_future_for_macpc_flutter_apps_bright_or_not/
+       https://www.reddit.com/r/FlutterDev/comments/1jv2efg/coming_back_after_a_few_years_how_much_has_changed/
+      https://www.reddit.com/r/FlutterDev/comments/1jw2afz/sincere_question_why_would_you_use_flutter_for/
+
+
 2025-02-09 svelt 5?
 		react vs vue vs flutter vs svelt
 		Hotwire - html over the wire?
@@ -100,6 +141,9 @@ UI Website login
 		buffalo 2019
 		gorrila mocks
 		
+https://www.reddit.com/r/htmx/comments/1js5t7x/htmx_vs_sveltejs_what_are_pros_and_cons_of_both/
+https://www.reddit.com/r/sveltejs/comments/1juaepm/svelte_and_ai_coding/
+
 	look up what HTMX is.
 		fast? use with templ, hotwire?
 
