@@ -158,6 +158,9 @@ https://stackoverflow.com/questions/36617949/how-to-use-base-template-file-for-g
 - https://www.reddit.com/r/golang/comments/1j1kvl1/any_golang_libraries_to_build_simple_crud_uis/
 - https://www.reddit.com/r/Frontend/comments/1j9g6f8/all_frontend_developers_lets_make_the_most/
 
+
+- [Is This Tech Dead?](https://www.isthistechdead.com/)
+
 ## Decision
 
 
