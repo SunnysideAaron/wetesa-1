@@ -14,7 +14,7 @@ We will have to push database changes to production. How?
 
 ## Why / Notes
 
-
+pick something compatible with sqlc https://docs.sqlc.dev/en/latest/howto/ddl.html
 
 ## Consequences
 
