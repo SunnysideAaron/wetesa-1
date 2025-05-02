@@ -2,7 +2,7 @@
 
 ## What we are building.
 
-An example CRUD api. With a minimum of dependencies.
+An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of tables.
 
 ## TL;DR of decisions
 
@@ -21,6 +21,6 @@ An example CRUD api. With a minimum of dependencies.
 - TSDR-007 API framework
   - Use the standard library.
 - TSDR-008 Possible Future Dependencies
-  - See document.
+  - **PENDING** See document.
 - TSDR-009 Commit Messages
   - Commits without messages are OK. For now.

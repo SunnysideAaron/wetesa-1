@@ -1,4 +1,10 @@
 # TODO
+sqlc
+sqlc gen server
+sqlc gen structurizr
+
+sqlc command flags compile, verify, and vet
+
 
 - [Tollboth](https://github.com/didip/tollbooth)
   - if we need rate limiting.
