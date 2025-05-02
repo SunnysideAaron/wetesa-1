@@ -1,9 +1,8 @@
-# ADR-100
-# TSDR-100
+# TSDR-1010 Code Generation
 
 ## Status
 
-Accepted, Proposed, Deprecated or Superseded (list DR)
+Accepted
 
 ## Context
 
@@ -12,9 +11,9 @@ We want code generation for (one will be source, others derived from):
 - DB Schema
 - DB Migrations
 - API Model / DB Communication (should include basic validation)
-- API Routing
-- API Validation
 - API controllers / handlers
+- API Validation
+- API Routing
 - OpenAPI 3 (Swagger 1 and 2 are previous versions of OpenAPI) (API Documentation)
 - Web Client use of API
 - Web Client Validation
@@ -23,30 +22,75 @@ We want code generation for (one will be source, others derived from):
 - SDKs for other languages for our clients
 
 Code generation should allow for:
+- Overrides when we want our own code.
 - Pagination
 - Filters
-- Overrides when we want our own code.
 
 ## Decision
 
+[sqlc](https://sqlc.dev/) Use sqlc built in generator for go db model. Create
+our own plugins to generate the rest of what we want.
 
+## Why
 
-## Why / Notes
+Something has to be source of truth to generate code from. Might as well be SQL.
+Helps that I personally like SQL. After a cursory look at all the generators out
+at the moment there isn't anything that covers all we want to generate or even
+generate code the way we would want it. It appears that writing sqlc plugins is 
+relatively easy.
 
+## Notes
 
+- [sql-gen-go](https://github.com/sqlc-dev/sqlc-gen-go)
+  - a plugin but more of an example as it is just a pull of the code from sqlc.
+- [sqlc-gen-go-server](https://github.com/walterwanderley/sqlc-gen-go-server/)
+  - Source: SQL
+  - Generates:
+    - API Model / DB Communication (should include basic validation)
+    - API controllers / handlers
+    - API Validation
+    - API Routing
+  - This is a sqlc plugin. Need to test how code is different from sqlc-http. Same developer of both projects.
+  - fork of [sql-gen-go](https://github.com/sqlc-dev/sqlc-gen-go) but also does
+    server code.
+- [sqlc-http](https://github.com/walterwanderley/sqlc-http)
+  - Source: SQL
+  - Generates:
+    - API Model / DB Communication (should include basic validation)
+    - API controllers / handlers
+    - API Validation
+    - API Routing
+  - Seems to pretty much generate same code as sqlc-gen-go-server but without
+    being a plugin.
 
 ## Consequences
 
-
+We will be on our own for code changes / support for new plugins.
 
 ## Short List of Options
 
-- SQLc
-- SQLc custom plugin
-- open api codegen -> fallthrough podcast
-- [oto](https://github.com/pacedotdev/oto/tree/main/otohttp) by Mat Ryer **liked this** can generate anything I want from templates.
-- scrutinizer?
-- goa (retry?)
+- [sqlc](https://sqlc.dev/)
+  - Source: SQL
+  - Generates: API Model / DB Communication
+- [Goa](https://github.com/goadesign/goa)
+  - Source: DSL
+  - Generates:
+    - Go API
+    - OpenAPI Spec
+  - **TRIED** may give another chance.
+- [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen)
+  - Source: OpenAPI specs
+  - Generates:
+    - API Clients
+  - developer was on fallthrough podcast
+- [oto](https://github.com/pacedotdev/oto/tree/main/otohttp) by Mat Ryer 
+  - Source: GO code (structs)
+  - Generates:
+    - API controllers / handlers
+    - API Validation
+    - API Routing
+  - **liked this** can generate anything I want from templates. Simple code but
+    but would be heavy lift of generating many of our own templates.
 
 ## Other Possible Options
 
@@ -63,7 +107,10 @@ Code generation should allow for:
     - Generates routers for Gin, Echo v4, Gorilla Mux, Chi v5, and Fiber v2 routers. Probably I could add standard library router.
     - Generates HTTP routing generation, authorization enforcement, payload validation, error handling, and OpenAPI v3 specification generation
     - https://zuplo.com/blog/2025/03/04/holistic-view-of-apis
-  - Huma by
+  - [Huma](https://huma.rocks/)
+    - built on top of chi
+    - generates spec from the go code. Essentially you write a chi server and
+      Huma generates the openapi spec from it.
   - Tonic
   - libopenapi
   - kin-openapi (seems semi-abandoned as of 2024-02-22)
@@ -75,13 +122,8 @@ Code generation should allow for:
   - oapi-codegen
     doesn't do OpenAPI 3?
   - ogen **TRIED**
-  - openapi-generator
-  - swagger-codegen
   - microsoft/kiota
 - DSL → Spec + Code
-  - [Goa](https://github.com/goadesign/goa)
-    - Goa provides a holistic approach for developing remote APIs and microservices in Go.
-    - **TRIED** may give another chance.
 - Unknown if Spec or SDK first
   - [Prism](https://stoplight.io/open-source/prism)
     - use for testing?
@@ -90,10 +132,24 @@ Code generation should allow for:
 
 ## Not an Option
 
+- [OpenAPI Generator](https://openapi-generator.tech/)
+  - Source: OpenAPI 3
+  - Generates:
+    - API
+    - Clients
+    - PostgreSQL Schema (beta)
+  - seems to be specifically set up to create many generators
+  - written in **Java**
+  - fork of swagger-codegen.
+  - If we have to write our own generators we don't want to be writing in a different language.
+- [speakeasy](https://www.speakeasy.com/docs/languages/golang/oss-comparison-go)
+  - trying to sell speakeasy
+  - generates sdks
+- [swagger-codegen](https://github.com/swagger-api/swagger-codegen)
+  - written in **Java** and Mustache??
+  - If we have to write our own generators we don't want to be writing in a different language.
 - swaggo/swag (OAS3 Beta)
   - **TRIED** supported frameworks:
   - gin, echo, buffalo, net/http (standard library), gorilla/mux, go-chi/chi,
     flamingo, fiber, atreugo, hertz
-- [speakeasy](https://www.speakeasy.com/docs/languages/golang/oss-comparison-go)
-  - trying to sell speakeasy
-  - generates sdks
+

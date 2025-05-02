@@ -25,21 +25,30 @@ look into docusaurus
 
 Uses C4 Modeling to document system. 
 
-	
-	https://github.com/krzysztofreczek/go-structurizr
-		look into
-		generates c4models from go code
-		https://threedots.tech/post/auto-generated-c4-architecture-diagrams-in-go/
-		
-	https://github.com/plantuml-stdlib/C4-PlantUML
-		
-	https://github.com/goadesign/model
-		alternative to structurizr
-
-[Liam ERD](https://liambx.com/)
-  - db modeling
 
 https://doxygen.nl/
+
+
+Diagrams
+- [Structurizr](https://structurizr.com/)
+  - Source: Structrurizr DSL
+  - Generates: 
+    - Schema
+    - Documentation
+    - Links to Decision Records
+  - C4 Modeling
+  - https://github.com/structurizr/lite
+  - https://github.com/krzysztofreczek/go-structurizr
+    - generates c4models from go code
+    - https://threedots.tech/post/auto-generated-c4-architecture-diagrams-in-go/
+- [goa model](https://github.com/goadesign/model)
+- [Liam ERD](https://liambx.com/)
+	- auto diagram from schema
+	- db modeling
+- [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML)
+    - based on PlantUML
+	- C4 Modeling
+- [Mermaid]()
 
 ## Decision
 
