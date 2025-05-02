@@ -1,10 +1,4 @@
-# TSDR-000 What and TLDR
-
-## What we are building.
-
-An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of tables.
-
-## TL;DR of decisions
+# TSDR-000 TL;DR of Decisions
 
 - TSDR-001 Language(s)
   - Go
@@ -21,6 +15,6 @@ An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of t
 - TSDR-007 API framework
   - Use the standard library.
 - TSDR-008 Possible Future Dependencies
-  - **PENDING** See document.
+  - See document.
 - TSDR-009 Commit Messages
   - Commits without messages are OK. For now.

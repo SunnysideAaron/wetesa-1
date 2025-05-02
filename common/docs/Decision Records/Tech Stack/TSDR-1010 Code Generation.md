@@ -35,7 +35,7 @@ our own plugins to generate the rest of what we want.
 
 Something has to be source of truth to generate code from. Might as well be SQL.
 Helps that I personally like SQL. After a cursory look at all the generators out
-at the moment there isn't anything that covers all we want to generate or even
+at the moment there isn't anything that covers all we want to generate, or even
 generate code the way we would want it. It appears that writing sqlc plugins is 
 relatively easy.
 
