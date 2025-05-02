@@ -8,6 +8,8 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 Choose how and what to document.
 
+what ever it is that go has baked in for pulling out comments into documention
+
 look into docusaurus
 	documentation tool. others? use from goa/open api?
 
