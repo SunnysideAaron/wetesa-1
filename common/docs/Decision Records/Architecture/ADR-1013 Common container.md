@@ -1,27 +1,14 @@
-# ADR-100
-# TSDR-100
+# ADR-1013 Common container
 
 ## Status
 
-Accepted, Proposed, Deprecated or Superseded (list DR)
+Accepted
 
 ## Context
 
-
+There are tools, applications, code, documentation, and misc that is used in common
+across the other containers.
 
 ## Decision
 
-
-
-## Why / Notes
-
-
-
-## Consequences
-
-
-
-## Other Possible Options
-
-## Not an Option
-
+Create a common docker container for things relevant to multiple containers.

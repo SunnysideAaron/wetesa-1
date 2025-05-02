@@ -52,6 +52,16 @@ services:
       - ./api:/api
     working_dir: /api
     command: make watch
+  common:
+    build:
+      context: ./common
+      dockerfile: Dockerfile
+    container_name: common
+    networks:
+      - app-tier
+    volumes:
+      - ./common:/common
+    working_dir: /common
 networks:
   app-tier:
     driver: bridge

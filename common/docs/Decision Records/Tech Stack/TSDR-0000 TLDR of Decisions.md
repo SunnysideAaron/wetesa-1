@@ -1,13 +1,8 @@
-# TSDR-0000 What and TLDR
-
-## What we are building.
-
-An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of tables.
-
-## TL;DR of decisions
+# TSDR-0000  TL;DR of Decisions
 
 - All Decisions from wetesa-0
-  - These will be pulled into example 1 later. Once that example is "finished".
+  - These are copied from wetesa-0 so AI can find them. Don't edit them here.
+    Create a new decision record.
 - TSDR-1001 ORM
   - **PENDING**
 - TSDR-1002 DB migrations
@@ -22,9 +17,17 @@ An enterprise CRUD application. Enterprise scale monolith. 10s or even 100s of t
   - **PENDING**  
 - TSDR-1007 UI Design - Theme
   - **PENDING**  
+- TSDR-1008 Debugging Tools
+  - **PENDING**  
+- TSDR-1009 Monitoring
+  - **PENDING**  
+- TSDR-1010 Code Generation
+  - [sqlc](https://sqlc.dev/)  
+- TSDR-1011 Javascript Libraries
+  - **PENDING**  
 
+## TODO
 
-TODO
  - simplerr?, other error handling packages
 
 customer id in route? or user login?
@@ -38,4 +41,3 @@ starting expensive work
   so kicks off work. but doesn't do work.
 
 can all (err Error) returns be named so don't have initialize?
-

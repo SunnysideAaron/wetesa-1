@@ -18,7 +18,6 @@ api-build:
 #	docker compose build api --no-cache
 	@docker compose build api
 
-# run sh in service (starts service)
 api-bash:
 	@docker compose run --remove-orphans --service-ports api bash
 
@@ -26,6 +25,14 @@ api-watch:
 # results in same thing. Leave in case I want later for some kind of troubleshooting.
 #	@docker compose run --remove-orphans --service-ports  api bash -c "make watch"
 	@docker compose up --remove-orphans api
+
+# **************************************************
+
+common-build:
+	@docker compose build common
+
+common-bash:
+	@docker compose run --remove-orphans --service-ports common bash
 
 # **************************************************
 
