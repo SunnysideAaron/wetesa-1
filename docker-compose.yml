@@ -16,6 +16,8 @@ services:
     volumes:
        - ./datastore/initdb:/docker-entrypoint-initdb.d
        - ./datastore/persistence:/bitnami/postgresql
+       # tried to mount file. doesn't seem to be consistently working.
+       # - ./common/sqlc/01schema.sql:/docker-entrypoint-initdb.d/01schema.sql
   api:
     build:
       context: ./api

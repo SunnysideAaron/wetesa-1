@@ -2,8 +2,8 @@
 version: "2"
 sql:
   - engine: "postgresql"
-    queries: "query.sql"
-    schema: "schema.sql"
+    schema: "01schema.sql"
+    queries: "02query.sql"
     gen:
       go:
         # The package name to use for the generated code. Defaults to out basename.
@@ -85,6 +85,9 @@ sql:
         # output_models_file_name:
 
         # Customize the name of the querier file. Defaults to querier.go.
+        # ARS Note: as of 2025-05 the query file does not have a rename setting.
+        # this setting is for an interface file and only works if emit_interface is true.
+        # https://github.com/sqlc-dev/sqlc/issues/3285
         # output_querier_file_name:
 
         # Customize the name of the copyfrom file. Defaults to copyfrom.go.
