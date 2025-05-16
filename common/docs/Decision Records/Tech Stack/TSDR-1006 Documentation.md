@@ -49,8 +49,9 @@ Diagrams
 	- db modeling
 - [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML)
     - based on PlantUML
-	- C4 Modeling
+	  - C4 Modeling
 - [Mermaid]()
+  simpler than plantuml. but then hit constraints fast?
 
 ## Decision
 

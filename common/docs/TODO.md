@@ -5,6 +5,7 @@ sqlc gen structurizr
 
 sqlc command flags compile, verify, and vet
 
+wetesa traffic tracker
 
 - [Tollboth](https://github.com/didip/tollbooth)
   - if we need rate limiting.
