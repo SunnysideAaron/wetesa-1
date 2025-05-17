@@ -161,6 +161,11 @@ https://stackoverflow.com/questions/36617949/how-to-use-base-template-file-for-g
 
 - [Is This Tech Dead?](https://www.isthistechdead.com/)
 
+
+- Go Standard Library template package
+  - Don't use it. I hated it. Especially the "." notation. No idea when looking at a "." what it relates to. what structure we are on. gross. Try tmpl or others first.
+  - maybe there is a way around that?
+
 ## Decision
 
 
