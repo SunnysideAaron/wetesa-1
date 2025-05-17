@@ -7,10 +7,10 @@ sql:
     gen:
       go:
         # The package name to use for the generated code. Defaults to out basename.
-        package: "sqlcgenerated"
+        package: "databasegen"
 
         # Output directory for generated code.
-        out: "sqlcgenerated"
+        out: "databasegen"
 
         # Either pgx/v4, pgx/v5 or database/sql. Defaults to database/sql.
         sql_package: "pgx/v5"

@@ -63,7 +63,7 @@ services:
       - app-tier
     volumes:
       - ./common:/common
-      - ./api/internal/sqlcgenerated:/common/sqlc/sqlcgenerated     
+      - ./api/internal/databasegen:/common/sqlc/databasegen     
     working_dir: /common
 networks:
   app-tier:

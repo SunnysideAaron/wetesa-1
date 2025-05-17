@@ -3,7 +3,7 @@
 //   sqlc v1.29.0
 // source: 02query.sql
 
-package sqlcgenerated
+package databasegen
 
 import (
 	"context"
