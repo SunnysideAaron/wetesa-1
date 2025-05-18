@@ -94,6 +94,10 @@ https://www.reddit.com/r/golang/comments/1k0t8y6/wails_is_it_still_gaining_momen
   https://www.reddit.com/r/FlutterDev/comments/1jtjliu/what_are_your_favorites_flutter_packages_that_you/
   https://www.reddit.com/r/FlutterDev/comments/1jwm4nn/i_made_a_hidden_inapp_debug_view_for_flutter_apps/
    https://www.reddit.com/r/FlutterDev/comments/1jxbf8q/whats_a_concept_you_understand_really_well_that/
+https://www.reddit.com/r/FlutterDev/comments/1k288c8/flutter_has_too_many_state_management_solutions/
+https://www.reddit.com/r/FlutterDev/comments/1k2s4zy/new_dart_formatting_is_hurting_productivity/
+https://www.reddit.com/r/FlutterDev/comments/1jv1iad/is_the_future_for_macpc_flutter_apps_bright_or_not/
+https://www.reddit.com/r/FlutterDev/comments/1k32q3g/gradle_sucks/
 
 - React
   - https://github.com/alan2207/bulletproof-react
@@ -162,6 +166,9 @@ https://stackoverflow.com/questions/36617949/how-to-use-base-template-file-for-g
 - [Is This Tech Dead?](https://www.isthistechdead.com/)
 
 
+https://www.reddit.com/r/iOSProgramming/comments/1gavd7s/as_of_2024_what_are_the_distinct_advantages_that/
+
+
 - Go Standard Library template package
   - Don't use it. I hated it. Especially the "." notation. No idea when looking at a "." what it relates to. what structure we are on. gross. Try tmpl or others first.
   - maybe there is a way around that?
@@ -186,6 +193,8 @@ Possibilities:
   - specifically says he just started in go. Take with grain of salt.
 - https://github.com/avelino/awesome-go?tab=readme-ov-file#template-engines
 
+
+https://www.reddit.com/r/webdev/comments/1k1b0oc/whats_the_one_web_dev_framework_or_library_you/
 
 
 

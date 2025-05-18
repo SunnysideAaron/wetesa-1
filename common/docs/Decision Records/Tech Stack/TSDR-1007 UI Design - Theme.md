@@ -36,6 +36,7 @@ https://www.reddit.com/r/Frontend/comments/1ju66te/how_do_i_make_my_frontend_not
 
 https://www.reddit.com/r/ChatGPTCoding/comments/1jzb7wz/vibe_coding_hack_use_websites_you_like_as_a/
 
+https://www.reddit.com/r/sveltejs/comments/1k1hq4d/tired_of_keywordbased_icon_searches_maybe_its/
 
 Not an option:
 

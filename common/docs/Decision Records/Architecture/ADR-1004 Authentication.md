@@ -40,6 +40,9 @@ https://www.reddit.com/r/golang/comments/1jsqdnq/should_i_build_a_simple_auth_se
 
 ## Other Options
 
+Kinde
+https://kinde.com/?utm_source=reddit&utm_medium=social&utm_campaign=USCanada&utm_term=expensiveauth&utm_content=product
+
 Possibilities:
 - just basic sessions
 - [Awesome Go - Authentication and OAuth](https://github.com/avelino/awesome-go?tab=readme-ov-file#authentication-and-oauth)

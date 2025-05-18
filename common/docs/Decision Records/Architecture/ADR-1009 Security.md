@@ -34,6 +34,7 @@ https://www.reddit.com/r/webdev/comments/1jtig15/what_are_the_most_impotent_secu
 
 https://www.reddit.com/r/golang/comments/1k1lmqd/go_security_best_practices_for_software_engineers/
 
+https://www.reddit.com/r/devops/comments/1k13m0p/how_are_you_catching_sketchy_opensource_packages/
 
 ## Not an Option
 
