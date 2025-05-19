@@ -36,5 +36,7 @@ https://www.reddit.com/r/golang/comments/1k1lmqd/go_security_best_practices_for_
 
 https://www.reddit.com/r/devops/comments/1k13m0p/how_are_you_catching_sketchy_opensource_packages/
 
+file path attack protection. use os.open root
+
 ## Not an Option
 

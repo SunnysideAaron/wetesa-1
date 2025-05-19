@@ -66,3 +66,8 @@ how to handle api breaking changes.
   - 20 QA, versioning
   - 22 Appendices
 
+https://pb33f.io/wiretap/
+
+use long form flags in make files. self documenting.
+
+https://www.reddit.com/r/webdev/comments/1k2uuoh/i_hate_timezones/

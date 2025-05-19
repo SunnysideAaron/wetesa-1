@@ -173,6 +173,13 @@ https://www.reddit.com/r/iOSProgramming/comments/1gavd7s/as_of_2024_what_are_the
   - Don't use it. I hated it. Especially the "." notation. No idea when looking at a "." what it relates to. what structure we are on. gross. Try tmpl or others first.
   - maybe there is a way around that?
 
+React bad
+  v19 rfc complex / married to next.js
+
+astro is alternate
+eleventry
+framer
+
 ## Decision
 
 
