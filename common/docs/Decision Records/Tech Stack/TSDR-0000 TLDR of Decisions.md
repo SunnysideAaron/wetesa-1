@@ -22,7 +22,7 @@
 - TSDR-1009 Monitoring
   - **PENDING**  
 - TSDR-1010 Code Generation
-  - [sqlc](https://sqlc.dev/)  
+  - Don't  
 - TSDR-1011 Javascript Libraries
   - **PENDING**  
 

@@ -30,48 +30,26 @@ Code generation should allow for:
 
 Don't do it.
 
-
-[sqlc](https://sqlc.dev/) Use sqlc built in generator for go db model. Create
-our own plugins to generate the rest of what we want.
-
 ## Why
 
-Something has to be source of truth to generate code from. Might as well be SQL.
-Helps that I personally like SQL. After a cursory look at all the generators out
-at the moment there isn't anything that covers all we want to generate, or even
-generate code the way we would want it. It appears that writing sqlc plugins is 
-relatively easy.
+I've done a cursory look at many of all the generators out at the moment. There
+isn't anything that covers all we want to generate, or even
+generate code the way we would want it. I gave a hard look at goa. Goa's new
+user experience was painful. I'd be willing to try it again and perhaps it would
+go better now that I have more experience. sqlc was givin even more time. sqlc
+drops the ball on filters and pagination. We could dig deep and fix. We could
+generate our own templates. I hate the standard library template package. I'm not
+going to marry my self to it. sqlc's code seems bloated. Trying to be everything
+to everyone. flags for every version of outputted code. Some of the flags produce
+broken code.Doesn't seem sustainable.
 
-## Notes
-
-- [sql-gen-go](https://github.com/sqlc-dev/sqlc-gen-go)
-  - a plugin but more of an example as it is just a pull of the code from sqlc.
-- [sqlc-gen-go-server](https://github.com/walterwanderley/sqlc-gen-go-server/)
-  - Source: SQL
-  - Generates:
-    - API Model / DB Communication (should include basic validation)
-    - API controllers / handlers
-    - API Validation
-    - API Routing
-  - This is a sqlc plugin. Need to test how code is different from sqlc-http. Same developer of both projects.
-  - fork of [sql-gen-go](https://github.com/sqlc-dev/sqlc-gen-go) but also does
-    server code.
-- [sqlc-http](https://github.com/walterwanderley/sqlc-http)
-  - Source: SQL
-  - Generates:
-    - API Model / DB Communication (should include basic validation)
-    - API controllers / handlers
-    - API Validation
-    - API Routing
-  - Seems to pretty much generate same code as sqlc-gen-go-server but without
-    being a plugin.
-
-https://www.reddit.com/r/golang/comments/1aiooft/sqlc_dynamic_queries_with_pagination_and_filters/
-https://www.reddit.com/r/golang/comments/183292y/best_practices_with_sqlc_and_dynamic_filters/?share_id=fTJsRkD8PPGBA2jm4VXhD&utm_medium=android_app&utm_name=androidcss&utm_source=share&utm_term=1
+Code generation feels like an uphill battle. I get the impression they are
+like ORMs. Good at 80% but fight like hell on the 20%. The brochure is nice but
+gets in way when you try to do something interesting. Just frustrating. 
 
 ## Consequences
 
-We will be on our own for code changes / support for new plugins.
+We will be on our own to keep code in sync.
 
 ## Short List of Options
 
@@ -135,6 +113,33 @@ We will be on our own for code changes / support for new plugins.
     - use for testing?
   - [swaggest - rest](https://github.com/swaggest/rest)
   - [swaggest - openapi-go](https://github.com/swaggest/openapi-go)
+
+## sqlc Notes
+
+- [sql-gen-go](https://github.com/sqlc-dev/sqlc-gen-go)
+  - a plugin but more of an example as it is just a pull of the code from sqlc.
+- [sqlc-gen-go-server](https://github.com/walterwanderley/sqlc-gen-go-server/)
+  - Source: SQL
+  - Generates:
+    - API Model / DB Communication (should include basic validation)
+    - API controllers / handlers
+    - API Validation
+    - API Routing
+  - This is a sqlc plugin. Need to test how code is different from sqlc-http. Same developer of both projects.
+  - fork of [sql-gen-go](https://github.com/sqlc-dev/sqlc-gen-go) but also does
+    server code.
+- [sqlc-http](https://github.com/walterwanderley/sqlc-http)
+  - Source: SQL
+  - Generates:
+    - API Model / DB Communication (should include basic validation)
+    - API controllers / handlers
+    - API Validation
+    - API Routing
+  - Seems to pretty much generate same code as sqlc-gen-go-server but without
+    being a plugin.
+- https://www.reddit.com/r/golang/comments/1aiooft/sqlc_dynamic_queries_with_pagination_and_filters/
+- https://www.reddit.com/r/golang/comments/183292y/best_practices_with_sqlc_and_dynamic_filters/?share_id=fTJsRkD8PPGBA2jm4VXhD&utm_medium=android_app&utm_name=androidcss&utm_source=share&utm_term=1
+
 
 ## Not an Option
 
