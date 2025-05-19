@@ -16,6 +16,7 @@ import (
 
 	"api/internal/config"
 	"api/internal/database"
+	"api/internal/databasegen"
 	"api/internal/logging"
 	"api/internal/server"
 )
@@ -40,10 +41,20 @@ func run(
 	db := database.NewPG(ctx, pCfg, logger)
 	defer db.Close()
 
+	// ------------------ sqlc gen attempt
+	pool, err := pgxpool.NewWithConfig(ctx, pCfg)
+	if err != nil {
+		return fmt.Errorf("could not create pgxpool: %w", err)
+	}
+	defer pool.Close()
+
+	queries := databasegen.New(pool)
+
 	handle := server.AddRoutes(
 		ctx,
 		cfg,
 		db,
+		queries,
 		logger,
 		logLevel,
 	)

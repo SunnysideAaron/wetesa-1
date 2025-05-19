@@ -56,11 +56,20 @@ func (q *Queries) GetClient(ctx context.Context, clientID pgtype.UUID) (Client, 
 
 const listClients = `-- name: ListClients :many
 SELECT client_id, name, address FROM client
-ORDER BY name
+WHERE (name ILIKE $1 OR $1 IS NULL)
+ORDER BY name ASC
+LIMIT $3
+OFFSET $2
 `
 
-func (q *Queries) ListClients(ctx context.Context) ([]Client, error) {
-	rows, err := q.db.Query(ctx, listClients)
+type ListClientsParams struct {
+	Name pgtype.Text
+	Off  int32
+	Lim  int32
+}
+
+func (q *Queries) ListClients(ctx context.Context, arg ListClientsParams) ([]Client, error) {
+	rows, err := q.db.Query(ctx, listClients, arg.Name, arg.Off, arg.Lim)
 	if err != nil {
 		return nil, err
 	}

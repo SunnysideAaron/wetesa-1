@@ -9,6 +9,7 @@ import (
 
 	"api/internal/config"
 	"api/internal/database"
+	"api/internal/databasegen"
 	"api/internal/logging"
 	"api/internal/server/middleware"
 )
@@ -19,6 +20,7 @@ func AddRoutes(
 	ctx context.Context,
 	cfg *config.APIConfig,
 	db *database.Postgres,
+	queries *databasegen.Queries,
 	logger *slog.Logger,
 	logLevel *slog.LevelVar,
 ) http.Handler {
@@ -43,6 +45,8 @@ func AddRoutes(
 	v1Mux.Handle(http.MethodPost+" /clients", middleDefaults(handleCreateClient(clientLogger, db)))
 	v1Mux.Handle(http.MethodPut+" /clients/{id}", middleDefaults(handleUpdateClient(clientLogger, db)))
 	v1Mux.Handle(http.MethodDelete+" /clients/{id}", middleDefaults(handleDeleteClient(clientLogger, db)))
+
+	v1Mux.Handle(http.MethodGet+" /clients2", middleDefaults(handleListClients2(logger, queries)))
 
 	// TODO how to do breaking changes to an api. WARNING hot wire topic but something has to be done.
 	baseMux.Handle(cfg.BaseURL+"/", http.StripPrefix(cfg.BaseURL, v1Mux))
