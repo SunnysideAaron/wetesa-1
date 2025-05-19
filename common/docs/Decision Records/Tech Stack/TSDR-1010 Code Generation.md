@@ -28,6 +28,9 @@ Code generation should allow for:
 
 ## Decision
 
+Don't do it.
+
+
 [sqlc](https://sqlc.dev/) Use sqlc built in generator for go db model. Create
 our own plugins to generate the rest of what we want.
 
@@ -62,6 +65,9 @@ relatively easy.
     - API Routing
   - Seems to pretty much generate same code as sqlc-gen-go-server but without
     being a plugin.
+
+https://www.reddit.com/r/golang/comments/1aiooft/sqlc_dynamic_queries_with_pagination_and_filters/
+https://www.reddit.com/r/golang/comments/183292y/best_practices_with_sqlc_and_dynamic_filters/?share_id=fTJsRkD8PPGBA2jm4VXhD&utm_medium=android_app&utm_name=androidcss&utm_source=share&utm_term=1
 
 ## Consequences
 
