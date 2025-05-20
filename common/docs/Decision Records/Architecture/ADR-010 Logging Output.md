@@ -23,4 +23,6 @@ logging to a file we would need to find out and code a solution if not.
 
 ## Notes
 
+TODO https://www.reddit.com/r/golang/comments/1kcmdy7/whats_your_logging_strategy_for_go_backend/
+
 ## Consequences

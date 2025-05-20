@@ -19,6 +19,16 @@ Which CSS library
     Tailwind
     Others?
 
+CSS libraries like chakra, mui, tailwind
+
+https://getbootstrap.com/
+
+https://tailwindcss.com/
+
+https://simplecss.org/
+
+https://www.w3schools.com/w3css/default.asp
+
 ## Decision
 
 

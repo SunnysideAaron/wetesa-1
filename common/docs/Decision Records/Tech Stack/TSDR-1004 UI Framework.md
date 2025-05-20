@@ -91,6 +91,10 @@ https://www.reddit.com/r/golang/comments/1k0t8y6/wails_is_it_still_gaining_momen
   - https://www.reddit.com/r/FlutterDev/comments/1j2vmxj/develop_the_business_logic_first_approach/
   - https://www.reddit.com/r/FlutterDev/comments/1jayrqx/the_final_word_on_flutter_architecture/
 
+https://www.reddit.com/r/FlutterDev/comments/1k9imhf/flutter_clean_architecture_implementation_guide/
+
+
+
   https://www.reddit.com/r/FlutterDev/comments/1jtjliu/what_are_your_favorites_flutter_packages_that_you/
   https://www.reddit.com/r/FlutterDev/comments/1jwm4nn/i_made_a_hidden_inapp_debug_view_for_flutter_apps/
    https://www.reddit.com/r/FlutterDev/comments/1jxbf8q/whats_a_concept_you_understand_really_well_that/
@@ -98,6 +102,8 @@ https://www.reddit.com/r/FlutterDev/comments/1k288c8/flutter_has_too_many_state_
 https://www.reddit.com/r/FlutterDev/comments/1k2s4zy/new_dart_formatting_is_hurting_productivity/
 https://www.reddit.com/r/FlutterDev/comments/1jv1iad/is_the_future_for_macpc_flutter_apps_bright_or_not/
 https://www.reddit.com/r/FlutterDev/comments/1k32q3g/gradle_sucks/
+
+https://www.reddit.com/r/FlutterDev/comments/1k883sp/what_are_your_favorite_underrated_flutter_packages/
 
 - React
   - https://github.com/alan2207/bulletproof-react
@@ -183,6 +189,18 @@ framer
 https://www.reddit.com/r/golang/comments/1755wh9/template_engine_recommendation/
 
 - [templui](https://github.com/axzilla/templui) - Modern UI Components for Go & Templ.
+
+https://ui.shadcn.com/
+
+https://react.dev/
+
+https://angularjs.org/
+
+https://vuejs.org/
+
+https://svelte.dev/
+
+https://dev.to/nikl/using-golang-gomobile-to-build-android-application-with-code-18jo
 
 ## Decision
 

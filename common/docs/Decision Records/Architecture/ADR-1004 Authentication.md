@@ -51,7 +51,7 @@ Possibilities:
 - https://www.reddit.com/r/golang/comments/idsvuv/what_do_you_use_for_authentication_in_golang/
 - [gotth-auth](https://github.com/lordaris/gotth-auth)
   - Example we don't use tech stack
-
+- https://www.reddit.com/r/golang/comments/1kdm8n3/auth_in_golang_2025/
 
 Not an option:
 
