@@ -52,6 +52,13 @@ Possibilities:
 - [gotth-auth](https://github.com/lordaris/gotth-auth)
   - Example we don't use tech stack
 - https://www.reddit.com/r/golang/comments/1kdm8n3/auth_in_golang_2025/
+- https://www.reddit.com/r/devops/comments/1kf2vqj/whats_one_cloud_concept_that_took_you_way_longer/
+
+
+client golang/oauth2
+server go-oauth2/oauth2
+or check oauth.net/code/go/
+
 
 Not an option:
 

@@ -23,6 +23,7 @@ Micro-services add complexity and are very costly in developer time and support.
 Micro-services are an organizational solution not a technical solution.
 
 [So you want to break down monolith?](https://www.architecture-weekly.com/p/so-you-want-to-break-down-monolith)
+https://www.reddit.com/r/ExperiencedDevs/comments/1kjl1uh/an_actual_success_story_in_beating_down_technical/
 
 ## Consequences
 

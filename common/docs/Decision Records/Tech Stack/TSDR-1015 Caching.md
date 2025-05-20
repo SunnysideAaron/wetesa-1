@@ -23,8 +23,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Other Possible Options
 
-https://www.reddit.com/r/golang/comments/1keirz8/seeking_solution_for_scheduled_tasks_probably/
-https://www.reddit.com/r/golang/comments/1knzzng/go_scheduler/
+https://www.reddit.com/r/devops/comments/1kdlg94/redis_is_open_source_again/
 
 ## Not an Option
 

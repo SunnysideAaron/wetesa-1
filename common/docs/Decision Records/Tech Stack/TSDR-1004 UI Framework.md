@@ -54,6 +54,10 @@ We do not want:
   - Mac
   - Linux
 
+
+https://www.reddit.com/r/FlutterDev/comments/1klltpf/how_does_your_maindart_file_looks_like_any_good/
+
+
 Typescript for Javascript??
 include versions of browser / operationg system / phone version in list
 - https://www.reddit.com/r/typescript/comments/1jrqmjl/once_you_learn_typescript_you_never_go_back_to/
@@ -92,7 +96,10 @@ https://www.reddit.com/r/golang/comments/1k0t8y6/wails_is_it_still_gaining_momen
   - https://www.reddit.com/r/FlutterDev/comments/1jayrqx/the_final_word_on_flutter_architecture/
 
 https://www.reddit.com/r/FlutterDev/comments/1k9imhf/flutter_clean_architecture_implementation_guide/
-
+https://www.reddit.com/r/FlutterDev/comments/1kh9owe/whats_the_catch_with_flutter/
+https://www.reddit.com/r/FlutterDev/comments/1khrhrx/aside_from_being_cross_platform_why_do_some_devs/
+https://www.reddit.com/r/FlutterDev/comments/1kjnn2l/flutter_architecture_riverpod_bloc_or_vanilla/
+https://www.reddit.com/r/FlutterDev/comments/1klhp49/i_compiled_80_flutter_tips_into_a_web_page/
 
 
   https://www.reddit.com/r/FlutterDev/comments/1jtjliu/what_are_your_favorites_flutter_packages_that_you/
@@ -115,6 +122,7 @@ https://www.reddit.com/r/FlutterDev/comments/1k883sp/what_are_your_favorite_unde
 - Svelt
   - https://www.reddit.com/r/sveltejs/comments/1j2h7du/is_there_anything_what_you_dont_like_in_sveltekit/
   - https://www.reddit.com/r/sveltejs/comments/1jg56is/the_best_sveltekit_codebase_ive_ever_seen/
+  https://www.reddit.com/r/sveltejs/comments/1kg91ai/daisyui_or_shadcn/
 - Svelt Native
 - tmple - htmx
   - htmx is a javascript library for go? allows replacement of parts of page. 

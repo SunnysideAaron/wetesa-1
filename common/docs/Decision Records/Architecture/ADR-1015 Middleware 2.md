@@ -23,8 +23,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Other Possible Options
 
-https://www.reddit.com/r/golang/comments/1keirz8/seeking_solution_for_scheduled_tasks_probably/
-https://www.reddit.com/r/golang/comments/1knzzng/go_scheduler/
+TODO https://www.reddit.com/r/golang/comments/1kca68h/do_i_still_need_timeout_middleware_if_im_setting/
 
 ## Not an Option
 

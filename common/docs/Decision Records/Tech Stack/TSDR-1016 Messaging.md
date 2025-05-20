@@ -11,7 +11,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Decision
 
-
+Wont need till we do distributed architecture / micro-services.
 
 ## Why / Notes
 
@@ -23,8 +23,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Other Possible Options
 
-https://www.reddit.com/r/golang/comments/1keirz8/seeking_solution_for_scheduled_tasks_probably/
-https://www.reddit.com/r/golang/comments/1knzzng/go_scheduler/
+https://www.reddit.com/r/softwarearchitecture/comments/1kn63sj/whats_your_goto_message_queue_in_2025/
 
 ## Not an Option
 

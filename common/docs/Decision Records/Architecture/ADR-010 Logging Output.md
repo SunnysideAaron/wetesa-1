@@ -23,6 +23,8 @@ logging to a file we would need to find out and code a solution if not.
 
 ## Notes
 
-TODO https://www.reddit.com/r/golang/comments/1kcmdy7/whats_your_logging_strategy_for_go_backend/
+- TODO https://www.reddit.com/r/golang/comments/1kcmdy7/whats_your_logging_strategy_for_go_backend/
+- https://www.reddit.com/r/webdev/comments/1kdikta/is_it_good_practice_to_log_every_single_api/
+  - places to send logs for storage
 
 ## Consequences

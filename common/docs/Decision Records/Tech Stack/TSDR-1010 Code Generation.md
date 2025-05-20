@@ -29,6 +29,7 @@ Code generation should allow for:
 ## Decision
 
 Don't do it.
+https://threedots.tech/post/common-anti-patterns-in-go-web-applications/
 
 ## Why
 
