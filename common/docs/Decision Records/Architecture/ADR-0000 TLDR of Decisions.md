@@ -71,3 +71,6 @@ https://pb33f.io/wiretap/
 use long form flags in make files. self documenting.
 
 https://www.reddit.com/r/webdev/comments/1k2uuoh/i_hate_timezones/
+
+https://www.reddit.com/r/golang/comments/1k3sb3j/json_schema_to_go_struct_or_alternatives/
+

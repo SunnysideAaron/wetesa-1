@@ -180,6 +180,10 @@ astro is alternate
 eleventry
 framer
 
+https://www.reddit.com/r/golang/comments/1755wh9/template_engine_recommendation/
+
+- [templui](https://github.com/axzilla/templui) - Modern UI Components for Go & Templ.
+
 ## Decision
 
 
