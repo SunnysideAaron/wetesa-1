@@ -4,7 +4,7 @@
   - These are copied from wetesa-0 so AI can find them. Don't edit them here.
     Create a new decision record.
 - TSDR-1001 ORM
-  - **PENDING**
+  - Don't use an ORM.
 - TSDR-1002 DB migrations
   - **PENDING**
 - TSDR-1003 CSS
@@ -22,7 +22,7 @@
 - TSDR-1009 Monitoring
   - **PENDING**  
 - TSDR-1010 Code Generation
-  - Don't
+  - Don't do it.
 - TSDR-1011 Javascript Libraries
   - **PENDING**  
 

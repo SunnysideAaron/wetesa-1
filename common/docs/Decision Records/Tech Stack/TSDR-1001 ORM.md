@@ -2,30 +2,33 @@
 
 ## Status
 
-Accepted, Proposed, Deprecated or Superseded (list DR)
+Accepted
 
 ## Context
 
-I hate ORMs. Avoid if possible. We did think about them.
+
 
 ## Decision
 
-sqlc?
+Don't use an ORM.
 
-Squirrel or sqrl. for more complex queries?
+## Why 
 
-jet? 
-  - https://www.reddit.com/r/golang/comments/1j6fzsz/we_made_writing_typesafe_sql_queries_in_go_even/
-  - https://github.com/go-jet/jet
+I hate ORMs. Avoid if possible. We did think about them. At some point developers
+just have to write code. ORMs take a simple and dense language (SQL) and just add
+another layer of complexity. Makes the 80% only slightly easier. Anything special
+becomes a fight.
 
-Comparing database/sql, GORM, sqlx, and sqlc
-https://blog.jetbrains.com/go/2023/04/27/comparing-db-packages/
+## Notes
+
+- [Comparing database/sql, GORM, sqlx, and sqlc](https://blog.jetbrains.com/go/2023/04/27/comparing-db-packages/) 2023-04
 
 ### sqlc
 
 [sqlc](https://sqlc.dev/)
 
 Plugins:
+
 - [sqlc-gen-go](https://github.com/sqlc-dev/sqlc-gen-go)
   - code gen plugin template
 - [sqlc-gen-go-server](https://github.com/walterwanderley/sqlc-gen-go-server)  
@@ -53,17 +56,22 @@ Intro Guides:
 Misc Links:
 - [sqlc-pgx-monitoring ](https://github.com/amirsalarsafaei/sqlc-pgx-monitoring)
 
-
-## Why / Notes
-
-- Sounds amazing.
-
 ## Consequences
 
-## Other Options
 
-Possibilities:
-- [Bun](https://bun.uptrace.dev/)
-- GORM
-- [ent.](https://entgo.io/)
+
+## Other Possible Options
+
 - [Awesome Go: ORMs](https://github.com/avelino/awesome-go?tab=readme-ov-file#orm)
+- [Bob](https://github.com/stephenafamo/bob)
+  - Query Builder
+  - SQL Executor for convenient scanning of results
+  - Models for convenient database queries
+  - Code generation of Models and Factories from your database schema
+  - Code generation of Queries similar to sqlc.
+- [Bun](https://bun.uptrace.dev/)
+- [ent.](https://entgo.io/)
+- GORM
+- [jet](https://github.com/go-jet/jet)
+  - https://www.reddit.com/r/golang/comments/1j6fzsz/we_made_writing_typesafe_sql_queries_in_go_even/
+- [squirrel](https://github.com/Masterminds/squirrel)
