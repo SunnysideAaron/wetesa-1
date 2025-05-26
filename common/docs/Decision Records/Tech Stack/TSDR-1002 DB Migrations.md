@@ -28,6 +28,7 @@ pick something compatible with sqlc https://docs.sqlc.dev/en/latest/howto/ddl.ht
 - Goose
 - https://github.com/golang-migrate/migrate
 - https://www.reddit.com/r/golang/comments/1kghyca/how_to_manage_database_schema_in_golang/
+- https://github.com/xataio/pgroll
 
 Not an option:
 - [Bun](https://bun.uptrace.dev/guide/)
