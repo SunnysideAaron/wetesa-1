@@ -35,7 +35,21 @@ func run(
 	logLevel := new(slog.LevelVar)
 	logLevel.Set(slog.LevelInfo)
 
-	logger := slog.New(devslog.NewHandler(os.Stdout, nil))
+	slogOpts := &slog.HandlerOptions{
+		AddSource: true,
+		Level:     slog.LevelDebug,
+	}
+
+	// new logger with options
+	opts := &devslog.Options{
+		HandlerOptions:    slogOpts,
+		MaxSlicePrintSize: 4,
+		SortKeys:          true,
+		NewLineAfterLog:   true,
+		StringerFormatter: true,
+	}
+
+	logger := slog.New(devslog.NewHandler(os.Stdout, opts))
 
 	slog.SetDefault(logger)
 
