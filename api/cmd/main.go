@@ -13,10 +13,10 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/lmittmann/tint"
 
 	"api/internal/config"
 	"api/internal/database"
-	"api/internal/logging"
 	"api/internal/server"
 )
 
@@ -30,8 +30,24 @@ func run(
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
 
-	logger, logLevel := logging.NewLogger(cfg)
-	slog.SetDefault(logger)
+	//logger, logLevel := logging.NewLogger(cfg)
+	//slog.SetDefault(logger)
+
+	logLevel := new(slog.LevelVar)
+	logLevel.Set(slog.LevelInfo)
+
+	w := os.Stderr
+
+	// Create a new logger
+	logger := slog.New(tint.NewHandler(w, nil))
+
+	// Set global logger with custom options
+	slog.SetDefault(slog.New(
+		tint.NewHandler(w, &tint.Options{
+			Level:      slog.LevelDebug,
+			TimeFormat: time.Kitchen,
+		}),
+	))
 
 	// convert from slog to log for http
 	httpLogger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)

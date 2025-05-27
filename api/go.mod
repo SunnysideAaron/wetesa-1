@@ -5,6 +5,7 @@ go 1.23.5
 require (
 	github.com/jackc/pgerrcode v0.0.0-20240316143900-6e2875d9b438
 	github.com/jackc/pgx/v5 v5.7.4
+	github.com/lmittmann/tint v1.1.0
 )
 
 require (
