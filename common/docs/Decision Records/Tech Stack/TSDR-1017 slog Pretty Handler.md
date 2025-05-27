@@ -37,8 +37,7 @@ format the slog output for human readability.
 - [slog-formatter](https://github.com/samber/slog-formatter)
   - Common formatters for slog + helpers for building your own
   - seems like a lot there. but not widely used?
-- [tinted](https://pkg.go.dev/github.com/lmittmann/tint)
-  - colorized output
+
 
 ## Other Possible Options
 
@@ -65,3 +64,6 @@ format the slog output for human readability.
 - [slug](https://github.com/dotse/slug)
   - a handler that prints colourful logs for humans
   - not maintained
+- [tinted](https://pkg.go.dev/github.com/lmittmann/tint)
+  - colorized output
+  - tried. our home brew is better.  
