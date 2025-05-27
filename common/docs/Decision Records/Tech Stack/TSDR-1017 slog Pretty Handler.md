@@ -34,6 +34,10 @@ I had the feeling that there were all these slog pretty handlers out there.
 ## Possible Options (short list)
 
 - [devslog](https://github.com/golang-cz/devslog) - Format logs for development.
+  - nice output. a bit too much color.
+  - has some nice features like type flaging and only so many values in a slice.
+  - does not output context attributes. would have to add that.
+
 - [golog](https://github.com/primalskill/golog) - Development, discard and production handlers with sensible formatting.
 - [logging](https://github.com/dusted-go/logging)
   - [Creating a pretty console logger using Go's slog package](https://dusted.codes/creating-a-pretty-console-logger-using-gos-slog-package)
