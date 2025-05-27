@@ -12,16 +12,18 @@ format the slog output for human readability.
 ## Decision
 
 Keep our home brew from Wetesa-0. At some point will have to fix it and make
-more robust.
+more robust. I think attribute overwrites are broken? will need those to hide
+sensitive information.
 
 ## Why / Notes
 
-I had the feeling that there were all these slog pretty handlers out there. 
+I had the feeling that there were all these slog pretty handlers out there. There
+is but most are one offs and not maintained. After looking them over the only one
+that looked like it might work was devslog. But it has too much color and not
+actually an improvement over what we have.
 
-## Consequences
-
-
-
+[Creating a pretty console logger using Go's slog package](https://dusted.codes/creating-a-pretty-console-logger-using-gos-slog-package)
+is worth looking at if we go about fixing our handler.
 
 ## Links
 - See ADR-011 Logging Package.
@@ -37,8 +39,6 @@ I had the feeling that there were all these slog pretty handlers out there.
   - nice output. a bit too much color.
   - has some nice features like type flaging and only so many values in a slice.
   - does not output context attributes. would have to add that.
-
-- [golog](https://github.com/primalskill/golog) - Development, discard and production handlers with sensible formatting.
 - [logging](https://github.com/dusted-go/logging)
   - [Creating a pretty console logger using Go's slog package](https://dusted.codes/creating-a-pretty-console-logger-using-gos-slog-package)
   - [prettylog](https://github.com/sytallax/prettylog)
@@ -50,10 +50,12 @@ I had the feeling that there were all these slog pretty handlers out there.
 - [ConsoleHandler](https://gist.github.com/wijayaerick/de3de10c47a79d5310968ba5ff101a19) - similar to Zap’s ConsoleEncoder
   - very small code
 - [console-slog](https://github.com/phsym/console-slog) - Handler that prints colorized logs, similar to zerolog's console writer output without sacrificing performances.
+- [golog](https://github.com/primalskill/golog) - Development, discard and production handlers with sensible formatting.
+  - OK output, someone really liked old school console green screens.
+  - would have to add context attributes.
 - [humane](https://github.com/telemachus/humane) - a human-friendly (but still largely structured) slog Handler
 - [klog](https://github.com/kubernetes/klog) - the text format used by Kubernetes. Provides klog output routing when using the main package’s logger and a simpler logger that just writes to stderr. Both slog/logr and go-logr/logr APIs are supported.
 - [slogcolor](https://github.com/MatusOllah/slogcolor) - Color handler for log/slog.
-
 - [slogjson](https://github.com/veqryn/slog-json) - Format using the upcoming **JSON v2** library, with optional single-line pretty-printing: https://github.com/veqryn/slog-json
 - [slogor](https://gitlab.com/greyxor/slogor) - A colorful slog handler
 
@@ -63,11 +65,8 @@ I had the feeling that there were all these slog pretty handlers out there.
   - not maintained?
 - [standard library slog: Writing a handler](https://pkg.go.dev/log/slog@go1.24.1#hdr-Writing_a_handler) - we don't need to write our own.
   - [slgotest](https://pkg.go.dev/testing/slogtest@go1.24.1)
-
 - [slogpfx](https://github.com/dpotapov/slogpfx) - Easily prefix your log messages with attributes from the log record.
   - old, low buzz
-
-
 - [slug](https://github.com/dotse/slug) - a handler that prints colourful logs for humans
   - not maintained
 - [tinted](https://pkg.go.dev/github.com/lmittmann/tint) - colorized output

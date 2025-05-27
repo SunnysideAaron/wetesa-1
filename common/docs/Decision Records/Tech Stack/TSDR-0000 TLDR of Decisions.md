@@ -23,8 +23,23 @@
   - **PENDING**  
 - TSDR-1010 Code Generation
   - Don't do it.
-- TSDR-1011 Javascript Libraries
+- TSDR-1011 Limited Javascript
   - **PENDING**  
+- TSDR-1012 Javascript Libraries
+  - **PENDING** 
+- TSDR-1013 Template Engine
+  - **PENDING**  
+- TSDR-1014 Maps
+  - **PENDING**  
+- TSDR-1015 Caching
+  - **PENDING**  
+- TSDR-1016 Messaging
+  - **PENDING**  
+- TSDR-1017 slog pretty handler
+  - Keep our home brew from Wetesa-0.  
+- TSDR-1018 pgx Packages
+  - **PENDING**
+
 
 ## TODO
 
