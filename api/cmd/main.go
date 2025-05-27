@@ -12,11 +12,11 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/golang-cz/devslog"
 	"github.com/jackc/pgx/v5/pgxpool"
 
 	"api/internal/config"
 	"api/internal/database"
-	"api/internal/logging"
 	"api/internal/server"
 )
 
@@ -30,7 +30,13 @@ func run(
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
 
-	logger, logLevel := logging.NewLogger(cfg)
+	// logger, logLevel := logging.NewLogger(cfg)
+
+	logLevel := new(slog.LevelVar)
+	logLevel.Set(slog.LevelInfo)
+
+	logger := slog.New(devslog.NewHandler(os.Stdout, nil))
+
 	slog.SetDefault(logger)
 
 	// convert from slog to log for http
