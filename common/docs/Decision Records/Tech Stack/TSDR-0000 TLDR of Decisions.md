@@ -56,3 +56,7 @@ starting expensive work
   so kicks off work. but doesn't do work.
 
 can all (err Error) returns be named so don't have initialize?
+
+https://github.com/vanclief/ez
+  better error handling
+  different types of errors: user, app, dev debug

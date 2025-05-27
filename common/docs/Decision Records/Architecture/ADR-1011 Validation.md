@@ -28,6 +28,7 @@ Possibilities:
 - https://github.com/avelino/awesome-go?tab=readme-ov-file#validation
 - https://github.com/youngjun827/api-std-lib
   - writen for go 1.21 but does have some interesting things like rate limiting middleware. logging with slog package and data validation
-  
+- https://github.com/go-ozzo/ozzo-validation/
+
 Not an option:
 
