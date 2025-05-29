@@ -18,11 +18,6 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
   - https://github.com/jackc/pgx/wiki/Numeric-and-decimal-support - 2022 check if still true.
   - github.com/jackc/pgx-shopspring-decimal
   - SEE TSDR-1019 Decimals & Currency.md
-- UUIDs
-  - https://github.com/jackc/pgx/wiki/UUID-Support - 2022 check if still true.
-  - github.com/vgarvardt/pgx-google-uuid
-    - Adds support for github.com/google/uuid.
-  - github.com/jackc/pgx-gofrs-uuid
 - Misc
   - github.com/jackc/pgx/v5/pgtype
     - Offers Go types for over 70 PostgreSQL types, including uuid, json, bytea,
@@ -42,7 +37,6 @@ includes links to alternatives in readme.
   - A database monitoring/metrics library for pgx and sqlc, enabling tracing, logging, and monitoring of query performance using OpenTelemetry.
 
 ## Other Possible Options
-
 
 
 ## Not an Option
@@ -71,7 +65,14 @@ includes links to alternatives in readme.
     - A mock library implementing pgx interfaces, enabling simulation of pgx
       behavior in tests without a real database connection.  
     - we will test api. indirectly testing db.
+- UUIDs
+  - https://github.com/jackc/pgx/wiki/UUID-Support - 2022 check if still true.
+  - github.com/vgarvardt/pgx-google-uuid
+    - Adds support for github.com/google/uuid.
+  - github.com/jackc/pgx-gofrs-uuid
+  - https://github.com/jackc/pgx/blob/master/pgtype/uuid.go
+    - seems like UUID is built into pgx now.
 - Misc
   - github.com/otan/gopgkrb5
     - Adds GSSAPI/Kerberos authentication support
-    - wont be user kerberneties for awhile if ever.
+    - wont be user kerberneties for awhile if ever.    

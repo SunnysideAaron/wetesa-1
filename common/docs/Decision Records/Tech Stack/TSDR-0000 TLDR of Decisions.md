@@ -38,7 +38,7 @@
 - TSDR-1017 slog pretty handler
   - Keep our home brew from Wetesa-0.  
 - TSDR-1018 pgx Packages
-  - **PENDING**
+  - waiting on decimals till needed
 
 
 ## TODO
