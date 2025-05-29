@@ -30,6 +30,10 @@ pick something compatible with sqlc https://docs.sqlc.dev/en/latest/howto/ddl.ht
 - https://www.reddit.com/r/golang/comments/1kghyca/how_to_manage_database_schema_in_golang/
 - https://github.com/xataio/pgroll
 
+github.com/adlio/pgxschema
+An embeddable library for tracking and applying modifications to the PostgreSQL schema from inside a Go application using the pgx driver.
+
+
 Not an option:
 - [Bun](https://bun.uptrace.dev/guide/)
   - We are already using pgx. Bun comes with a lot more stuff.
