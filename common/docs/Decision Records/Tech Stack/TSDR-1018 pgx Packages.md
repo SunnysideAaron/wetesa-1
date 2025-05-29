@@ -17,6 +17,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 - Decimals
   - https://github.com/jackc/pgx/wiki/Numeric-and-decimal-support - 2022 check if still true.
   - github.com/jackc/pgx-shopspring-decimal
+  - SEE TSDR-1019 Decimals & Currency.md
 - UUIDs
   - https://github.com/jackc/pgx/wiki/UUID-Support - 2022 check if still true.
   - github.com/vgarvardt/pgx-google-uuid
