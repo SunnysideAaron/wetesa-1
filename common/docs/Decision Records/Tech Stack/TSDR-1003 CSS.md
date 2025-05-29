@@ -29,6 +29,8 @@ https://simplecss.org/
 
 https://www.w3schools.com/w3css/default.asp
 
+- https://www.reddit.com/r/htmx/comments/1jbqdm2/dont_sleep_on_daisyui_especially_for_htmx/
+
 ## Decision
 
 

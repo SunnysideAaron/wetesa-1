@@ -25,5 +25,10 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 [Modernizr](https://github.com/Modernizr/Modernizr)
 
+[tabulator](https://github.com/olifolkerd/tabulator)
+
+https://ui.shadcn.com/
+  - components. uses tailwind, typescript
+
 ## Not an Option
 
