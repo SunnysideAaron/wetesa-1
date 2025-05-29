@@ -23,12 +23,13 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Other Possible Options
 
-- templ
+- [templ](https://templ.guide/)
   - has lsp, code completion
   - [templui](https://github.com/axzilla/templui) - Modern UI Components for Go & Templ.
+  - https://www.reddit.com/r/golang/comments/131yqwk/the_templ_templating_language_2_years_later/
 - Plush? Push? what ever Oto uses.
 
-- gomponent
+- [gomponent](https://www.gomponents.com/)
   - alternative to templ. dev says it's stable. more use of go code. tmple more use of html
 
 - https://github.com/avelino/awesome-go?tab=readme-ov-file#template-engines
