@@ -34,6 +34,8 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 - https://github.com/avelino/awesome-go?tab=readme-ov-file#template-engines
 
+- https://www.reddit.com/r/golang/comments/1ha44gb/better_go_templating_templ_vs_gomponents/
+
 https://www.reddit.com/r/golang/comments/1755wh9/template_engine_recommendation/
 
 https://www.reddit.com/r/golang/comments/1hwlxeq/faq_whats_the_best_way_to_do_html_templating/
