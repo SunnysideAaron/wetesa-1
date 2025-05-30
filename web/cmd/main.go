@@ -24,17 +24,21 @@ func run(
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
 
-	logger, logLevel := logging.NewLogger(cfg)
+	//logger, logLevel := logging.NewLogger(cfg)
+	logger, _ := logging.NewLogger(cfg)
 	slog.SetDefault(logger)
 
 	// convert from slog to log for http
 	httpLogger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
 
+	templateCache := server.NewTemplateCache(ctx, logger, "./templates")
+
 	handle := server.AddRoutes(
-		ctx,
-		cfg,
+		//ctx,
+		//cfg,
 		logger,
-		logLevel,
+		//logLevel,
+		templateCache,
 	)
 
 	// Configure the HTTP server

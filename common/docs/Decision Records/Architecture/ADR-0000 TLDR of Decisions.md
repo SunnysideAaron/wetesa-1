@@ -30,6 +30,14 @@
   - **PENDING**
 - ADR-1013 Common container
   - common docker container
+- ADR-1014 Pagination
+  - **PENDING**
+- ADR-1015 Middleware 2
+  - **PENDING**
+- ADR-1016 App Struct vs Parameters
+  - Pass parameters not a struct.
+
+
 
 ## TODO
 
