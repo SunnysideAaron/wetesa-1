@@ -7,6 +7,11 @@ import (
 	"path/filepath"
 )
 
+// template caching examples
+
+// Let's Go! by Alex Edwards Chapter 5.3
+// [How To Create A Template Cache For Your Golang Web Application](https://andrew-mccall.com/blog/2022/06/create-a-template-cache-for-a-go-application/)
+
 func NewTemplateCache(ctx context.Context,
 	logger *slog.Logger,
 	dir string,
