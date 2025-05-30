@@ -18,7 +18,7 @@ type PageData struct {
 func handleListClients(logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			tmpl, err := template.ParseFiles("template.html")
+			tmpl, err := template.ParseFiles("./templates/template.page.tmpl")
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
@@ -33,6 +33,8 @@ func handleListClients(logger *slog.Logger) http.Handler {
 			// Execute the template with the data
 			err = tmpl.Execute(w, data)
 			if err != nil {
+				// TODO LOG
+
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
