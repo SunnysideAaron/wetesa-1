@@ -1,6 +1,4 @@
-// Package main is the entry point for the API service.
-// Following guidelines from:
-// [How I write HTTP services in Go after 13 years](https://grafana.com/blog/2024/02/09/how-i-write-http-services-in-go-after-13-years/)
+// Package main is the entry point for the web service.
 package main
 
 import (
@@ -12,20 +10,16 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/jackc/pgx/v5/pgxpool"
-
-	"api/internal/config"
-	"api/internal/database"
-	"api/internal/logging"
-	"api/internal/server"
+	"web/internal/config"
+	"web/internal/logging"
+	"web/internal/server"
 )
 
 // run is the actual main function
 // [func main() only calls run()](https://grafana.com/blog/2024/02/09/how-i-write-http-services-in-go-after-13-years/#func-main-only-calls-run)
 func run(
 	ctx context.Context,
-	cfg *config.APIConfig,
-	pCfg *pgxpool.Config,
+	cfg *config.WebConfig,
 ) error {
 	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt)
 	defer cancel()
@@ -36,25 +30,20 @@ func run(
 	// convert from slog to log for http
 	httpLogger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
 
-	// Create database connection
-	db := database.NewPG(ctx, pCfg, logger)
-	defer db.Close()
-
 	handle := server.AddRoutes(
 		ctx,
 		cfg,
-		db,
 		logger,
 		logLevel,
 	)
 
 	// Configure the HTTP server
 	httpServer := &http.Server{
-		Addr:         fmt.Sprintf("%s:%s", cfg.APIHost, cfg.APIPort),
+		Addr:         fmt.Sprintf("%s:%s", cfg.WebHost, cfg.WebPort),
 		Handler:      handle,
-		ReadTimeout:  cfg.APIReadTimeout,
-		WriteTimeout: cfg.APIWriteTimeout,
-		IdleTimeout:  cfg.APIIdleTimeout,
+		ReadTimeout:  cfg.WebReadTimeout,
+		WriteTimeout: cfg.WebWriteTimeout,
+		IdleTimeout:  cfg.WebIdleTimeout,
 		ErrorLog:     httpLogger,
 	}
 
@@ -97,10 +86,9 @@ func run(
 
 func main() {
 	ctx := context.Background()
-	cfg := config.LoadAPIConfig()
-	pCfg := config.LoadDBConfig()
+	cfg := config.LoadWebConfig()
 
-	if err := run(ctx, cfg, pCfg); err != nil {
+	if err := run(ctx, cfg); err != nil {
 		slog.LogAttrs(
 			ctx,
 			slog.LevelError,

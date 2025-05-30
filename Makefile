@@ -28,6 +28,20 @@ api-watch:
 
 # **************************************************
 
+web-build:
+#	docker compose build web --no-cache
+	@docker compose build web
+
+web-bash:
+	@docker compose run --remove-orphans --service-ports web bash
+
+web-watch:
+# results in same thing. Leave in case I want later for some kind of troubleshooting.
+#	@docker compose run --remove-orphans --service-ports  api bash -c "make watch"
+	@docker compose up --remove-orphans web
+
+# **************************************************
+
 common-build:
 	@docker compose build common
 

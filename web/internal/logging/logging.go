@@ -17,7 +17,7 @@ import (
 	"runtime"
 	"strings"
 
-	"api/internal/config"
+	"web/internal/config"
 )
 
 // ANSI color codes
@@ -53,7 +53,7 @@ const (
 
 // NewLogger creates a new structured logger configured based on the environment.
 // It returns a slog.Logger and a LevelVar for dynamic log level control.
-func NewLogger(cfg *config.APIConfig) (*slog.Logger, *slog.LevelVar) {
+func NewLogger(cfg *config.WebConfig) (*slog.Logger, *slog.LevelVar) {
 	lvl := new(slog.LevelVar)
 	lvl.Set(slog.LevelInfo)
 
