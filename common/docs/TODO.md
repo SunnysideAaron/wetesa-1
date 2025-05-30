@@ -7,11 +7,12 @@ sqlc command flags compile, verify, and vet
 
 wetesa traffic tracker
 
+- linter all images have alt text
+- html linter
+
 - [Tollboth](https://github.com/didip/tollbooth)
   - if we need rate limiting.
-- https://github.com/spf13/viper
-  - allows for hot loading of config.
-  - what other features would we actually use?
+
 - [Awesome Go - Database](https://github.com/avelino/awesome-go?tab=readme-ov-file#database)
 https://github.com/avelino/awesome-go?tab=readme-ov-file#date-and-time
 https://github.com/avelino/awesome-go?tab=readme-ov-file#email

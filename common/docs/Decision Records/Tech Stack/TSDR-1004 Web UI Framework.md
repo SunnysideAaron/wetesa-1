@@ -69,6 +69,7 @@ Minimal that this example should demonstrate:
 - essays on htmx website
 - HTMX + Alpine.js
   - seems to be a simi popluar combo
+  - Alpine + Alpine-Ajax as an alternative to htmx?
 - htmx + tailwind?
 - https://go-monk.beehiiv.com/p/htmx-and-templ
 - https://www.reddit.com/r/golang/comments/1g1k03p/i_found_the_best_web_dev_stack_for_golang/

@@ -8,9 +8,6 @@ import (
 	"net/http"
 
 	"web/internal/config"
-	"web/internal/template"
-
-	"github.com/a-h/templ"
 )
 
 // AddRoutes maps all the API routes
@@ -23,9 +20,7 @@ func AddRoutes(
 ) http.Handler {
 	baseMux := http.NewServeMux()
 
-	component := template.Hello("John")
-
-	baseMux.Handle(http.MethodGet+" /clients", templ.Handler(component))
+	baseMux.Handle(http.MethodGet+" /clients", handleListClients(logger))
 	baseMux.Handle(http.MethodGet+" /healthz", handleHealthz(logger))
 
 	// due to how go works middleware directly on NotFoundHandler is never called.
