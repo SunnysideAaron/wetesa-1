@@ -21,13 +21,13 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 				Message: "Hello from the template!",
 			}
 
-			rendered, err := renderTemplate(cfg, "template.page.tmpl", data)
+			rendered, err := renderTemplate(cfg, "clients.page.tmpl", data)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),
 					slog.LevelError,
 					"error rendering template",
-					slog.String("template", "template.page.tmpl"),
+					slog.String("template", "clients.page.tmpl"),
 					slog.String("error", err.Error()),
 				)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
