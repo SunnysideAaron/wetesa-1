@@ -1,4 +1,4 @@
-{{define "base2"}}
+{{define "_site/base.layout.tmpl"}}
 <!doctype html>
 <html lang='en'>
 <head>
@@ -7,7 +7,7 @@
 </head>
 <body>
     <header>
-        <h1><a href='/'>Snippetbox222</a></h1>
+        <h1><a href='/'>Snippetbox</a></h1>
     </header>
     <nav>
         <a href='/'>Home</a>
@@ -15,6 +15,7 @@
     <section>
         {{template "body" .}}
     </section>
+    {{template "_site/footer.partial.tmpl" .}}
 </body>
 </html>
 {{end}}
