@@ -31,14 +31,20 @@ func run(
 	// convert from slog to log for http
 	httpLogger := slog.NewLogLogger(logger.Handler(), slog.LevelInfo)
 
-	templateCache := server.NewTemplateCache(ctx, logger, "./templates")
+	// templateCache := server.NewTemplateCache(ctx, logger, "./templates")
+
+	err := server.ParseTemplates()
+	if err != nil {
+		fmt.Println("Error parsing templates:", err)
+		return err
+	}
 
 	handle := server.AddRoutes(
 		//ctx,
-		//cfg,
+		cfg,
 		logger,
 		//logLevel,
-		templateCache,
+		// templateCache,
 	)
 
 	// Configure the HTTP server

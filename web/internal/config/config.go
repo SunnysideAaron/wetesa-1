@@ -135,6 +135,7 @@ type WebConfig struct {
 	WebIdleTimeout time.Duration
 	// RequestMaxBytes is the maximum size of incoming request bodies
 	// RequestMaxBytes int64
+	WebCacheTemplates bool
 }
 
 // TODO api config and web config are virtually the same
@@ -154,6 +155,7 @@ func LoadWebConfig() *WebConfig {
 		WebIdleTimeout: 60 * time.Second,
 		// common values default is 8k, Other defaults might be 4k, 16k, or 48k.
 		// RequestMaxBytes: 8192,
+		WebCacheTemplates: true,
 	}
 
 	// Read and validate environment variables.
@@ -209,6 +211,13 @@ func LoadWebConfig() *WebConfig {
 	// if err == nil && maxBytes > 0 {
 	// 	cnf.RequestMaxBytes = maxBytes
 	// } // else if there is an error this will use the default value.
+
+	cacheTemplatesStr := os.Getenv("WEB_CACHE_TEMPLATES")
+	if cacheTemplatesStr != "" {
+		if cacheTemplates, err := strconv.ParseBool(cacheTemplatesStr); err == nil {
+			cnf.WebCacheTemplates = cacheTemplates
+		}
+	}
 
 	return cnf
 }

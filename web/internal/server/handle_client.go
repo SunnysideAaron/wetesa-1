@@ -1,11 +1,9 @@
 package server
 
 import (
-	"bytes"
 	"log/slog"
 	"net/http"
-
-	"html/template"
+	"web/internal/config"
 )
 
 // Define a struct to hold data for the template
@@ -14,7 +12,7 @@ type PageData struct {
 	Message string
 }
 
-func handleListClients(logger *slog.Logger, templateCache map[string]*template.Template) http.Handler {
+func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			// Create data for the template
@@ -23,46 +21,19 @@ func handleListClients(logger *slog.Logger, templateCache map[string]*template.T
 				Message: "Hello from the template!",
 			}
 
-			useCache := false
-			var tc map[string]*template.Template
-
-			if useCache {
-				tc = templateCache
-			} else {
-				tc = NewTemplateCache(r.Context(), logger, "./templates")
-			}
-
-			ts, ok := tc["template.page.tmpl"]
-			if !ok {
-				logger.LogAttrs(
-					r.Context(),
-					slog.LevelError,
-					"template not found in cache",
-					slog.String("template", "template.page.tmpl"),
-				)
-				http.Error(w, "Template not found", http.StatusInternalServerError)
-				return
-			}
-
-			buf := new(bytes.Buffer)
-
-			// Execute the template with the data
-			err := ts.Execute(buf, data)
+			rendered, err := renderTemplate(cfg, "template.page.tmpl", data)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),
 					slog.LevelError,
-					"error executing template",
+					"error rendering template",
 					slog.String("template", "template.page.tmpl"),
 					slog.String("error", err.Error()),
 				)
-
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-
-			buf.WriteTo(w)
-
+			w.Write([]byte(rendered))
 		},
 	)
 }

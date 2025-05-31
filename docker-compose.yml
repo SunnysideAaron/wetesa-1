@@ -68,7 +68,11 @@ services:
       API_HOST: ${API_HOST}
       API_PORT: ${API_PORT}
       WEB_HOST: ${WEB_HOST}
-      WEB_PORT: ${WEB_PORT}      
+      WEB_PORT: ${WEB_PORT}
+      WEB_READ_TIMEOUT: ${WEB_READ_TIMEOUT}
+      WEB_WRITE_TIMEOUT: ${WEB_WRITE_TIMEOUT}
+      WEB_IDLE_TIMEOUT: ${WEB_IDLE_TIMEOUT}
+      WEB_CACHE_TEMPLATES: ${WEB_CACHE_TEMPLATES}         
     ports:
       - '${WEB_PORT}:${WEB_PORT}'
     volumes:
