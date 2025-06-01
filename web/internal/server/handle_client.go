@@ -6,28 +6,24 @@ import (
 	"web/internal/config"
 )
 
-// Define a struct to hold data for the template
-type PageData struct {
-	Title   string
+type ListClientsData struct {
 	Message string
 }
 
 func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			// Create data for the template
-			data := PageData{
-				Title:   "My Template",
+			data := ListClientsData{
 				Message: "Hello from the template!",
 			}
 
-			rendered, err := renderTemplate(cfg, "clients/list.page.tmpl", data)
+			rendered, err := renderTemplate(cfg, "clients_list", data)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),
 					slog.LevelError,
 					"error rendering template",
-					slog.String("template", "clients.page.tmpl"),
+					slog.String("template", "clients_list"),
 					slog.String("error", err.Error()),
 				)
 				http.Error(w, err.Error(), http.StatusInternalServerError)

@@ -1,4 +1,4 @@
-{{define "_site/base.layout.tmpl"}}
+{{define "base layout"}}
 <!doctype html>
 <html lang='en'>
 <head>
@@ -15,7 +15,7 @@
     <section>
         {{template "body" .}}
     </section>
-    {{template "_site/footer.partial.tmpl" .}}
+    {{template "footer" .}}
 </body>
 </html>
 {{end}}

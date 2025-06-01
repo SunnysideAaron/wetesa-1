@@ -72,6 +72,7 @@ I see a few other options.
   - so either we make them set to file names or we read each file and each define
   - to try and match them up. Even more complex if we have sub directories and allow
     defines to have the same name across files.
+3. one thought would be to force the name of the sub templates to include the path and file name?
 
 ## Not an Option
 
