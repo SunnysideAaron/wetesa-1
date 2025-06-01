@@ -6,20 +6,11 @@ import (
 	"web/internal/config"
 )
 
-type listClientsData struct {
-	Message string
-}
-
-func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+// handleTemplate is for when we don't need to pass any data to the template.
+func handleTemplate(cfg *config.WebConfig, logger *slog.Logger, t string) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			t := "clients_list"
-
-			data := listClientsData{
-				Message: "Hello from the template!",
-			}
-
-			rendered, err := renderTemplate(cfg, t, data)
+			rendered, err := renderTemplate(cfg, t, nil)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),

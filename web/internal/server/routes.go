@@ -21,6 +21,10 @@ func AddRoutes(
 
 	baseMux.Handle(http.MethodGet+" /clients", handleListClients(cfg, logger))
 	baseMux.Handle(http.MethodGet+" /healthz", handleHealthz(logger))
+	baseMux.Handle(http.MethodGet+" /home", handleTemplate(cfg, logger, "home"))
+	baseMux.Handle(http.MethodGet+" /orders", handleListOrders(cfg, logger))
+	baseMux.Handle(http.MethodGet+" /products", handleListProducts(cfg, logger))
+	baseMux.Handle(http.MethodGet+" /users", handleListUsers(cfg, logger))
 
 	// due to how go works middleware directly on NotFoundHandler is never called.
 	// have to wrap the mux instead.

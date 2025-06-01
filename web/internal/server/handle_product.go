@@ -6,16 +6,16 @@ import (
 	"web/internal/config"
 )
 
-type listClientsData struct {
+type listProductsData struct {
 	Message string
 }
 
-func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+func handleListProducts(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			t := "clients_list"
+			t := "products_list"
 
-			data := listClientsData{
+			data := listProductsData{
 				Message: "Hello from the template!",
 			}
 
