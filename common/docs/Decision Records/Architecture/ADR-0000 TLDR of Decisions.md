@@ -36,6 +36,9 @@
   - **PENDING**
 - ADR-1016 App Struct vs Parameters
   - Pass parameters not a struct.
+- ADR-1017 Template Cache
+  - Use the method from "Let's Go!" by Alex Edwards.
+  - Don't use sub directories.
 
 
 
