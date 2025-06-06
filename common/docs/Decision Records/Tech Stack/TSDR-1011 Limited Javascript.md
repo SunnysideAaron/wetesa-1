@@ -22,17 +22,24 @@ Look up United Kingdoms GDS departments website access guidlines
     - https://gds-way.digital.cabinet-office.gov.uk/manuals/accessibility.html
 
 
-Typescript for Javascript we do use?
-    https://www.reddit.com/r/typescript/comments/1j59khs/boss_refuses_to_adopt_typescript_whats_the_next/
+
 
 
 ## Decision
 
+## Why
 
+- [Everyone has JavaScript, right?](https://www.kryogenix.org/code/browser/everyonehasjs.html)
+- [Do you take into account those who disable Javascript?](https://www.reddit.com/r/webdev/comments/48z7jz/do_you_take_into_account_those_who_disable/)
 
-## Why / Notes
+## Notes
 
-
+- [Is there a tiny market for websites without js?](https://www.reddit.com/r/webdev/comments/17jo8od/is_there_a_tiny_market_for_websites_without_js/)
+- [8 Sites That Work Just Fine Without JS, Thank You](https://webdesignerdepot.com/8-sites-that-work-just-fine-without-js-thank-you/)
+- examples
+  - https://lite.cnn.com/
+  - https://news.ycombinator.com/
+  - https://text.npr.org/
 
 ## Consequences
 

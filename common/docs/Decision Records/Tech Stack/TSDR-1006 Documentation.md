@@ -34,6 +34,7 @@ https://www.reddit.com/r/golang/comments/1khhgyt/show_go_i_made_a_tool_that_auto
 https://www.johnnolan.dev/hcta/articles/ams-tools-architecture/
 https://icepanel.medium.com/top-7-diagrams-as-code-tools-for-software-architecture-1a9dd0df1815
 https://www.reddit.com/r/softwarearchitecture/comments/1i8wa5f/i_am_writing_some_documentation_for_a_system/
+https://www.reddit.com/r/golang/comments/1ktcneg/how_do_you_guys_document_your_apis/
 
 Diagrams
 - [Structurizr](https://structurizr.com/)

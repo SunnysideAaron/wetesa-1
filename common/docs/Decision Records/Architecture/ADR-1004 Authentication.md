@@ -54,6 +54,8 @@ Possibilities:
 - https://www.reddit.com/r/golang/comments/1kdm8n3/auth_in_golang_2025/
 - https://www.reddit.com/r/devops/comments/1kf2vqj/whats_one_cloud_concept_that_took_you_way_longer/
 
+https://www.reddit.com/r/golang/comments/1kwf1ue/tesseral_open_source_auth_for_business_software/
+
 
 client golang/oauth2
 server go-oauth2/oauth2

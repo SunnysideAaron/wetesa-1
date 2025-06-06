@@ -55,6 +55,7 @@ Minimal that this example should demonstrate:
   - Good listing of various resources
 - https://www.reddit.com/r/webdev/comments/1k1b0oc/whats_the_one_web_dev_framework_or_library_you/
   - TODO list of good tech to check out
+- https://medium.com/@william.b/i-built-a-raw-html-website-with-no-frameworks-heres-what-i-learned-407249be2137
 
 ## Comparisons
 
@@ -70,6 +71,7 @@ Minimal that this example should demonstrate:
 - HTMX + Alpine.js
   - seems to be a simi popluar combo
   - Alpine + Alpine-Ajax as an alternative to htmx?
+  - https://www.reddit.com/r/htmx/comments/1kzncvs/htmx_alpine_is_a_breath_of_fresh_air/
 - htmx + tailwind?
 - https://go-monk.beehiiv.com/p/htmx-and-templ
 - https://www.reddit.com/r/golang/comments/1g1k03p/i_found_the_best_web_dev_stack_for_golang/
@@ -93,6 +95,7 @@ https://svelte.dev/
 - https://www.reddit.com/r/sveltejs/comments/1kg91ai/daisyui_or_shadcn/
 - https://www.reddit.com/r/sveltejs/comments/1juaepm/svelte_and_ai_coding/
 - https://www.reddit.com/r/htmx/comments/1js5t7x/htmx_vs_sveltejs_what_are_pros_and_cons_of_both/
+- https://www.reddit.com/r/sveltejs/comments/1kulk34/modern_ui_library/
 
 ### Typescript
 
@@ -133,7 +136,7 @@ which also throws off AI.
 
 - Angular
   - https://angularjs.org/
-  - other options
+  - [why_do_enterprises / big_companies_use_angular](https://www.reddit.com/r/Frontend/comments/1kyd5g5/why_do_enterprisesbig_companies_use_angular/)
 - Datastar instead of htmx?
   - too new
 - [qor](https://github.com/qor/qor)

@@ -31,6 +31,10 @@ https://www.w3schools.com/w3css/default.asp
 
 - https://www.reddit.com/r/htmx/comments/1jbqdm2/dont_sleep_on_daisyui_especially_for_htmx/
 
+https://www.reddit.com/r/webdev/comments/1l0dq5m/what_i_actually_learned_building_a_changelog_and/
+
+https://www.reddit.com/r/sveltejs/comments/1kulk34/modern_ui_library/
+
 ## Decision
 
 

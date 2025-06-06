@@ -1,6 +1,8 @@
 # wetesa-1
 An example CRUD API. Uses Go as the language and PostgreSQL as a datastore. Web and mobile front ends.
 
+Website is specifically designed to be run with with or without javascript and css.
+
 As of 2025-05 this is just a stub while I work on the api part of what will
  eventually be here. I needed a place to start putting decision records on this project
   which will be far more opinionated and have far more dependencies.
