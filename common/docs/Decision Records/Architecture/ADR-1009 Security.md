@@ -38,5 +38,8 @@ https://www.reddit.com/r/devops/comments/1k13m0p/how_are_you_catching_sketchy_op
 
 file path attack protection. use os.open root
 
+https://github.com/toddmotto/public-apis?tab=readme-ov-file#anti-malware
+https://github.com/toddmotto/public-apis?tab=readme-ov-file#security
+
 ## Not an Option
 

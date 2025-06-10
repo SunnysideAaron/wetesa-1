@@ -56,6 +56,8 @@ Possibilities:
 
 https://www.reddit.com/r/golang/comments/1kwf1ue/tesseral_open_source_auth_for_business_software/
 
+https://github.com/toddmotto/public-apis?tab=readme-ov-file#authentication--authorization
+
 
 client golang/oauth2
 server go-oauth2/oauth2
