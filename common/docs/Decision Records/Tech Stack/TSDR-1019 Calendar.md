@@ -23,5 +23,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 ## Other Possible Options
 
+https://github.com/toddmotto/public-apis?tab=readme-ov-file#calendar
+
 ## Not an Option
 
