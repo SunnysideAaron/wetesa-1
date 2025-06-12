@@ -115,10 +115,6 @@ func LoadAPIConfig() *APIConfig {
 
 // WebConfig stores the Web service configuration parameters.
 type WebConfig struct {
-	// BaseURL is the base URL for the API. Includes API version. Unlike the
-	// other settings do not load BaseURL from an environment variable. Including
-	// here so there is only one source of truth for api version.
-	// BaseURL string
 	// Environment specifies the running environment (dev/prod)
 	Environment string
 	// APIHost is the host address to bind the server to
@@ -136,6 +132,8 @@ type WebConfig struct {
 	// RequestMaxBytes is the maximum size of incoming request bodies
 	// RequestMaxBytes int64
 	WebCacheTemplates bool
+	// APIURL is where to get this sites data from.
+	WebAPIURL string
 }
 
 // TODO api config and web config are virtually the same
@@ -145,7 +143,6 @@ type WebConfig struct {
 func LoadWebConfig() *WebConfig {
 	// Set default values.
 	cnf := &WebConfig{
-		// BaseURL:                "/api/v0.1",
 		Environment:     EnvironmentProd,
 		WebHost:         "",
 		WebPort:         "8082",
@@ -156,6 +153,7 @@ func LoadWebConfig() *WebConfig {
 		// common values default is 8k, Other defaults might be 4k, 16k, or 48k.
 		// RequestMaxBytes: 8192,
 		WebCacheTemplates: true,
+		WebAPIURL:         "",
 	}
 
 	// Read and validate environment variables.
@@ -218,6 +216,8 @@ func LoadWebConfig() *WebConfig {
 			cnf.WebCacheTemplates = cacheTemplates
 		}
 	}
+
+	cnf.WebAPIURL = os.Getenv("WEB_API_URL")
 
 	return cnf
 }

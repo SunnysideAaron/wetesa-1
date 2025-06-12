@@ -58,16 +58,23 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 				sort = sortLower
 			}
 
-			// Get filter parameters
-			filters := database.ClientFilters{
+			responseFilters := database.ClientFilters{
 				Name:    r.URL.Query().Get("name"),
 				Address: r.URL.Query().Get("address"),
 			}
 
-			// Calculate offset from page and size
+			dbFilters := responseFilters
+
+			if dbFilters.Name != "" {
+				dbFilters.Name = strings.ReplaceAll(dbFilters.Name, "*", "%")
+			}
+			if dbFilters.Address != "" {
+				dbFilters.Address = strings.ReplaceAll(dbFilters.Address, "*", "%")
+			}
+
 			offset := page * size
 
-			clients, err := db.GetClients(r.Context(), size, offset, sort, filters)
+			clients, hasNext, err := db.GetClients(r.Context(), size, offset, sort, dbFilters)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),
@@ -84,8 +91,9 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 				"page":     page,
 				"size":     size,
 				"sort":     sort,
-				"filters":  filters,
+				"filters":  responseFilters,
 				"returned": len(clients),
+				"hasNext":  hasNext,
 			}
 
 			err = encode(w, r, http.StatusOK, response)

@@ -3,7 +3,27 @@
 {{define "title"}}Clients{{end}}
 
 {{define "body"}}
-<h2>Clients</h2>
-<p>There's nothing to see here yet!</p>
-<p>{{.Message}}</p>
+<form method="get">
+  <div>
+    <label for="name">Name:</label>
+    <input type='text' id="name" name='name' value='{{.Response.Filters.Name}}' placeholder="* = wildcard">
+  </div>
+  <div>
+    <label for="deleted">Show Deleted:</label>
+    <input type='checkbox' id="deleted" name='deleted' value='true' checked>
+  </div>  
+  <div>
+    <input type='submit' value='Filter'>
+  </div>
+</form>
+<ul>
+{{range .Response.Clients}}
+<li><a href='/clients/{{.ClientID}}'>{{.Name}}</a> (deleted)</li>
+{{end}}
+</ul>
+{{if .Response.HasNext}}
+<div>
+  <a href='/clients?page={{.NextPage}}'>Next</a>
+</div>
+{{end}}
 {{end}}

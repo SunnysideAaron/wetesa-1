@@ -148,8 +148,10 @@ func (pg *Postgres) GetClients(
 	limit, offset int,
 	sort string,
 	filters ClientFilters,
-) ([]Client, error) {
-	query := `SELECT client_id, name, address
+) ([]Client, bool, error) {
+	query := `SELECT client_id
+			  , name
+			  , address
 			  FROM client
 			  WHERE 1=1`
 
@@ -159,33 +161,43 @@ func (pg *Postgres) GetClients(
 	// Add filter conditions if provided
 	if filters.Name != "" {
 		query += fmt.Sprintf(" AND name ILIKE $%d", argPosition)
-		args = append(args, "%"+filters.Name+"%")
+		args = append(args, filters.Name)
 		argPosition++
 	}
 
 	if filters.Address != "" {
 		query += fmt.Sprintf(" AND address ILIKE $%d", argPosition)
-		args = append(args, "%"+filters.Address+"%")
+		args = append(args, filters.Address)
 		argPosition++
 	}
 
 	// Add sorting and pagination
 	query += " ORDER BY name " + sort
+	// Request one extra record to determine if there are more results
 	query += fmt.Sprintf(" LIMIT $%d OFFSET $%d", argPosition, argPosition+1)
-	args = append(args, limit, offset)
+	args = append(args, limit+1, offset)
 
 	rows, err := pg.pool.Query(ctx, query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("unable to query clients: %w", err)
+		return nil, false, fmt.Errorf("unable to query clients: %w", err)
 	}
 
 	defer rows.Close()
 
 	clients, err := pgx.CollectRows(rows, pgx.RowToStructByName[Client])
 	if err != nil {
-		return nil, fmt.Errorf("failed to collect client rows: %w", err)
+		return nil, false, fmt.Errorf("failed to collect client rows: %w", err)
 	}
-	return clients, nil
+
+	// Check if we got more results than requested
+	hasNext := false
+	if len(clients) > limit {
+		hasNext = true
+		// Remove the extra record before returning
+		clients = clients[:limit]
+	}
+
+	return clients, hasNext, nil
 }
 
 // GetClient retrieves a single client by their ID.

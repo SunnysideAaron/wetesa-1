@@ -7,7 +7,8 @@ import (
 )
 
 type listUsersData struct {
-	Message string
+	MainMenu string
+	Message  string
 }
 
 func handleListUsers(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
@@ -16,7 +17,8 @@ func handleListUsers(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 			t := "users_list"
 
 			data := listUsersData{
-				Message: "Hello from the template!",
+				MainMenu: "Users",
+				Message:  "Hello from the template!",
 			}
 
 			rendered, err := renderTemplate(cfg, t, data)
