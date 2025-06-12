@@ -10,13 +10,13 @@ import (
 	"web/internal/config"
 )
 
-type listClientsData struct {
+type listClientsTemplateData struct {
 	MainMenu string
-	Response listClientsResponse
+	Response listClientsAPIResponse
 	NextPage int
 }
 
-type listClientsResponse struct {
+type listClientsAPIResponse struct {
 	Clients []client `json:"clients"`
 	Page    int      `json:"page"`
 	Filters struct {
@@ -50,9 +50,9 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 				page = parsedPage
 			}
 
-			name := r.URL.Query().Get("name")
-
 			url := cfg.WebAPIURL + "/clients?page=" + strconv.Itoa(page)
+
+			name := r.URL.Query().Get("name")
 
 			if name != "" {
 				url += "&name=" + name
@@ -69,7 +69,7 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 				log.Fatal(err)
 			}
 
-			var responseData listClientsResponse
+			var responseData listClientsAPIResponse
 			err = json.Unmarshal(body, &responseData)
 			if err != nil {
 				log.Fatal(err)
@@ -77,7 +77,7 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 
 			t := "clients_list"
 
-			data := listClientsData{
+			data := listClientsTemplateData{
 				MainMenu: "Clients",
 				Response: responseData,
 				NextPage: page + 1,
