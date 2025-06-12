@@ -88,13 +88,12 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 			}
 
 			response := map[string]any{
-				"clients":  clients,
-				"page":     page,
-				"size":     size,
-				"sort":     sort,
-				"filters":  responseFilters,
-				"returned": len(clients),
-				"hasNext":  hasNext,
+				"clients": clients,
+				"page":    page,
+				"size":    size,
+				"sort":    sort,
+				"filters": responseFilters,
+				"hasNext": hasNext,
 			}
 
 			err = encode(w, r, http.StatusOK, response)

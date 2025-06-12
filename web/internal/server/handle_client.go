@@ -22,8 +22,7 @@ type listClientsAPIResponse struct {
 	Filters struct {
 		Name string `json:"name"`
 	} `json:"filters"`
-	Returned int  `json:"returned"`
-	HasNext  bool `json:"hasNext"`
+	HasNext bool `json:"hasNext"`
 }
 
 type client struct {

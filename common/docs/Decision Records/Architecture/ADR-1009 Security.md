@@ -41,5 +41,7 @@ file path attack protection. use os.open root
 https://github.com/toddmotto/public-apis?tab=readme-ov-file#anti-malware
 https://github.com/toddmotto/public-apis?tab=readme-ov-file#security
 
+https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+
 ## Not an Option
 
