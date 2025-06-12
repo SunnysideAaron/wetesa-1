@@ -6,51 +6,52 @@ import (
 	"fmt"
 	"log/slog"
 
+	"shared-code/model"
+
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
-// Client represents a client record in the database.
-// It contains basic information about a client including their unique identifier,
-// name, and optional address.
-type Client struct {
-	ClientID string      `json:"client_id,omitempty"`
-	Name     string      `json:"name"`
-	Address  pgtype.Text `json:"address"`
-}
+// // Client represents a client record in the database.
+// // It contains basic information about a client including their unique identifier,
+// // name, and optional address.
+// type Client struct {
+// 	ClientID string      `json:"client_id,omitempty"`
+// 	Name     string      `json:"name"`
+// 	Address  pgtype.Text `json:"address"`
+// }
 
-// ClientFilters contains the available filter options for client queries
-type ClientFilters struct {
-	Name    string `json:"name,omitempty"`
-	Address string `json:"address,omitempty"`
-}
+// // ClientFilters contains the available filter options for client queries
+// type ClientFilters struct {
+// 	Name    string `json:"name,omitempty"`
+// 	Address string `json:"address,omitempty"`
+// }
 
-// Valid implements the Validator interface for Client.
-// It checks if the required fields are properly set and returns a map of validation errors.
-// An empty map indicates the Client is valid.
-func (c Client) Valid(_ context.Context) map[string]string {
-	problems := make(map[string]string)
+// // Valid implements the Validator interface for Client.
+// // It checks if the required fields are properly set and returns a map of validation errors.
+// // An empty map indicates the Client is valid.
+// func (c Client) Valid(_ context.Context) map[string]string {
+// 	problems := make(map[string]string)
 
-	if c.Name == "" {
-		problems["name"] = "name is required"
-	}
+// 	if c.Name == "" {
+// 		problems["name"] = "name is required"
+// 	}
 
-	// Address is optional, so no validation needed
+// 	// Address is optional, so no validation needed
 
-	return problems
-}
+// 	return problems
+// }
 
-// LogValue implements slog.LogValuer to provide structured logging support.
-// It returns the client's ID as the log value for concise logging.
-func (c Client) LogValue() slog.Value {
-	return slog.StringValue(c.ClientID)
-}
+// // LogValue implements slog.LogValuer to provide structured logging support.
+// // It returns the client's ID as the log value for concise logging.
+// func (c Client) LogValue() slog.Value {
+// 	return slog.StringValue(c.ClientID)
+// }
 
 // InsertClient adds a new client record to the database.
 // It returns an error if the insert operation fails.
-func (pg *Postgres) InsertClient(ctx context.Context, c Client) error {
+func (pg *Postgres) InsertClient(ctx context.Context, c model.Client) error {
 	query := `INSERT INTO client (name, address) VALUES (@name, @address)`
 	args := pgx.NamedArgs{
 		"name":    c.Name,
@@ -66,7 +67,7 @@ func (pg *Postgres) InsertClient(ctx context.Context, c Client) error {
 }
 
 // BulkInsertClients is slower than CopyInserts. Use bulk inserts if you need to know a particular insert failed.
-func (pg *Postgres) BulkInsertClients(ctx context.Context, clients []Client) error {
+func (pg *Postgres) BulkInsertClients(ctx context.Context, clients []model.Client) error {
 	query := `INSERT INTO client (name, address) VALUES (@name, @address)`
 
 	batch := &pgx.Batch{} //nolint:exhaustruct // works fine. we don't need to initialize. already handled.
@@ -119,7 +120,7 @@ func (pg *Postgres) BulkInsertClients(ctx context.Context, clients []Client) err
 }
 
 // CopyInsertClients if faster than BulkInsertClients
-func (pg *Postgres) CopyInsertClients(ctx context.Context, clients []Client) error {
+func (pg *Postgres) CopyInsertClients(ctx context.Context, clients []model.Client) error {
 	entries := [][]any{}
 	columns := []string{"name", "address"}
 	tableName := "client"
@@ -147,8 +148,8 @@ func (pg *Postgres) GetClients(
 	ctx context.Context,
 	limit, offset int,
 	sort string,
-	filters ClientFilters,
-) ([]Client, bool, error) {
+	filters model.ClientFilters,
+) ([]model.Client, bool, error) {
 	query := `SELECT client_id
 			  , name
 			  , address
@@ -184,7 +185,7 @@ func (pg *Postgres) GetClients(
 
 	defer rows.Close()
 
-	clients, err := pgx.CollectRows(rows, pgx.RowToStructByName[Client])
+	clients, err := pgx.CollectRows(rows, pgx.RowToStructByName[model.Client])
 	if err != nil {
 		return nil, false, fmt.Errorf("failed to collect client rows: %w", err)
 	}
@@ -203,8 +204,8 @@ func (pg *Postgres) GetClients(
 // GetClient retrieves a single client by their ID.
 // Returns the client data if found, or an error if the client doesn't exist
 // or if the query fails.
-func (pg *Postgres) GetClient(ctx context.Context, id string) (Client, error) {
-	var client Client
+func (pg *Postgres) GetClient(ctx context.Context, id string) (model.Client, error) {
+	var client model.Client
 
 	query := `SELECT client_id, name, address FROM client WHERE client_id = $1`
 
@@ -219,7 +220,7 @@ func (pg *Postgres) GetClient(ctx context.Context, id string) (Client, error) {
 
 // UpdateClient updates an existing client's information.
 // Returns an error if the client doesn't exist or if the update operation fails.
-func (pg *Postgres) UpdateClient(ctx context.Context, c Client) error {
+func (pg *Postgres) UpdateClient(ctx context.Context, c model.Client) error {
 	query := `UPDATE client 
 			  SET name = @name, address = @address 
 			  WHERE client_id = @client_id`

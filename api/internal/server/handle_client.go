@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"shared-code/model"
+
 	"api/internal/database"
 )
 
@@ -58,7 +60,7 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 				sort = sortLower
 			}
 
-			responseFilters := database.ClientFilters{
+			responseFilters := model.ClientFilters{
 				Name:    r.URL.Query().Get("name"),
 				Address: r.URL.Query().Get("address"),
 			}
@@ -161,7 +163,7 @@ func handleGetClient(logger *slog.Logger, db *database.Postgres) http.Handler {
 func handleCreateClient(logger *slog.Logger, db *database.Postgres) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			client, problems, err := decode[database.Client](r)
+			client, problems, err := decode[model.Client](r)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),
@@ -244,7 +246,7 @@ func handleUpdateClient(logger *slog.Logger, db *database.Postgres) http.Handler
 			}
 
 			// Decode the update request
-			updateClient, problems, err := decode[database.Client](r)
+			updateClient, problems, err := decode[model.Client](r)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),
