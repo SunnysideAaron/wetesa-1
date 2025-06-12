@@ -6,9 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"shared-code/model"
-
 	"api/internal/database"
+	"api/internal/shared-code/model"
 )
 
 // handleListClients handles requests to list all clients

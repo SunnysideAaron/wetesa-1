@@ -52,7 +52,7 @@ services:
       - '${API_PORT}:${API_PORT}'
     volumes:
       - ./api:/api
-      - ./common/shared-code:/api/shared-code
+      - ./common/shared-code:/api/internal/shared-code
     working_dir: /api
     command: make watch
   web:

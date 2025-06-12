@@ -5,10 +5,10 @@ go 1.23.5
 require (
 	github.com/jackc/pgerrcode v0.0.0-20240316143900-6e2875d9b438
 	github.com/jackc/pgx/v5 v5.7.5
-	shared-code v0.0.0
+// shared-code v0.0.0
 )
 
-replace shared-code => ./shared-code
+// replace shared-code => ./shared-code
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect
