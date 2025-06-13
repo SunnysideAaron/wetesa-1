@@ -1,72 +1,44 @@
 package server
 
 import (
-	"errors"
 	"log/slog"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"api/internal/database"
 	"api/internal/shared-code/model"
 )
 
-func validateUrlParamPage(pageStr, sizeStr string) (page, size, offset int, err error) {
-	page = 0
-	size = 10 //TODO make this 25 when have more test data
-	offset = 0
-	err = nil
-
-	if pageStr != "" {
-		page, err = strconv.Atoi(pageStr)
-		if err != nil {
-			return 0, 0, 0, errors.New("Invalid page parameter")
-		}
-		if page < 0 {
-			page = 0
-		}
-	}
-
-	if sizeStr != "" {
-		size, err = strconv.Atoi(sizeStr)
-		if err != nil {
-			return 0, 0, 0, errors.New("Invalid size parameter")
-		}
-		// Enforce reasonable size limits
-		if size > 100 {
-			size = 100
-		} else if size < 1 {
-			size = 1
-		}
-	}
-
-	offset = page * size
-
-	return page, size, offset, err
-}
-
 // handleListClients handles requests to list all clients
 func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			page, size, offset, err := validateUrlParamPage(r.URL.Query().Get("page"), r.URL.Query().Get("size"))
+			qs, page, err := database.ValidateGetClientsParams(r.URL.Query())
+
+			// qs, page, err := database.ValidateGetClientsParams(
+			// 	r.URL.Query().Get("fields"),
+			// 	r.URL.Query().Get("filters"),
+			// 	r.URL.Query().Get("sort"),
+			// 	r.URL.Query().Get("page"),
+			// 	r.URL.Query().Get("size"),
+			// )
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
 
-			sort := "asc"
+			// sort := "asc"
 
-			// Parse sort from query parameter
-			if sortStr := r.URL.Query().Get("sort"); sortStr != "" {
-				sortLower := strings.ToLower(sortStr)
-				if sortLower != "asc" && sortLower != "desc" {
-					http.Error(w, "Invalid sort parameter. Must be 'asc' or 'desc'", http.StatusBadRequest)
-					return
-				}
+			// // Parse sort from query parameter
+			// if sortStr := r.URL.Query().Get("sort"); sortStr != "" {
+			// 	sortLower := strings.ToLower(sortStr)
+			// 	if sortLower != "asc" && sortLower != "desc" {
+			// 		http.Error(w, "Invalid sort parameter. Must be 'asc' or 'desc'", http.StatusBadRequest)
+			// 		return
+			// 	}
 
-				sort = sortLower
-			}
+			// 	sort = sortLower
+			// }
 
 			responseFilters := model.ClientFilters{
 				Name:    r.URL.Query().Get("name"),
@@ -82,7 +54,7 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 				dbFilters.Address = strings.ReplaceAll(dbFilters.Address, "*", "%")
 			}
 
-			clients, hasNext, err := db.GetClients(r.Context(), size, offset, sort, dbFilters)
+			clients, hasNext, err := db.GetClients(r.Context(), dbFilters, qs)
 
 			// err = errors.New("test error")
 
@@ -101,11 +73,11 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 				Success: true,
 				Clients: clients,
 				MetaData: model.MetaDataAPIResponse{
-					Fields:  "client_id, name, address",
-					Filters: "name, address",
-					Sort:    sort,
+					Fields:  "client_id, name, address", // TODO
+					Filters: "name, address",            //TOOD
+					Sort:    "asc",                      //TODO
 					Page:    page,
-					Size:    size,
+					Size:    qs.Size,
 					HasNext: hasNext,
 				},
 			}

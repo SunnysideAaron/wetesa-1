@@ -5,6 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"net/url"
+	"strconv"
+	"strings"
 
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5"
@@ -107,39 +110,108 @@ func (pg *Postgres) CopyInsertClients(ctx context.Context, clients []model.Clien
 	return nil
 }
 
-type qryStrings struct {
+type QryStrings struct {
 	Columns string
 	Where   string
 	OrderBy string
 	Limit   string
+	Size    int
 	Args    []any
+}
+
+func validateUrlParamPage(pageStr, sizeStr string) (page, size, offset int, err error) {
+	page = 0
+	size = 10 //TODO make this 25 when have more test data
+	offset = 0
+	err = nil
+
+	if pageStr != "" {
+		page, err = strconv.Atoi(pageStr)
+		if err != nil {
+			return 0, 0, 0, errors.New("Invalid page parameter")
+		}
+		if page < 0 {
+			page = 0
+		}
+	}
+
+	if sizeStr != "" {
+		size, err = strconv.Atoi(sizeStr)
+		if err != nil {
+			return 0, 0, 0, errors.New("Invalid size parameter")
+		}
+		// Enforce reasonable size limits
+		if size > 100 {
+			size = 100
+		} else if size < 1 {
+			size = 1
+		}
+	}
+
+	offset = page * size
+
+	return page, size, offset, err
 }
 
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
-func GetClientsParseParams(urlParams string) (qs qryStrings, err error) {
-	qs.Columns = "client_id, name, address"
-	qs.Where = ""
-	qs.OrderBy = "name"
-	qs.Limit = "10"
+func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, err error) {
 	qs.Args = []any{}
+	argPosition := 1
 
-	return qs, err
+	qs.Columns = " client_id, name, address"
+	qs.Where = ""
+	qs.OrderBy = "  ORDER BY name ASC"
+
+	sortParams := urlParams["sort"] // This gets all values for the "sort" key as a slice
+	orderByParts := []string{}
+
+	if len(sortParams) > 0 {
+		for _, sortParam := range sortParams {
+			// Parse each sort parameter (e.g., "name:desc", "address:asc")
+			if sortParam != "" {
+				parts := strings.Split(sortParam, ":")
+				field := parts[0]
+				order := "ASC" // Default to ascending
+
+				if len(parts) > 1 && strings.ToUpper(parts[1]) == "DESC" {
+					order = "DESC"
+				}
+
+				// Add to order by parts
+				orderByParts = append(orderByParts, fmt.Sprintf("%s %s", field, order))
+			}
+		}
+	}
+
+	// Build the ORDER BY clause
+	if len(orderByParts) > 0 {
+		qs.OrderBy = " ORDER BY " + strings.Join(orderByParts, ", ")
+	}
+
+	var offset int
+	page, qs.Size, offset, err = validateUrlParamPage(urlParams.Get("page"), urlParams.Get("size"))
+	if err != nil {
+		return qs, page, err
+	}
+
+	// Request one extra record to determine if there are more results
+	qs.Limit = fmt.Sprintf(" LIMIT $%d OFFSET $%d", argPosition, argPosition+1)
+	qs.Args = append(qs.Args, qs.Size+1, offset)
+
+	return qs, page, err
 }
 
 // GetClients retrieves a list of clients from the database.
 // any errors from here is an internal server error
 func (pg *Postgres) GetClients(
 	ctx context.Context,
-	limit, offset int,
-	sort string,
 	filters model.ClientFilters,
+	qs QryStrings,
 ) ([]model.Client, bool, error) {
-	query := `SELECT client_id
-			  , name
-			  , address
-			  FROM client
-			  WHERE 1=1`
+	query := `SELECT` + qs.Columns
+	query += ` FROM client
+		 	   WHERE 1=1`
 
 	args := []any{}
 	argPosition := 1
@@ -158,11 +230,11 @@ func (pg *Postgres) GetClients(
 	}
 
 	// Add sorting and pagination
-	query += " ORDER BY name " + sort
+	query += qs.OrderBy
+	query += qs.Limit
+	args = append(args, qs.Args...)
 
-	// Request one extra record to determine if there are more results
-	query += fmt.Sprintf(" LIMIT $%d OFFSET $%d", argPosition, argPosition+1)
-	args = append(args, limit+1, offset)
+	//println(query)
 
 	rows, err := pg.pool.Query(ctx, query, args...)
 	if err != nil {
@@ -178,10 +250,10 @@ func (pg *Postgres) GetClients(
 
 	// Check if we got more results than requested
 	hasNext := false
-	if len(clients) > limit {
+	if len(clients) > qs.Size {
 		hasNext = true
 		// Remove the extra record before returning
-		clients = clients[:limit]
+		clients = clients[:qs.Size]
 	}
 
 	return clients, hasNext, nil
