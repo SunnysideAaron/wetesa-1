@@ -107,7 +107,28 @@ func (pg *Postgres) CopyInsertClients(ctx context.Context, clients []model.Clien
 	return nil
 }
 
+type qryStrings struct {
+	Columns string
+	Where   string
+	OrderBy string
+	Limit   string
+	Args    []any
+}
+
+// GetClientsParseParams parses the parameters for the GetClients query.
+// any errors from here is a http bad request
+func GetClientsParseParams(urlParams string) (qs qryStrings, err error) {
+	qs.Columns = "client_id, name, address"
+	qs.Where = ""
+	qs.OrderBy = "name"
+	qs.Limit = "10"
+	qs.Args = []any{}
+
+	return qs, err
+}
+
 // GetClients retrieves a list of clients from the database.
+// any errors from here is an internal server error
 func (pg *Postgres) GetClients(
 	ctx context.Context,
 	limit, offset int,
@@ -138,6 +159,7 @@ func (pg *Postgres) GetClients(
 
 	// Add sorting and pagination
 	query += " ORDER BY name " + sort
+
 	// Request one extra record to determine if there are more results
 	query += fmt.Sprintf(" LIMIT $%d OFFSET $%d", argPosition, argPosition+1)
 	args = append(args, limit+1, offset)

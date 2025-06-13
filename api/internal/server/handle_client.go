@@ -1,6 +1,7 @@
 package server
 
 import (
+	"errors"
 	"log/slog"
 	"net/http"
 	"strconv"
@@ -10,43 +11,51 @@ import (
 	"api/internal/shared-code/model"
 )
 
+func validateUrlParamPage(pageStr, sizeStr string) (page, size, offset int, err error) {
+	page = 0
+	size = 10 //TODO make this 25 when have more test data
+	offset = 0
+	err = nil
+
+	if pageStr != "" {
+		page, err = strconv.Atoi(pageStr)
+		if err != nil {
+			return 0, 0, 0, errors.New("Invalid page parameter")
+		}
+		if page < 0 {
+			page = 0
+		}
+	}
+
+	if sizeStr != "" {
+		size, err = strconv.Atoi(sizeStr)
+		if err != nil {
+			return 0, 0, 0, errors.New("Invalid size parameter")
+		}
+		// Enforce reasonable size limits
+		if size > 100 {
+			size = 100
+		} else if size < 1 {
+			size = 1
+		}
+	}
+
+	offset = page * size
+
+	return page, size, offset, err
+}
+
 // handleListClients handles requests to list all clients
 func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			// Default values for pagination and sorting
-			page := 0
-			size := 10
+			page, size, offset, err := validateUrlParamPage(r.URL.Query().Get("page"), r.URL.Query().Get("size"))
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+
 			sort := "asc"
-
-			// Parse page from query parameter
-			if pageStr := r.URL.Query().Get("page"); pageStr != "" {
-				parsedPage, err := strconv.Atoi(pageStr)
-				if err != nil {
-					http.Error(w, "Invalid page parameter", http.StatusBadRequest)
-					return
-				}
-				if parsedPage < 0 {
-					parsedPage = 0
-				}
-				page = parsedPage
-			}
-
-			// Parse size from query parameter
-			if sizeStr := r.URL.Query().Get("size"); sizeStr != "" {
-				parsedSize, err := strconv.Atoi(sizeStr)
-				if err != nil {
-					http.Error(w, "Invalid size parameter", http.StatusBadRequest)
-					return
-				}
-				// Enforce reasonable size limits
-				if parsedSize > 100 {
-					parsedSize = 100
-				} else if parsedSize < 1 {
-					parsedSize = 1
-				}
-				size = parsedSize
-			}
 
 			// Parse sort from query parameter
 			if sortStr := r.URL.Query().Get("sort"); sortStr != "" {
@@ -72,8 +81,6 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 			if dbFilters.Address != "" {
 				dbFilters.Address = strings.ReplaceAll(dbFilters.Address, "*", "%")
 			}
-
-			offset := page * size
 
 			clients, hasNext, err := db.GetClients(r.Context(), size, offset, sort, dbFilters)
 
