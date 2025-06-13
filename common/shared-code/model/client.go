@@ -42,3 +42,11 @@ type ClientFilters struct {
 	Name    string `json:"name,omitempty"`
 	Address string `json:"address,omitempty"`
 }
+
+// ClientListResponse represents the response structure for client list requests
+type ListClientsAPIResponse struct {
+	Success  bool                 `json:"success"`
+	Messages []MessageAPIResponse `json:"messages"`
+	Clients  []Client             `json:"clients"`
+	MetaData MetaDataAPIResponse  `json:"metaData"`
+}

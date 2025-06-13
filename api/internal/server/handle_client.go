@@ -76,6 +76,9 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 			offset := page * size
 
 			clients, hasNext, err := db.GetClients(r.Context(), size, offset, sort, dbFilters)
+
+			// err = errors.New("test error")
+
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),
@@ -87,13 +90,17 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 				return
 			}
 
-			response := map[string]any{
-				"clients": clients,
-				"page":    page,
-				"size":    size,
-				"sort":    sort,
-				"filters": responseFilters,
-				"hasNext": hasNext,
+			response := model.ListClientsAPIResponse{
+				Success: true,
+				Clients: clients,
+				MetaData: model.MetaDataAPIResponse{
+					Fields:  "client_id, name, address",
+					Filters: "name, address",
+					Sort:    sort,
+					Page:    page,
+					Size:    size,
+					HasNext: hasNext,
+				},
 			}
 
 			err = encode(w, r, http.StatusOK, response)
