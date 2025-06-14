@@ -172,21 +172,39 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 			if sortParam != "" {
 				parts := strings.Split(sortParam, ":")
 				field := parts[0]
-				order := "ASC" // Default to ascending
 
-				if len(parts) > 1 && strings.ToUpper(parts[1]) == "DESC" {
-					order = "DESC"
+				// Validate that the field is one of the allowed columns. This helps protect against SQL injection.
+				allowedFields := map[string]bool{
+					"client_id": true,
+					"name":      true,
+					"address":   true,
+				}
+
+				if !allowedFields[field] {
+					return qs, page, fmt.Errorf("Invalid sort field: %s", field)
+				}
+
+				order := "ASC" // Default to ascending. Allows users to not include direction on sort if they include the column only.
+				if len(parts) > 1 {
+					switch strings.ToUpper(parts[1]) {
+					case "DESC":
+						order = "DESC"
+					case "ASC":
+						order = "ASC" // Not necessary since we already have the default above but doesn't hurt.
+					default:
+						return qs, page, fmt.Errorf("Invalid sort order: %s", parts[1])
+					}
 				}
 
 				// Add to order by parts
 				orderByParts = append(orderByParts, fmt.Sprintf("%s %s", field, order))
 			}
 		}
-	}
 
-	// Build the ORDER BY clause
-	if len(orderByParts) > 0 {
-		qs.OrderBy = " ORDER BY " + strings.Join(orderByParts, ", ")
+		if len(orderByParts) > 0 {
+			qs.OrderBy = " ORDER BY " + strings.Join(orderByParts, ", ")
+		}
+
 	}
 
 	var offset int
