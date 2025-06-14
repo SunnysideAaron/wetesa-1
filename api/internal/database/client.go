@@ -153,58 +153,67 @@ func validateUrlParamPage(pageStr, sizeStr string) (page, size, offset int, err 
 	return page, size, offset, err
 }
 
+// validateURLParamSort validates and processes sort parameters
+func validateURLParamSort(sortParams []string, allowedColumns map[string]bool) (string, error) {
+	orderByParts := []string{}
+
+	for _, sortParam := range sortParams {
+		// Parse each sort parameter (e.g., "name:desc", "address:asc")
+		if sortParam != "" {
+			parts := strings.Split(sortParam, ":")
+			column := parts[0]
+
+			// Validate that the field is one of the allowed columns
+			if !allowedColumns[column] {
+				return "", fmt.Errorf("Invalid sort field: %s", column)
+			}
+
+			order := "ASC" // Default to ascending
+			if len(parts) > 1 {
+				switch strings.ToUpper(parts[1]) {
+				case "DESC":
+					order = "DESC"
+				case "ASC":
+					order = "ASC"
+				default:
+					return "", fmt.Errorf("Invalid sort order: %s", parts[1])
+				}
+			}
+
+			// Add to order by parts
+			orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
+		}
+	}
+
+	if len(orderByParts) > 0 {
+		return " ORDER BY " + strings.Join(orderByParts, ", "), nil
+	}
+
+	return "", fmt.Errorf("nothing sortable")
+}
+
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
 func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, err error) {
+	qs.Columns = " client_id, name, address"
+
+	qs.Where = ""
 	qs.Args = []any{}
 	argPosition := 1
 
-	qs.Columns = " client_id, name, address"
-	qs.Where = ""
 	qs.OrderBy = "  ORDER BY name ASC"
-
 	sortParams := urlParams["sort"] // This gets all values for the "sort" key as a slice
-	orderByParts := []string{}
-
 	if len(sortParams) > 0 {
-		for _, sortParam := range sortParams {
-			// Parse each sort parameter (e.g., "name:desc", "address:asc")
-			if sortParam != "" {
-				parts := strings.Split(sortParam, ":")
-				field := parts[0]
-
-				// Validate that the field is one of the allowed columns. This helps protect against SQL injection.
-				allowedFields := map[string]bool{
-					"client_id": true,
-					"name":      true,
-					"address":   true,
-				}
-
-				if !allowedFields[field] {
-					return qs, page, fmt.Errorf("Invalid sort field: %s", field)
-				}
-
-				order := "ASC" // Default to ascending. Allows users to not include direction on sort if they include the column only.
-				if len(parts) > 1 {
-					switch strings.ToUpper(parts[1]) {
-					case "DESC":
-						order = "DESC"
-					case "ASC":
-						order = "ASC" // Not necessary since we already have the default above but doesn't hurt.
-					default:
-						return qs, page, fmt.Errorf("Invalid sort order: %s", parts[1])
-					}
-				}
-
-				// Add to order by parts
-				orderByParts = append(orderByParts, fmt.Sprintf("%s %s", field, order))
-			}
+		allowedColumns := map[string]bool{
+			"client_id": true,
+			"name":      true,
+			"address":   true,
 		}
 
-		if len(orderByParts) > 0 {
-			qs.OrderBy = " ORDER BY " + strings.Join(orderByParts, ", ")
+		qs.OrderBy, err = validateURLParamSort(sortParams, allowedColumns)
+		if err != nil {
+			return qs, page, err
 		}
-
 	}
 
 	var offset int
