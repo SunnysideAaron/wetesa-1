@@ -327,6 +327,9 @@ Common techniques include:
 - [OpenAPI specification](https://github.com/OAI/OpenAPI-Specification/)
   - [OpenAPI Map](https://openapi-map.apihandyman.io/)
 - [Zalando: References](https://opensource.zalando.com/restful-api-guidelines/#dissertations)
+- "Design and Build Great Web APIs" by Mike Amundsen
+  - Aaron notes: seemed a bit too basic? or maybe a bit to much on process of documenting?
+    Something seemed off. Read several chapters.
 
 ## TODO
 
@@ -342,3 +345,4 @@ Common techniques include:
 - [PokeAPI](https://pokeapi.co/docs/v2#info)
 - [Github](https://docs.github.com/en/rest?apiVersion=2022-11-28)
 - [json-server](https://github.com/typicode/json-server)
+- [Todd Motto: public-apis](https://github.com/toddmotto/public-apis)
