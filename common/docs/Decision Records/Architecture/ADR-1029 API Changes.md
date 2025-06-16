@@ -24,6 +24,7 @@ Bit of hot topic.
 
 - [Zalando: Compatibility](https://opensource.zalando.com/restful-api-guidelines/#compatibility)
 - [Zalando: Deprecation](https://opensource.zalando.com/restful-api-guidelines/#deprecation)
+- https://amberonrails.com/building-stripes-api
 
 ## Not an Option
 
