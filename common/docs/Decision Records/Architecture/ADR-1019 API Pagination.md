@@ -12,6 +12,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 ## Decision
 
 - Use offset pagination.
+- Use page and size query parameters
 - Do not return total records
 - Use pagination links (previous and next)
 
@@ -23,6 +24,8 @@ will be filtered, a report, or a data export. No user is going to click "Next pa
 Perhaps social media type data sets might need that. ie scrolling through a feed.
 
 If we end up with a use case for cursor based pagination we can implement it then.
+
+query parameters will be "page" and "size". NOT limit" or "offset"
 
 Total records is expensive to calculate. Have to run the query twice. Once for
 the data and once for the count.

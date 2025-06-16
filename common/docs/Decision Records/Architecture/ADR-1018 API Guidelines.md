@@ -110,18 +110,53 @@ Avoid requiring resource URIs more complex than collection/item/collection.
 
 ### PENDING MUST use snake_case (never camelCase) for query parameters
 
-### PENDING MUST stick to conventional query parameters
+### PENDING MUST define collection format of header and query parameters
 
-If you provide query support for searching, sorting, filtering, and paginating, you must stick to the following naming conventions:
+Pick one of the following. I prefer the first. But do we have to escape commas?
 
-- **q**: default query parameter, e.g. used by browser tab completion; should have an entity specific alias, e.g. sku.
-- **sort**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the sort order. To indicate sorting direction, fields may be prefixed with + (ascending) or - (descending), e.g. /sales-orders?sort=+id.
-- **filter**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the filter criteria. To indicate filtering direction, fields may be prefixed with + (include) or - (exclude), e.g. /sales-orders?filter=-cancelled.
+```
+?param=value1,value2
+```	
+
+```
+?param=value1&param=value2
+```
+
+### PENDING MUST use URL parameters for result set limiting
+
 - **fields**: field name expression to retrieve only a subset of fields of a resource. See SHOULD support partial responses via filtering below.
 - **embed**: field name expression to expand or embedded sub-entities, e.g. inside of an article entity, expand silhouette code into the silhouette object. Implementing embed correctly is difficult, so do it with care. See SHOULD allow optional embedding of sub-resources below.
-- **offset**: numeric offset of the first element provided on a page representing a collection request. See REST Design - Pagination section below.
-- **cursor**: an opaque pointer to a page, never to be inspected or constructed by clients. It usually (encrypted) encodes the page position, i.e. the identifier of the first or last page element, the pagination direction, and the applied query filters to recreate the collection. See Cursor-based pagination in RESTful APIs or REST Design - Pagination section below.
-- **limit**: client suggested limit to restrict the number of entries on a page. See REST Design - Pagination section below.
+
+### PENDING MUST use URL parameters for sorting
+
+- **sort**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the sort order. To indicate sorting direction, fields may be prefixed with + (ascending) or - (descending), e.g. /sales-orders?sort=+id.
+
+
+
+
+### PENDING MUST use URL parameters for queries
+
+- **q**: default query parameter, e.g. used by browser tab completion; should have an entity specific alias, e.g. sku.
+
+- **filter**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the filter criteria. To indicate filtering direction, fields may be prefixed with + (include) or - (exclude), e.g. /sales-orders?filter=-cancelled.
+
+- [SHOULD design simple query languages using query parameters [236]](https://opensource.zalando.com/restful-api-guidelines/#236)
+
+
+
+
+
+
+### MUST use URL query parameters for pagination
+
+SEE ADR-1019 API Pagination.md
+
+### MUST NOT design complex query languages using JSON
+
+For our example API we wont need complex queries. It's enough to know we can.
+
+
+
 
 ## 8. REST Basics - JSON payload
 
@@ -157,45 +192,35 @@ If you provide query support for searching, sorting, filtering, and paginating, 
 
 ### PENDING MUST use the common money object
 
+
+
+
 ## 9. REST Basics - HTTP requests
 
-### PENDING MUST use HTTP methods correctly
+### MUST use POST for create
 
-### PENDING MUST fulfill common method properties
+Do not use PUT. Clients will not create IDs
 
-### PENDING SHOULD consider to design POST and PATCH idempotent
+### PENDING update methods
 
-### PENDING SHOULD use secondary key for idempotent POST design
+- PENDING PUT vs PATCH use one throughout unless have specific use case.
+- TODO: https://opensource.zalando.com/restful-api-guidelines/#http-requests
 
-### MAY support asynchronous request processing
+### TODO
 
-### PENDING MUST define collection format of header and query parameters
-
-### PENDING SHOULD design simple query languages using query parameters
-
-### PENDING SHOULD design complex query languages using JSON
-
-### PENDING MUST document implicit response filtering
-
-## 10. REST Basics - HTTP status codes
-
-### MUST use official HTTP status codes
-
-### PENDING MUST specify success and error responses
-
-### PENDING SHOULD only use most common HTTP status codes
-
-### PENDING MUST use most specific HTTP status codes
-
-### PENDING MUST use code 207 for batch or bulk requests
-
-### PENDING MUST use code 429 with headers for rate limits
-
-### PENDING MUST support problem JSON
-
-### MUST not expose stack traces
-
-### PENDING SHOULD not use redirection codes
+- idempotent
+  - same request results in same response / action. ie delete deletes once but subsequent calls 
+  - still say deleted. For how long? before not not found?
+  - creates once. don't create multiple of same record?
+  - update once. don't keep overwriting?
+  - ### PENDING SHOULD use secondary key for idempotent POST design
+  - ### PENDING SHOULD consider to design POST and PATCH idempotent
+  - Idempotency: PUT requests are generally idempotent, meaning that multiple identical PUT requests should have the same effect as a single request. POST requests are not idempotent, as each request can result in the creation of a new resource.
+- caching
+- support asynchronous request processing
+  - MAY support asynchronous request processing
+- implicit response filtering
+  - [MUST document implicit response filtering [226]](https://opensource.zalando.com/restful-api-guidelines/#226)
 
 ## 11. REST Basics - HTTP headers
 
@@ -264,6 +289,7 @@ Common techniques include:
 - [Zalando: References](https://opensource.zalando.com/restful-api-guidelines/#dissertations)
 
 ## TODO
+
 
 - [11. REST Basics - HTTP headers](https://opensource.zalando.com/restful-api-guidelines/#headers)
   - some stuff about language and location I might want to come back to in here.
