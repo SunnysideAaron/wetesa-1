@@ -346,3 +346,4 @@ Common techniques include:
 - [Github](https://docs.github.com/en/rest?apiVersion=2022-11-28)
 - [json-server](https://github.com/typicode/json-server)
 - [Todd Motto: public-apis](https://github.com/toddmotto/public-apis)
+- stripe api is often recommended as a good api
