@@ -28,11 +28,6 @@ model, and prematurely optimizing sorting, filtering, and embedding.
 
 ## 4. REST Basics - Meta information
 
-
-### PENDING MUST provide API identifiers
-
-This idea might be good for us someday in the future. https://opensource.zalando.com/restful-api-guidelines/#215
-
 ## 5. REST Basics - Security
 
 ### MUST secure endpoints
@@ -53,6 +48,7 @@ https://opensource.zalando.com/restful-api-guidelines/#225
 
 TODO go through and pick formats.
 https://opensource.zalando.com/restful-api-guidelines/#238
+https://opensource.zalando.com/restful-api-guidelines/#publications-specifications-and-standards
 
 ### PENDING MUST define a format for number and integer types
 
@@ -203,47 +199,55 @@ If you provide query support for searching, sorting, filtering, and paginating, 
 
 ## 11. REST Basics - HTTP headers
 
-### Using Standard Header definitions
-
-### MAY use standard headers
-
-### PENDING SHOULD use kebab-case with uppercase separate words for HTTP headers
-
-### PENDING MUST use Content-* headers correctly
-
-### PENDING SHOULD use Location header instead of Content-Location header
-
-### MAY use Content-Location header
-
-### MAY consider to support Prefer header to handle processing preferences
-
-### MAY consider to support ETag together with If-Match/If-None-Match header
-
-### MAY consider to support Idempotency-Key header
-
-### PENDING SHOULD use only the specified proprietary Zalando headers
-
-### PENDING MUST propagate proprietary headers
-
-### PENDING MUST support X-Flow-ID
-
 ## 12. REST Design - Hypermedia
 
-### PENDING MUST use REST maturity level 2
+### MAY use href links on sub items.
 
-### MAY use REST maturity level 3 - HATEOAS
+Use these if the UI will use them.
 
-### PENDING MUST use common hypertext controls
+```json
+{
+  "id": "446f9876-e89b-12d3-a456-426655440000",
+  "name": "Peter Mustermann",
+  "spouse": {
+    "href": "https://...",
+    "since": "1996-12-19",
+    "id": "123e4567-e89b-12d3-a456-426655440000",
+    "name": "Linda Mustermann"
+  }
+}
+```
 
-### PENDING SHOULD use simple hypertext controls for pagination and self-references
+### MUST use full, absolute URI for resource identification
 
-### PENDING MUST use full, absolute URI for resource identification
+Links to other resource must always use full, absolute URI.
 
-### PENDING MUST not use link headers with JSON entities
+Motivation: Exposing any form of relative URI (no matter if the relative URI uses an absolute or relative path) introduces avoidable client side complexity. It also requires clarity on the base URI, which might not be given when using features like embedding subresources. The primary advantage of non-absolute URI is reduction of the payload size, which is better achievable by following the recommendation to use gzip compression
+
+### MUST NOT use link headers with JSON entities
+
+For flexibility and precision, we prefer links to be directly embedded in the JSON payload instead of being attached using the uncommon link header syntax. As a result, the use of the Link Header defined by RFC 8288 in conjunction with JSON media types is forbidden.
+
+### SHOULD NOT turn into HATEOAS
+
+HATEOAS = links in response
+
+- Don't do it. The premise is that clients can discover and build a ui / app based
+on the links provided but there are no clients that do this. FUll HATEOAS is just overhead.
+Does not mean we can't include links in the response if our UI will use them.
+- [Why HATEOAS is useless and what that means for REST](https://www.reddit.com/r/programming/comments/80bul4/why_hateoas_is_useless_and_what_that_means_for/)
 
 ## 13. REST Design - Performance
 
 ### PENDING SHOULD reduce bandwidth needs and improve responsiveness
+
+Common techniques include:
+- compression of request and response bodies (see SHOULD use gzip compression)
+- querying field filters to retrieve a subset of resource attributes (see SHOULD support partial responses via filtering below)
+- ETag and If-Match/If-None-Match headers to avoid re-fetching of unchanged resources (see MAY consider to support ETag together with If-Match/If-None-Match header)
+- Prefer header with return=minimal or respond-async to anticipate reduced processing requirements of clients (see MAY consider to support Prefer header to handle processing preferences)
+- REST Design - Pagination for incremental access of larger collections of data items
+- caching of master data items, i.e. resources that change rarely or not at all after creation (see MUST document cacheable GET, HEAD, and POST endpoints).
 
 ### PENDING SHOULD use gzip compression
 
@@ -253,44 +257,16 @@ If you provide query support for searching, sorting, filtering, and paginating, 
 
 ### PENDING MUST document cacheable GET, HEAD, and POST endpoints
 
-## 14. REST Design - Pagination
+## Notes
 
-### PENDING MUST support pagination
+- [OpenAPI specification](https://github.com/OAI/OpenAPI-Specification/)
+  - [OpenAPI Map](https://openapi-map.apihandyman.io/)
+- [Zalando: References](https://opensource.zalando.com/restful-api-guidelines/#dissertations)
 
-### PENDING SHOULD prefer cursor-based pagination, avoid offset-based pagination
+## TODO
 
-### PENDING SHOULD use pagination response page object
-
-### PENDING SHOULD use pagination links
-
-### PENDING SHOULD avoid a total result count
-
-
-
-
-## Appendix A: References
-
-### OpenAPI specification
-
-### Publications, specifications and standards
-
-### Dissertations
-
-### Books
-
-### Blogs
-
-## Appendix B: Tooling
-
-### API first integrations
-
-### Support libraries
-
-## Appendix C: Best practices
-
-### Cursor-based pagination in RESTful APIs
-
-### Optimistic locking in RESTful APIs
-
-### Handling compatible API extensions
+- [11. REST Basics - HTTP headers](https://opensource.zalando.com/restful-api-guidelines/#headers)
+  - some stuff about language and location I might want to come back to in here.
+- [MUST provide API identifiers [215]](https://opensource.zalando.com/restful-api-guidelines/#215)
+- [optimistic-locking](https://opensource.zalando.com/restful-api-guidelines/#optimistic-locking)
 

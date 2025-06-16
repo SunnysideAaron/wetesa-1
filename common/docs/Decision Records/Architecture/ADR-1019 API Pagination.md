@@ -13,6 +13,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 - Use offset pagination.
 - Do not return total records
+- Use pagination links (previous and next)
 
 ## Why
 
@@ -26,6 +27,22 @@ If we end up with a use case for cursor based pagination we can implement it the
 Total records is expensive to calculate. Have to run the query twice. Once for
 the data and once for the count.
 
+use of pagination links simplifies what the front end has to do. Somewhere the 
+links have to be created. It is easier for the api server than the web server. Seems
+like expected API behavior as well.
+
+**PENDING** self, first, last links. Not certain our clients will use them.
+
+```json
+{
+  "data": [...]
+  "self": "https://my-service.zalandoapis.com/resources?cursor=<self-position>",
+  "first": "https://my-service.zalandoapis.com/resources?cursor=<first-position>",
+  "prev": "https://my-service.zalandoapis.com/resources?cursor=<previous-position>",
+  "next": "https://my-service.zalandoapis.com/resources?cursor=<next-position>",
+  "last": "https://my-service.zalandoapis.com/resources?cursor=<last-position>",
+}
+```
 ## Notes
 
 offset vs cursor
@@ -51,13 +68,13 @@ the user to jump to. ie not page 1, 2, 3, ... 10, 11, 12 links. Users will have
 to use filtering to quickly get to pages they are looking for.
 
 ## Other Possible Options
-[Pagination in MySQL - offset vs. cursor](https://www.youtube.com/watch?v=zwDIN04lIpc)
+- [Pagination in MySQL - offset vs. cursor](https://www.youtube.com/watch?v=zwDIN04lIpc)
   - [Pagination in MySQL](https://planetscale.com/blog/mysql-pagination)
   - https://planetscale.com/learn/courses/mysql-for-developers/examples/deferred-joins
   - [Efficient MySQL pagination using deferred joins](https://aaronfrancis.com/2022/efficient-mysql-pagination-using-deferred-joins-15d0de14)
-
-https://www.depesz.com/2011/05/20/pagination-with-fixed-order/
-https://dev.to/sadhakbj/implementing-cursor-pagination-in-golang-go-fiber-mysql-gorm-from-scratch-2p60
+- https://www.depesz.com/2011/05/20/pagination-with-fixed-order/
+- https://dev.to/sadhakbj/implementing-cursor-pagination-in-golang-go-fiber-mysql-gorm-from-scratch-2p60
+- https://opensource.zalando.com/restful-api-guidelines/#cursor-based-pagination
 
 ## Not an Option
 
