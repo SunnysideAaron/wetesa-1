@@ -25,16 +25,20 @@ Perhaps social media type data sets might need that. ie scrolling through a feed
 
 If we end up with a use case for cursor based pagination we can implement it then.
 
-query parameters will be "page" and "size". NOT limit" or "offset"
+query parameters will be "page" and "per_page". NOT limit", "offset", or "size".
 
 Total records is expensive to calculate. Have to run the query twice. Once for
 the data and once for the count.
 
 use of pagination links simplifies what the front end has to do. Somewhere the 
 links have to be created. It is easier for the api server than the web server. Seems
-like expected API behavior as well.
+like expected API behavior as well. Less duplicated code between web, mobile and 3rd parties.
+
+example of links:
+  - [json:api](https://jsonapi.org/)
 
 **PENDING** self, first, last links. Not certain our clients will use them.
+Would self link mean we wouldn't have to include params/filters/pages into metaData?
 
 ```json
 {
@@ -46,6 +50,7 @@ like expected API behavior as well.
   "last": "https://my-service.zalandoapis.com/resources?cursor=<last-position>",
 }
 ```
+
 ## Notes
 
 offset vs cursor

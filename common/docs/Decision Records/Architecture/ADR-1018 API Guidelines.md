@@ -2,6 +2,8 @@
 
 ## 1. Introduction
 
+See ADR-016 API Standard.md for initial API design / standards.
+
 This ADR is a bit different because there are so many minor and interdependent decisions to be made.
 We are starting with [Zalando RESTful API and Event Guidelines](https://opensource.zalando.com/restful-api-guidelines/)
 and then adjusting to fit our own decisions.
@@ -23,6 +25,25 @@ user input, reports, and database structures. It may be shooting myself in the f
 now I'm going to tailer the API to the screens the UI needs. Hopefully this will
 cut down on over and under fetching, prevent the API from just mirroring the database
 model, and prematurely optimizing sorting, filtering, and embedding.
+
+### It is OK to be different.
+
+In "Design and Build Great Web APIs" by Mike Amundsen it is stated that givin the
+same spec 5 api designers would create 5 different APIs. I'm getting the impression
+that APIs are like UI and Resumes. Who ever you talk to will be able to point out
+how you did it wrong. Here is my permission to flip them the bird and just do what
+makes sense for this problem.
+
+### API is not the database model.
+
+Do not mirror DB tables. Because this example is so small this might be a bit hard to see in this
+example.
+
+- [Data model vs. API: what’s the difference?](https://tyk.io/blog/your-data-model-is-not-an-api/)
+- "data model relates to how information is stored and retrieved. An API, on the other hand, relates to the way in which consumers experience your app."
+- [Design question on structs and responses for a REST API](https://www.reddit.com/r/golang/comments/pf4vjv/design_question_on_structs_and_responses_for_a/)
+- [Common Anti-Patterns in Go Web Applications](https://threedots.tech/post/common-anti-patterns-in-go-web-applications/#a-single-model-couples-your-application)
+- [Backend API design principles: Don’t mirror your data](https://ravendb.net/articles/backend-api-design-principles-dont-mirror-your-data)
 
 ## 3. General Guidelines
 
@@ -125,12 +146,14 @@ Pick one of the following. I prefer the first. But do we have to escape commas?
 ### PENDING MUST use URL parameters for result set limiting
 
 - **fields**: field name expression to retrieve only a subset of fields of a resource. See SHOULD support partial responses via filtering below.
+  - We don't need to allow for all fields to be filterable. Only the ones the UI needs.
+
 - **embed**: field name expression to expand or embedded sub-entities, e.g. inside of an article entity, expand silhouette code into the silhouette object. Implementing embed correctly is difficult, so do it with care. See SHOULD allow optional embedding of sub-resources below.
 
 ### PENDING MUST use URL parameters for sorting
 
 - **sort**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the sort order. To indicate sorting direction, fields may be prefixed with + (ascending) or - (descending), e.g. /sales-orders?sort=+id.
-
+  - We don't need to allow for all fields to be sortable. Only the ones the UI needs.
 
 
 
@@ -143,8 +166,21 @@ Pick one of the following. I prefer the first. But do we have to escape commas?
 - [SHOULD design simple query languages using query parameters [236]](https://opensource.zalando.com/restful-api-guidelines/#236)
 
 
+- URL Formatting
 
-
+  - [FIQL](https://datatracker.ietf.org/doc/html/draft-nottingham-atompub-fiql-00)
+    - since 2007
+  - [RSQL]()
+    - slightly more modern version of FIQL
+    - [Here: RSQL](https://www.here.com/docs/bundle/data-client-library-developer-guide-java-scala/page/client/rsql.html)  
+  - [OData](https://www.odata.org/)
+    - came from microsoft
+    - [OData adoption rate?](https://www.reddit.com/r/dotnet/comments/11eoa6d/odata_adoption_rate/)
+    - maybe too flexible?
+  - [speakeasy: Filtering Collections](https://www.speakeasy.com/api-design/filtering-responses)
+  - [Correct way to pass multiple values for same parameter name in GET request](https://stackoverflow.com/questions/24059773/correct-way-to-pass-multiple-values-for-same-parameter-name-in-get-request)
+- [json-server](https://github.com/typicode/json-server)
+  - example
 
 
 ### MUST use URL query parameters for pagination
@@ -191,6 +227,10 @@ For our example API we wont need complex queries. It's enough to know we can.
 ### PENDING MUST use the common address fields
 
 ### PENDING MUST use the common money object
+
+### MUST use success and messages in response
+
+- [Why do so many standards for JSON API response formats contain a "success" property in the response body instead of just using HTTP status codes?](https://softwareengineering.stackexchange.com/questions/437529/why-do-so-many-standards-for-json-api-response-formats-contain-a-success-prope)
 
 
 
@@ -290,9 +330,15 @@ Common techniques include:
 
 ## TODO
 
-
 - [11. REST Basics - HTTP headers](https://opensource.zalando.com/restful-api-guidelines/#headers)
   - some stuff about language and location I might want to come back to in here.
 - [MUST provide API identifiers [215]](https://opensource.zalando.com/restful-api-guidelines/#215)
 - [optimistic-locking](https://opensource.zalando.com/restful-api-guidelines/#optimistic-locking)
 
+## Example APIs
+- [Best Practices for Structuring JSON API Responses](https://sahinur.medium.com/best-practices-for-structuring-json-api-responses-24881e7add2f)
+- [json:api](https://jsonapi.org/)
+  - link heavy. HATEOAS?
+- [PokeAPI](https://pokeapi.co/docs/v2#info)
+- [Github](https://docs.github.com/en/rest?apiVersion=2022-11-28)
+- [json-server](https://github.com/typicode/json-server)

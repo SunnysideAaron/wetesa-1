@@ -24,7 +24,7 @@ Heavy on the network
 
 ### Option 3 Fields parameter
 
-too cumbersome. can't optimize db or queries.
+OK for a few. too cumbersome on all. can't optimize db or queries.
 Will every field in the whole system be optional? That would get ridiculous quickly.
 
 ### Option 4 Separate Endpoints
