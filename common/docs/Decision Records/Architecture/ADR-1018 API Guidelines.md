@@ -324,12 +324,21 @@ Common techniques include:
 
 ## Notes
 
+- https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api
+- https://github.com/interagent/http-api-design
+- [Ask HN: What are good reads for designing APIs?](https://news.ycombinator.com/item?id=12262586)
+- https://stackoverflow.com/questions/978061/http-get-with-request-body
+
+
+- [Microsoft REST API Guidelines](https://news.ycombinator.com/item?id=12122828)
 - [OpenAPI specification](https://github.com/OAI/OpenAPI-Specification/)
   - [OpenAPI Map](https://openapi-map.apihandyman.io/)
 - [Zalando: References](https://opensource.zalando.com/restful-api-guidelines/#dissertations)
 - "Design and Build Great Web APIs" by Mike Amundsen
   - Aaron notes: seemed a bit too basic? or maybe a bit to much on process of documenting?
     Something seemed off. Read several chapters.
+- https://amberonrails.com/building-stripes-api
+
 
 ## TODO
 
@@ -346,4 +355,4 @@ Common techniques include:
 - [Github](https://docs.github.com/en/rest?apiVersion=2022-11-28)
 - [json-server](https://github.com/typicode/json-server)
 - [Todd Motto: public-apis](https://github.com/toddmotto/public-apis)
-- stripe api is often recommended as a good api
+- https://docs.stripe.com/api stripe api is often recommended as a good api
