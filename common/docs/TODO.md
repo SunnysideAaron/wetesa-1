@@ -10,6 +10,7 @@ wetesa traffic tracker
 - linter all images have alt text
 - html linter
 
+
 - [Tollboth](https://github.com/didip/tollbooth)
   - if we need rate limiting.
 
@@ -47,3 +48,9 @@ https://github.com/avelino/awesome-go?tab=readme-ov-file#go-tools
 https://github.com/avelino/awesome-go?tab=readme-ov-file#devops-tools
 https://github.com/avelino/awesome-go?tab=readme-ov-file#other-software
 
+
+
+## Collections to go through
+https://github.com/sahat/hackathon-starter
+https://github.com/abhishekbanthia/Awesome-APIs
+https://github.com/Kikobeats/awesome-api

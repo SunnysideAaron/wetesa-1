@@ -12,8 +12,8 @@ import (
 // name, and optional address.
 type Client struct {
 	ClientID string      `json:"client_id,omitempty"`
-	Name     string      `json:"name"`
-	Address  pgtype.Text `json:"address"`
+	Name     string      `json:"name,omitempty"`
+	Address  pgtype.Text `json:"address,omitempty"`
 }
 
 // Valid implements the Validator interface for Client.

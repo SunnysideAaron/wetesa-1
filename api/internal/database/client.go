@@ -119,38 +119,19 @@ type QryStrings struct {
 	Args    []any
 }
 
-func validateUrlParamPage(pageStr, sizeStr string) (page, size, offset int, err error) {
-	page = 0
-	size = 10 //TODO make this 25 when have more test data
-	offset = 0
-	err = nil
+// validateURLParamSort validates and processes sort parameters
+func validateURLParamFields(fields string, allowedColumns map[string]bool) (string, error) {
+	fieldParts := strings.Split(fields, ":")
+	columns := []string{}
 
-	if pageStr != "" {
-		page, err = strconv.Atoi(pageStr)
-		if err != nil {
-			return 0, 0, 0, errors.New("Invalid page parameter")
+	for _, field := range fieldParts {
+		if !allowedColumns[field] {
+			return "", fmt.Errorf("Invalid field: %s", field)
 		}
-		if page < 0 {
-			page = 0
-		}
+		columns = append(columns, field)
 	}
 
-	if sizeStr != "" {
-		size, err = strconv.Atoi(sizeStr)
-		if err != nil {
-			return 0, 0, 0, errors.New("Invalid size parameter")
-		}
-		// Enforce reasonable size limits
-		if size > 100 {
-			size = 100
-		} else if size < 1 {
-			size = 1
-		}
-	}
-
-	offset = page * size
-
-	return page, size, offset, err
+	return " " + strings.Join(columns, ", "), nil
 }
 
 // validateURLParamSort validates and processes sort parameters
@@ -192,10 +173,57 @@ func validateURLParamSort(sortParams []string, allowedColumns map[string]bool) (
 	return "", fmt.Errorf("nothing sortable")
 }
 
+func validateUrlParamPage(pageStr, sizeStr string) (page, size, offset int, err error) {
+	page = 0
+	size = 10 //TODO make this 25 when have more test data
+	offset = 0
+	err = nil
+
+	if pageStr != "" {
+		page, err = strconv.Atoi(pageStr)
+		if err != nil {
+			return 0, 0, 0, errors.New("Invalid page parameter")
+		}
+		if page < 0 {
+			page = 0
+		}
+	}
+
+	if sizeStr != "" {
+		size, err = strconv.Atoi(sizeStr)
+		if err != nil {
+			return 0, 0, 0, errors.New("Invalid size parameter")
+		}
+		// Enforce reasonable size limits
+		if size > 100 {
+			size = 100
+		} else if size < 1 {
+			size = 1
+		}
+	}
+
+	offset = page * size
+
+	return page, size, offset, err
+}
+
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
 func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, err error) {
 	qs.Columns = " client_id, name, address"
+	allowedColumns := map[string]bool{
+		"client_id": true,
+		"name":      true,
+		"address":   true,
+	}
+
+	fields := urlParams.Get("fields")
+	if fields != "" {
+		qs.Columns, err = validateURLParamFields(fields, allowedColumns)
+		if err != nil {
+			return qs, page, err
+		}
+	}
 
 	qs.Where = ""
 	qs.Args = []any{}
@@ -204,12 +232,6 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 	qs.OrderBy = "  ORDER BY name ASC"
 	sortParams := urlParams["sort"] // This gets all values for the "sort" key as a slice
 	if len(sortParams) > 0 {
-		allowedColumns := map[string]bool{
-			"client_id": true,
-			"name":      true,
-			"address":   true,
-		}
-
 		qs.OrderBy, err = validateURLParamSort(sortParams, allowedColumns)
 		if err != nil {
 			return qs, page, err
@@ -261,7 +283,7 @@ func (pg *Postgres) GetClients(
 	query += qs.Limit
 	args = append(args, qs.Args...)
 
-	//println(query)
+	println(query) //TODO this should be a permanent optional log.
 
 	rows, err := pg.pool.Query(ctx, query, args...)
 	if err != nil {
@@ -270,7 +292,7 @@ func (pg *Postgres) GetClients(
 
 	defer rows.Close()
 
-	clients, err := pgx.CollectRows(rows, pgx.RowToStructByName[model.Client])
+	clients, err := pgx.CollectRows(rows, pgx.RowToStructByNameLax[model.Client])
 	if err != nil {
 		return nil, false, fmt.Errorf("failed to collect client rows: %w", err)
 	}

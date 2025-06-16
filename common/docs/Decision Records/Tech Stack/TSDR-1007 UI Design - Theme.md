@@ -21,6 +21,16 @@ https://www.reddit.com/r/webdev/comments/1iigrug/after_12_years_of_selling_web_m
 
 look up google safe html package. (built in style)
 
+https://codestitch.app/
+
+https://html5up.net/
+
+https://www.reddit.com/r/webdev/comments/xr1bqp/what_is_your_goto_site_for_pure_html_templates/
+
+http://styleguides.io/
+
+https://evergreen-ils.org/documentation/previews/proposed_style_guide.html
+
 ## Decision
 
 

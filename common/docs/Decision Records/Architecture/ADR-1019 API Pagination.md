@@ -18,7 +18,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 
 Even if our data sets gets very large. For crud based apps
 pages will usually be less than 10 pages of usable data for end users. Otherwise data
-will be filtered, a report, or a data export. No user is going to click "Next page" 1000 times.
+will be filtered, a report, or a data export. No user is going to click "Next page" 210 times.
 Perhaps social media type data sets might need that. ie scrolling through a feed.
 
 If we end up with a use case for cursor based pagination we can implement it then.

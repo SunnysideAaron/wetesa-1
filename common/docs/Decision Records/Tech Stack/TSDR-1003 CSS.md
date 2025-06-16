@@ -35,6 +35,8 @@ https://www.reddit.com/r/webdev/comments/1l0dq5m/what_i_actually_learned_buildin
 
 https://www.reddit.com/r/sveltejs/comments/1kulk34/modern_ui_library/
 
+https://picocss.com/
+
 ## Decision
 
 
