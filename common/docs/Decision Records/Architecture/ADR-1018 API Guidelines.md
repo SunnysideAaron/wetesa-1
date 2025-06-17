@@ -51,6 +51,13 @@ example.
 
 ## 5. REST Basics - Security
 
+### MUST use rate limiting
+
+basic to prevent attacks
+
+- [Ticketmaster](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/#uri-format)
+  - has some interesting defaults.
+
 ### MUST secure endpoints
 
 TODO How
@@ -159,28 +166,76 @@ Pick one of the following. I prefer the first. But do we have to escape commas?
 
 ### PENDING MUST use URL parameters for queries
 
+- [Wikipedia: Query String](https://en.wikipedia.org/wiki/Query_string)
+  - SPACE is encoded as '+' or '%20'
+  - '+' is encoded as %2B
+  - Letters (A–Z and a–z), numbers (0–9) and the characters '~','-','.' and '_' are left as-is
+  - ("~") is permitted in query strings by RFC3986 but required to be percent-encoded in HTML forms to "%7E"
+
+
+
+Conditions
+
+     → ==
+    lt → <
+    lte → <=
+    gt → >
+    gte → >=
+    ne → !=
+
+GET /posts?views_gt=9000
+
+
+
+
+Range
+
+    start
+    end
+    limit
+
+GET /posts?_start=10&_end=20
+GET /posts?_start=10&_limit=10
+
+
+Nested and array fields
+
+    x.y.z...
+    x.y.z[i]...
+
+GET /foo?a.b=bar
+GET /foo?x.y_lt=100
+GET /foo?arr[0]=bar
+
+
+
 - **q**: default query parameter, e.g. used by browser tab completion; should have an entity specific alias, e.g. sku.
 
 - **filter**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the filter criteria. To indicate filtering direction, fields may be prefixed with + (include) or - (exclude), e.g. /sales-orders?filter=-cancelled.
 
+
+
+
+
+- [stripe: search](https://docs.stripe.com/search#search-query-language)
+- [speakeasy: Filtering Collections](https://www.speakeasy.com/api-design/filtering-responses)
 - [SHOULD design simple query languages using query parameters [236]](https://opensource.zalando.com/restful-api-guidelines/#236)
-
-
-- URL Formatting
-
-  - [FIQL](https://datatracker.ietf.org/doc/html/draft-nottingham-atompub-fiql-00)
-    - since 2007
-  - [RSQL]()
-    - slightly more modern version of FIQL
-    - [Here: RSQL](https://www.here.com/docs/bundle/data-client-library-developer-guide-java-scala/page/client/rsql.html)  
-  - [OData](https://www.odata.org/)
-    - came from microsoft
-    - [OData adoption rate?](https://www.reddit.com/r/dotnet/comments/11eoa6d/odata_adoption_rate/)
-    - maybe too flexible?
-  - [speakeasy: Filtering Collections](https://www.speakeasy.com/api-design/filtering-responses)
-  - [Correct way to pass multiple values for same parameter name in GET request](https://stackoverflow.com/questions/24059773/correct-way-to-pass-multiple-values-for-same-parameter-name-in-get-request)
+- [FIQL](https://datatracker.ietf.org/doc/html/draft-nottingham-atompub-fiql-00)
+  - since 2007
+- [RSQL](https://github.com/jirutka/rsql-parser?tab=readme-ov-file#grammar-and-semantic)
+  - slightly more modern version of FIQL
+  - [Here.com: RSQL](https://www.here.com/docs/bundle/data-client-library-developer-guide-java-scala/page/client/rsql.html)
 - [json-server](https://github.com/typicode/json-server)
-  - example
+- [Correct way to pass multiple values for same parameter name in GET request](https://stackoverflow.com/questions/24059773/correct-way-to-pass-multiple-values-for-same-parameter-name-in-get-request)
+
+Not an option:
+- [OData](https://www.odata.org/)
+  - came from microsoft
+  - [OData adoption rate?](https://www.reddit.com/r/dotnet/comments/11eoa6d/odata_adoption_rate/)
+  - too verbose and too flexible
+
+
+
 
 
 ### MUST use URL query parameters for pagination
@@ -355,4 +410,6 @@ Common techniques include:
 - [Github](https://docs.github.com/en/rest?apiVersion=2022-11-28)
 - [json-server](https://github.com/typicode/json-server)
 - [Todd Motto: public-apis](https://github.com/toddmotto/public-apis)
-- https://docs.stripe.com/api stripe api is often recommended as a good api
+- [Stripe](https://docs.stripe.com/api)
+  - stripe api is often recommended as a good api
+- https://github.com/public-apis/public-apis

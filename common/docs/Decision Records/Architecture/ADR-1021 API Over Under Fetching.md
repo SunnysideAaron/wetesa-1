@@ -25,7 +25,7 @@ Heavy on the network
 ### Option 3 Fields parameter
 
 OK for a few. too cumbersome on all. can't optimize db or queries.
-Will every field in the whole system be optional? That would get ridiculous quickly.
+Will most fields in the whole system be optional? That would get ridiculous quickly.
 
 ### Option 4 Separate Endpoints
 
@@ -36,13 +36,13 @@ This approach offers clearer separation of concerns and allows for more consiste
 response structures. It also simplifies authorization logic if different endpoints have different access restrictions. 
 It's a good choice when the data variations are significant and potentially involve different authorization levels. 
 
-### Option 5. Nested Resources:
+### Option 5. Nested Resources or include / embed:
 
 Nest related resources under a parent resource, such as /users/{user_id}/orders to
  retrieve a user's orders. This can be useful when the relationship between resources
   is strong and clients frequently need both parent and child data.
 However, nesting can lead to overfetching and complex structures if not implemented
- carefully. Consider using optional expansion parameters (e.g., ?include=items) to control the data returned. 
+ carefully. Consider using optional expansion parameters (e.g., ?include=items, ?embed=items) to control the data returned. 
 
 Example:
 Let's say you have a Product resource. You might have:
@@ -53,6 +53,8 @@ Let's say you have a Product resource. You might have:
 /products/{id}?include=reviews: Returns basic info + list of reviews for the product. 
 /products/{id}/images: Returns a list of image URLs for the product. 
 
+/posts?embed=comments
+/comments?embed=post
 
 ### other notes
 
