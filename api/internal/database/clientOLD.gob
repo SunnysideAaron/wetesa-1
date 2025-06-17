@@ -115,7 +115,7 @@ type QryStrings struct {
 	Where   string
 	OrderBy string
 	Limit   string
-	PerPage int
+	Size    int
 	Args    []any
 }
 
@@ -173,81 +173,80 @@ func validateURLParamSort(sortParams []string, allowedColumns map[string]bool) (
 	return "", fmt.Errorf("nothing sortable")
 }
 
-func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err error) {
-	err = nil
+func validateUrlParamPage(pageStr, sizeStr string) (page, size, offset int, err error) {
 	page = 0
-	pageStr := urlParams.Get("page")
+	size = 10 //TODO make this 25 when have more test data
+	offset = 0
+	err = nil
 
 	if pageStr != "" {
 		page, err = strconv.Atoi(pageStr)
 		if err != nil {
-			return 0, errors.New("Invalid page parameter")
+			return 0, 0, 0, errors.New("Invalid page parameter")
 		}
 		if page < 0 {
 			page = 0
 		}
 	}
 
-	perPage := 10 //TODO make this 25 when have more test data
-	perPageStr := urlParams.Get("per_page")
-
-	if perPageStr != "" {
-		perPage, err = strconv.Atoi(perPageStr)
+	if sizeStr != "" {
+		size, err = strconv.Atoi(sizeStr)
 		if err != nil {
-			return 0, errors.New("Invalid per_page parameter")
+			return 0, 0, 0, errors.New("Invalid size parameter")
 		}
 		// Enforce reasonable size limits
-		if perPage > 100 {
-			perPage = 100
-		} else if perPage < 1 {
-			perPage = 1
+		if size > 100 {
+			size = 100
+		} else if size < 1 {
+			size = 1
 		}
 	}
 
-	qs.PerPage = perPage
+	offset = page * size
 
-	offset := page * qs.PerPage
-	argPosition := len(qs.Args) + 1
-
-	qs.Limit = fmt.Sprintf(" LIMIT $%d OFFSET $%d", argPosition, argPosition+1)
-	// Request one extra record to determine if there are more results
-	qs.Args = append(qs.Args, qs.PerPage+1, offset)
-
-	return page, err
+	return page, size, offset, err
 }
 
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
 func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, err error) {
 	qs.Columns = " client_id, name, address"
-	// allowedColumns := map[string]bool{
-	// 	"client_id": true,
-	// 	"name":      true,
-	// 	"address":   true,
-	// }
+	allowedColumns := map[string]bool{
+		"client_id": true,
+		"name":      true,
+		"address":   true,
+	}
 
-	// fields := urlParams.Get("fields")
-	// if fields != "" {
-	// 	qs.Columns, err = validateURLParamFields(fields, allowedColumns)
-	// 	if err != nil {
-	// 		return qs, page, err
-	// 	}
-	// }
+	fields := urlParams.Get("fields")
+	if fields != "" {
+		qs.Columns, err = validateURLParamFields(fields, allowedColumns)
+		if err != nil {
+			return qs, page, err
+		}
+	}
 
 	qs.Where = ""
 	qs.Args = []any{}
-	// argPosition := 1
+	argPosition := 1
 
 	qs.OrderBy = "  ORDER BY name ASC"
-	// sortParams := urlParams["sort"] // This gets all values for the "sort" key as a slice
-	// if len(sortParams) > 0 {
-	// 	qs.OrderBy, err = validateURLParamSort(sortParams, allowedColumns)
-	// 	if err != nil {
-	// 		return qs, page, err
-	// 	}
-	// }
+	sortParams := urlParams["sort"] // This gets all values for the "sort" key as a slice
+	if len(sortParams) > 0 {
+		qs.OrderBy, err = validateURLParamSort(sortParams, allowedColumns)
+		if err != nil {
+			return qs, page, err
+		}
+	}
 
-	page, err = validateUrlParamPage(&qs, urlParams)
+	var offset int
+	page, qs.Size, offset, err = validateUrlParamPage(urlParams.Get("page"), urlParams.Get("per_page"))
+	if err != nil {
+		return qs, page, err
+	}
+
+	// Request one extra record to determine if there are more results
+	qs.Limit = fmt.Sprintf(" LIMIT $%d OFFSET $%d", argPosition, argPosition+1)
+	qs.Args = append(qs.Args, qs.Size+1, offset)
 
 	return qs, page, err
 }
@@ -256,25 +255,37 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 // any errors from here is an internal server error
 func (pg *Postgres) GetClients(
 	ctx context.Context,
+	filters model.ClientFilters,
 	qs QryStrings,
 ) ([]model.Client, bool, error) {
 	query := `SELECT` + qs.Columns
 	query += ` FROM client
 		 	   WHERE 1=1`
 
-	query += qs.Where
+	args := []any{}
+	argPosition := 1
+
+	// Add filter conditions if provided
+	if filters.Name != "" {
+		query += fmt.Sprintf(" AND name ILIKE $%d", argPosition)
+		args = append(args, filters.Name)
+		argPosition++
+	}
+
+	if filters.Address != "" {
+		query += fmt.Sprintf(" AND address ILIKE $%d", argPosition)
+		args = append(args, filters.Address)
+		argPosition++
+	}
+
+	// Add sorting and pagination
 	query += qs.OrderBy
 	query += qs.Limit
+	args = append(args, qs.Args...)
 
-	slog.LogAttrs(
-		ctx,
-		slog.LevelDebug,
-		"query",
-		slog.String("query", query),
-		slog.Any("args", qs.Args),
-	)
+	println(query) //TODO this should be a permanent optional log.
 
-	rows, err := pg.pool.Query(ctx, query, qs.Args...)
+	rows, err := pg.pool.Query(ctx, query, args...)
 	if err != nil {
 		return nil, false, fmt.Errorf("unable to query clients: %w", err)
 	}
@@ -288,10 +299,10 @@ func (pg *Postgres) GetClients(
 
 	// Check if we got more results than requested
 	hasNext := false
-	if len(clients) > qs.PerPage {
+	if len(clients) > qs.Size {
 		hasNext = true
 		// Remove the extra record before returning
-		clients = clients[:qs.PerPage]
+		clients = clients[:qs.Size]
 	}
 
 	return clients, hasNext, nil
