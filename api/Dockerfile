@@ -1,4 +1,4 @@
-FROM golang:1.23.6-bookworm
+FROM golang:1.24.4-bookworm
 # FROM bitnami/golang:1.23-debian-12
 
 WORKDIR /
