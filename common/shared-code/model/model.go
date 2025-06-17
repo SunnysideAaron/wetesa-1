@@ -5,7 +5,7 @@ type MetaDataAPIResponse struct {
 	Filters string `json:"filters,omitempty"`
 	Sort    string `json:"sort,omitempty"`
 	Page    int    `json:"page,omitempty"`
-	Size    int    `json:"size,omitempty"`
+	PerPage int    `json:"per_page,omitempty"`
 	HasNext bool   `json:"hasNext,omitempty"`
 }
 

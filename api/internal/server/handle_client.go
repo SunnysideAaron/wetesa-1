@@ -3,6 +3,7 @@ package server
 import (
 	"log/slog"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"api/internal/database"
@@ -15,46 +16,12 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 		func(w http.ResponseWriter, r *http.Request) {
 			qs, page, err := database.ValidateGetClientsParams(r.URL.Query())
 
-			// qs, page, err := database.ValidateGetClientsParams(
-			// 	r.URL.Query().Get("fields"),
-			// 	r.URL.Query().Get("filters"),
-			// 	r.URL.Query().Get("sort"),
-			// 	r.URL.Query().Get("page"),
-			// 	r.URL.Query().Get("size"),
-			// )
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return
 			}
 
-			// sort := "asc"
-
-			// // Parse sort from query parameter
-			// if sortStr := r.URL.Query().Get("sort"); sortStr != "" {
-			// 	sortLower := strings.ToLower(sortStr)
-			// 	if sortLower != "asc" && sortLower != "desc" {
-			// 		http.Error(w, "Invalid sort parameter. Must be 'asc' or 'desc'", http.StatusBadRequest)
-			// 		return
-			// 	}
-
-			// 	sort = sortLower
-			// }
-
-			responseFilters := model.ClientFilters{
-				Name:    r.URL.Query().Get("name"),
-				Address: r.URL.Query().Get("address"),
-			}
-
-			dbFilters := responseFilters
-
-			if dbFilters.Name != "" {
-				dbFilters.Name = strings.ReplaceAll(dbFilters.Name, "*", "%")
-			}
-			if dbFilters.Address != "" {
-				dbFilters.Address = strings.ReplaceAll(dbFilters.Address, "*", "%")
-			}
-
-			clients, hasNext, err := db.GetClients(r.Context(), dbFilters, qs)
+			clients, hasNext, err := db.GetClients(r.Context(), qs)
 
 			// err = errors.New("test error")
 
@@ -69,17 +36,37 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 				return
 			}
 
+			//TODO make this dynamic or pull from env or something. I'm being lasy atm.
+			baseURL := "http://localhost:8080/api/v0.1"
+
+			previous := ""
+			if page > 0 {
+				previous = r.URL.String()
+				previous = strings.ReplaceAll(previous, "page="+strconv.Itoa(page), "page="+strconv.Itoa(page-1))
+				previous = baseURL + previous
+			}
+
+			next := ""
+			if hasNext {
+				next = r.URL.String()
+				if strings.Contains(next, "page=") {
+					next = strings.ReplaceAll(next, "page="+strconv.Itoa(page), "page="+strconv.Itoa(page+1))
+				} else {
+					if strings.Contains(next, "?") {
+						next += "&page=" + strconv.Itoa(page+1)
+					} else {
+						next += "?page=" + strconv.Itoa(page+1)
+					}
+				}
+				next = baseURL + next
+			}
+
 			response := model.ListClientsAPIResponse{
-				Success: true,
+				Success:  true,
+				Previous: previous,
+				// Messages
+				Next:    next,
 				Clients: clients,
-				MetaData: model.MetaDataAPIResponse{
-					Fields:  "client_id, name, address", // TODO
-					Filters: "name, address",            //TOOD
-					Sort:    "asc",                      //TODO
-					Page:    page,
-					Size:    qs.Size,
-					HasNext: hasNext,
-				},
 			}
 
 			err = encode(w, r, http.StatusOK, response)

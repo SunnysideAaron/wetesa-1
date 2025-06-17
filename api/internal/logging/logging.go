@@ -55,7 +55,8 @@ const (
 // It returns a slog.Logger and a LevelVar for dynamic log level control.
 func NewLogger(cfg *config.APIConfig) (*slog.Logger, *slog.LevelVar) {
 	lvl := new(slog.LevelVar)
-	lvl.Set(slog.LevelInfo)
+	// lvl.Set(slog.LevelInfo)
+	lvl.Set(slog.LevelDebug) // TODO just for right now.
 
 	opts := slog.HandlerOptions{
 		Level:     lvl,

@@ -47,6 +47,7 @@ type ClientFilters struct {
 type ListClientsAPIResponse struct {
 	Success  bool                 `json:"success"`
 	Messages []MessageAPIResponse `json:"messages"`
+	Previous string               `json:"previous,omitempty"`
+	Next     string               `json:"next,omitempty"`
 	Clients  []Client             `json:"clients"`
-	MetaData MetaDataAPIResponse  `json:"metaData"`
 }

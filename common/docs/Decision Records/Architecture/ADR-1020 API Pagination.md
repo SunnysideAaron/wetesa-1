@@ -12,7 +12,7 @@ Accepted, Proposed, Deprecated or Superseded (list DR)
 ## Decision
 
 - Use offset pagination.
-- Use page and size query parameters
+- Use page and per_page query parameters
 - Do not return total records
 - Use pagination links (previous and next)
 
@@ -45,7 +45,7 @@ Would self link mean we wouldn't have to include params/filters/pages into metaD
   "data": [...]
   "self": "https://my-service.zalandoapis.com/resources?cursor=<self-position>",
   "first": "https://my-service.zalandoapis.com/resources?cursor=<first-position>",
-  "prev": "https://my-service.zalandoapis.com/resources?cursor=<previous-position>",
+  "previous": "https://my-service.zalandoapis.com/resources?cursor=<previous-position>",
   "next": "https://my-service.zalandoapis.com/resources?cursor=<next-position>",
   "last": "https://my-service.zalandoapis.com/resources?cursor=<last-position>",
 }
@@ -67,7 +67,6 @@ cursor
   con: can't jump to specific page. have to go through all previous pages to get to desired page.
   con: code to implement is more complex
   con: have to pass around cursors/tokens
-
 
 ## Consequences
 
