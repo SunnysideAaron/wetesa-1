@@ -135,43 +135,88 @@ func validateURLParamFields(fields string, allowedColumns map[string]bool) (stri
 }
 
 // validateURLParamSort validates and processes sort parameters
-func validateURLParamSort(sortParams []string, allowedColumns map[string]bool) (string, error) {
-	orderByParts := []string{}
+func validateURLParamSort(
+	qs *QryStrings,
+	urlParams url.Values,
+	allowedColumns map[string]bool,
+) (err error) {
+	sortStr := urlParams.Get("sort")
 
-	for _, sortParam := range sortParams {
-		// Parse each sort parameter (e.g., "name:desc", "address:asc")
-		if sortParam != "" {
-			parts := strings.Split(sortParam, ":")
-			column := parts[0]
+	// orderByParts := []string{}
 
-			// Validate that the field is one of the allowed columns
-			if !allowedColumns[column] {
-				return "", fmt.Errorf("Invalid sort field: %s", column)
-			}
+	// for _, sortParam := range sortParams {
+	// 	// Parse each sort parameter (e.g., "name:desc", "address:asc")
+	// 	if sortParam != "" {
+	// 		parts := strings.Split(sortParam, ":")
+	// 		column := parts[0]
 
-			order := "ASC" // Default to ascending
-			if len(parts) > 1 {
-				switch strings.ToUpper(parts[1]) {
-				case "DESC":
-					order = "DESC"
-				case "ASC":
-					order = "ASC"
-				default:
-					return "", fmt.Errorf("Invalid sort order: %s", parts[1])
-				}
-			}
+	// 		// Validate that the field is one of the allowed columns
+	// 		if !allowedColumns[column] {
+	// 			return "", fmt.Errorf("Invalid sort field: %s", column)
+	// 		}
 
-			// Add to order by parts
-			orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
-		}
-	}
+	// 		order := "ASC" // Default to ascending
+	// 		if len(parts) > 1 {
+	// 			switch strings.ToUpper(parts[1]) {
+	// 			case "DESC":
+	// 				order = "DESC"
+	// 			case "ASC":
+	// 				order = "ASC"
+	// 			default:
+	// 				return "", fmt.Errorf("Invalid sort order: %s", parts[1])
+	// 			}
+	// 		}
 
-	if len(orderByParts) > 0 {
-		return " ORDER BY " + strings.Join(orderByParts, ", "), nil
-	}
+	// 		// Add to order by parts
+	// 		orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
+	// 	}
+	// }
 
-	return "", fmt.Errorf("nothing sortable")
+	// if len(orderByParts) > 0 {
+	// 	return " ORDER BY " + strings.Join(orderByParts, ", "), nil
+	// }
+
+	// return "", fmt.Errorf("nothing sortable")
+	return err
 }
+
+// func validateURLParamSort(sortParams []string, allowedColumns map[string]bool) (string, error) {
+// 	orderByParts := []string{}
+
+// 	for _, sortParam := range sortParams {
+// 		// Parse each sort parameter (e.g., "name:desc", "address:asc")
+// 		if sortParam != "" {
+// 			parts := strings.Split(sortParam, ":")
+// 			column := parts[0]
+
+// 			// Validate that the field is one of the allowed columns
+// 			if !allowedColumns[column] {
+// 				return "", fmt.Errorf("Invalid sort field: %s", column)
+// 			}
+
+// 			order := "ASC" // Default to ascending
+// 			if len(parts) > 1 {
+// 				switch strings.ToUpper(parts[1]) {
+// 				case "DESC":
+// 					order = "DESC"
+// 				case "ASC":
+// 					order = "ASC"
+// 				default:
+// 					return "", fmt.Errorf("Invalid sort order: %s", parts[1])
+// 				}
+// 			}
+
+// 			// Add to order by parts
+// 			orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
+// 		}
+// 	}
+
+// 	if len(orderByParts) > 0 {
+// 		return " ORDER BY " + strings.Join(orderByParts, ", "), nil
+// 	}
+
+// 	return "", fmt.Errorf("nothing sortable")
+// }
 
 func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err error) {
 	err = nil
@@ -219,12 +264,13 @@ func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err e
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
 func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, err error) {
+
 	qs.Columns = " client_id, name, address"
-	// allowedColumns := map[string]bool{
-	// 	"client_id": true,
-	// 	"name":      true,
-	// 	"address":   true,
-	// }
+	allowedColumns := map[string]bool{
+		"client_id": true,
+		"name":      true,
+		"address":   true,
+	}
 
 	// fields := urlParams.Get("fields")
 	// if fields != "" {
@@ -239,6 +285,10 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 	// argPosition := 1
 
 	qs.OrderBy = "  ORDER BY name ASC"
+	err = validateUrlParamSort(&qs, urlParams, allowedColumns)
+	if err != nil {
+		return qs, 0, err
+	}
 	// sortParams := urlParams["sort"] // This gets all values for the "sort" key as a slice
 	// if len(sortParams) > 0 {
 	// 	qs.OrderBy, err = validateURLParamSort(sortParams, allowedColumns)
@@ -247,7 +297,7 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 	// 	}
 	// }
 
-	page, err = validateUrlParamPage(&qs, urlParams)
+	page, err = validateUrlParamPage(&qs, urlParams, page)
 
 	return qs, page, err
 }
