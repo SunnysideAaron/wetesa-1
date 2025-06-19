@@ -104,6 +104,8 @@ See: ADR-002 Database Columns
 
 ### MUST use kebab-case for path segments
 
+[Google: Make it easy to understand your URL structure](https://developers.google.com/search/docs/crawling-indexing/url-structure#best-practices)
+
 ### MUST use normalized paths without empty path segments and trailing slashes
 
 ### MUST keep URLs verb-free
@@ -157,20 +159,65 @@ Pick one of the following. I prefer the first. But do we have to escape commas?
 
 - **embed**: field name expression to expand or embedded sub-entities, e.g. inside of an article entity, expand silhouette code into the silhouette object. Implementing embed correctly is difficult, so do it with care. See SHOULD allow optional embedding of sub-resources below.
 
+
+
 ### PENDING MUST use URL parameters for sorting
+
+
+Option 2
+```
+GET /posts?sort=id,-views
+```
+
+
 
 - **sort**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the sort order. To indicate sorting direction, fields may be prefixed with + (ascending) or - (descending), e.g. /sales-orders?sort=+id.
   - We don't need to allow for all fields to be sortable. Only the ones the UI needs.
 
+Option 1
+```
+GET /posts?sort=id:asc&sort=views:desc
+```
 
+Option 2
+```
+GET /posts?sort=id,-views
+```
 
 ### PENDING MUST use URL parameters for queries
+
+- Aaron encountered "+" being url encoded as spaces. Need to confirm why / how but avoid "+" in urls for now.
 
 - [Wikipedia: Query String](https://en.wikipedia.org/wiki/Query_string)
   - SPACE is encoded as '+' or '%20'
   - '+' is encoded as %2B
   - Letters (A–Z and a–z), numbers (0–9) and the characters '~','-','.' and '_' are left as-is
   - ("~") is permitted in query strings by RFC3986 but required to be percent-encoded in HTML forms to "%7E"
+
+- [Faceted navigation best (and 5 of the worst) practices](https://developers.google.com/search/blog/2014/02/faceted-navigation-best-and-5-of-worst)
+  - [Google: Do Not Use Commas, Brackets Or Non-Standard URL Encoding For Faceted Navigation](https://www.seroundtable.com/google-commas-brackets-faceted-navigation-32741.html)
+- [Google: URL structure](https://developers.google.com/search/docs/crawling-indexing/url-structure)
+  - Using an equal sign (=) to separate key-value pairs and an ampersand (&) to add additional parameters: 
+    - ```https://example.com/category?category=dresses&sort=low-to-high&sid=789```
+  - DONT USE a colon (:) to separate key-value pairs and brackets ([ ]) to add additional parameters:
+    - ```https://example.com/category?[category:dresses][sort:price-low-to-high][sid:789]```
+  - Using a comma (,) to list multiple values for the same key, an equal sign (=) to separate key-value pairs, and an ampersand (&) to add additional parameters: 
+    - ```https://example.com/category?category=dresses&color=purple,pink,salmon&sort=low-to-high&sid=789```
+    DONT USE a single comma (,) to separate key-value pairs and double commas (,,) to add additional parameters:
+    - ```https://example.com/category?category,dresses,,sort,lowtohigh,,sid,789```
+  - [Google: fragements](https://developers.google.com/search/docs/crawling-indexing/url-structure#fragments)
+  - don't use fragments in URLs
+
+- [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#page-12)
+  - reserved = gen-delims / sub-delims
+  - gen-delims = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+  - sub-delims  = "!" / "$" / "&" / "'" / "(" / ")" "*" / "+" / "," / ";" / "="
+  - unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+
+TODO yes i'm trying
+- Commas: I see conflicting information on whether using commas in urls is good or bad.
+I'm going to avoid them. will make the urls more verbose but hopefully will keep
+us from running into % encoding issues.
 
 
 
@@ -234,20 +281,29 @@ Not an option:
   - [OData adoption rate?](https://www.reddit.com/r/dotnet/comments/11eoa6d/odata_adoption_rate/)
   - too verbose and too flexible
 
-
-
-
-
 ### MUST use URL query parameters for pagination
 
 SEE ADR-1019 API Pagination.md
+
+### PENDING MUST only include result set limiting if there is an established need to do so
+
+TODO rewrite rule to cover sorting and querying fields as well. each field has to have a reason. don't blanket add each field.
+
+It is always possible to add result set limiting later, but removing it is a breaking change.
+
+- [Google: Filtering](https://google.aip.dev/132#filtering)
 
 ### MUST NOT design complex query languages using JSON
 
 For our example API we wont need complex queries. It's enough to know we can.
 
+### PENDING MUST use locale-specific URLs
 
+**TODO** [Google: Using locale-specific URLs](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites#locale-specific-urls)
 
+### PENDING MUST use a robots.txt file to block crawlers
+
+-[Google: Prevent crawling of faceted navigation URLs](https://developers.google.com/search/docs/crawling-indexing/crawling-managing-faceted-navigation)
 
 ## 8. REST Basics - JSON payload
 

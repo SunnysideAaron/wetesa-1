@@ -134,89 +134,53 @@ func validateURLParamFields(fields string, allowedColumns map[string]bool) (stri
 	return " " + strings.Join(columns, ", "), nil
 }
 
-// validateURLParamSort validates and processes sort parameters
-func validateURLParamSort(
+// validateUrlParamSort validates and processes sort parameters
+func validateUrlParamSort(
 	qs *QryStrings,
 	urlParams url.Values,
 	allowedColumns map[string]bool,
 ) (err error) {
 	sortStr := urlParams.Get("sort")
 
-	// orderByParts := []string{}
+	if len(sortStr) == 0 {
+		return nil
+	}
 
-	// for _, sortParam := range sortParams {
-	// 	// Parse each sort parameter (e.g., "name:desc", "address:asc")
-	// 	if sortParam != "" {
-	// 		parts := strings.Split(sortParam, ":")
-	// 		column := parts[0]
+	orderByParts := []string{}
 
-	// 		// Validate that the field is one of the allowed columns
-	// 		if !allowedColumns[column] {
-	// 			return "", fmt.Errorf("Invalid sort field: %s", column)
-	// 		}
+	values := strings.Split(sortStr, ",")
 
-	// 		order := "ASC" // Default to ascending
-	// 		if len(parts) > 1 {
-	// 			switch strings.ToUpper(parts[1]) {
-	// 			case "DESC":
-	// 				order = "DESC"
-	// 			case "ASC":
-	// 				order = "ASC"
-	// 			default:
-	// 				return "", fmt.Errorf("Invalid sort order: %s", parts[1])
-	// 			}
-	// 		}
+	column := ""
+	order := "ASC"
 
-	// 		// Add to order by parts
-	// 		orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
-	// 	}
-	// }
+	for _, value := range values {
+		switch value[0] {
+		case '-':
+			column = value[1:]
+			order = "DESC"
+		// encountered + being url encoded as space. Don't use for now. Don't NEED to
+		// so OK to just leave off for now. Leaving here as documentation.
+		// case '+':
+		// 	column = value[1:]
+		// 	order = "ASC"
+		default:
+			column = value
+			order = "ASC"
+		}
 
-	// if len(orderByParts) > 0 {
-	// 	return " ORDER BY " + strings.Join(orderByParts, ", "), nil
-	// }
+		if !allowedColumns[column] {
+			return fmt.Errorf("Invalid sort field: '%s' allowed fields are: %v", column, allowedColumns)
+		}
 
-	// return "", fmt.Errorf("nothing sortable")
+		orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
+	}
+
+	if len(orderByParts) > 0 {
+		qs.OrderBy = " ORDER BY " + strings.Join(orderByParts, ", ")
+	}
+
 	return err
 }
-
-// func validateURLParamSort(sortParams []string, allowedColumns map[string]bool) (string, error) {
-// 	orderByParts := []string{}
-
-// 	for _, sortParam := range sortParams {
-// 		// Parse each sort parameter (e.g., "name:desc", "address:asc")
-// 		if sortParam != "" {
-// 			parts := strings.Split(sortParam, ":")
-// 			column := parts[0]
-
-// 			// Validate that the field is one of the allowed columns
-// 			if !allowedColumns[column] {
-// 				return "", fmt.Errorf("Invalid sort field: %s", column)
-// 			}
-
-// 			order := "ASC" // Default to ascending
-// 			if len(parts) > 1 {
-// 				switch strings.ToUpper(parts[1]) {
-// 				case "DESC":
-// 					order = "DESC"
-// 				case "ASC":
-// 					order = "ASC"
-// 				default:
-// 					return "", fmt.Errorf("Invalid sort order: %s", parts[1])
-// 				}
-// 			}
-
-// 			// Add to order by parts
-// 			orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
-// 		}
-// 	}
-
-// 	if len(orderByParts) > 0 {
-// 		return " ORDER BY " + strings.Join(orderByParts, ", "), nil
-// 	}
-
-// 	return "", fmt.Errorf("nothing sortable")
-// }
 
 func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err error) {
 	err = nil
@@ -284,20 +248,15 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 	qs.Args = []any{}
 	// argPosition := 1
 
-	qs.OrderBy = "  ORDER BY name ASC"
+	qs.OrderBy = "  ORDER BY name ASC" // default sort
+	// based on this limited example I wouldn't normally allow sorting on client_id or address on list client
+	// but I want to demonstrate how to do sorting
 	err = validateUrlParamSort(&qs, urlParams, allowedColumns)
 	if err != nil {
 		return qs, 0, err
 	}
-	// sortParams := urlParams["sort"] // This gets all values for the "sort" key as a slice
-	// if len(sortParams) > 0 {
-	// 	qs.OrderBy, err = validateURLParamSort(sortParams, allowedColumns)
-	// 	if err != nil {
-	// 		return qs, page, err
-	// 	}
-	// }
 
-	page, err = validateUrlParamPage(&qs, urlParams, page)
+	page, err = validateUrlParamPage(&qs, urlParams)
 
 	return qs, page, err
 }

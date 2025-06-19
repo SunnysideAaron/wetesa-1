@@ -37,6 +37,7 @@ func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler 
 			}
 
 			//TODO make this dynamic or pull from env or something. I'm being lasy atm.
+			// r.host?
 			baseURL := "http://localhost:8080/api/v0.1"
 
 			previous := ""
