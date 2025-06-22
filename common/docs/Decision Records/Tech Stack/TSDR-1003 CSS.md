@@ -37,6 +37,10 @@ https://www.reddit.com/r/sveltejs/comments/1kulk34/modern_ui_library/
 
 https://picocss.com/
 
+https://piccalil.li/blog/a-more-modern-css-reset/
+
+https://every-layout.dev/
+
 ## Decision
 
 

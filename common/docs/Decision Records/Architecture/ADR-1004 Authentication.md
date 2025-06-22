@@ -63,6 +63,9 @@ client golang/oauth2
 server go-oauth2/oauth2
 or check oauth.net/code/go/
 
+https://www.reddit.com/r/webdev/comments/1lh8tgs/im_struggling_to_implement_authentication_as_a/
+
+
 
 Not an option:
 

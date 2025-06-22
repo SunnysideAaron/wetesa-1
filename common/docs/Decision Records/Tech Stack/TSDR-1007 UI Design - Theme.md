@@ -34,6 +34,8 @@ https://evergreen-ils.org/documentation/previews/proposed_style_guide.html
 https://schema.org/
   simple. a bit dated but i liked it.
 
+https://www.npr.org/
+
 ## Decision
 
 
