@@ -12,6 +12,7 @@ import (
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
+	"github.com/rbicker/go-rsql"
 
 	"api/internal/shared-code/model"
 )
@@ -120,18 +121,48 @@ type QryStrings struct {
 }
 
 // validateURLParamSort validates and processes sort parameters
-func validateURLParamFields(fields string, allowedColumns map[string]bool) (string, error) {
-	fieldParts := strings.Split(fields, ":")
-	columns := []string{}
+// func validateURLParamFields(fields string, allowedColumns map[string]bool) (string, error) {
+// 	fieldParts := strings.Split(fields, ":")
+// 	columns := []string{}
 
-	for _, field := range fieldParts {
-		if !allowedColumns[field] {
-			return "", fmt.Errorf("Invalid field: %s", field)
-		}
-		columns = append(columns, field)
+// 	for _, field := range fieldParts {
+// 		if !allowedColumns[field] {
+// 			return "", fmt.Errorf("Invalid field: %s", field)
+// 		}
+// 		columns = append(columns, field)
+// 	}
+
+// 	return " " + strings.Join(columns, ", "), nil
+// }
+
+// validateUrlParamQuery validates and processes query parameters
+func validateUrlParamQuery(
+	qs *QryStrings,
+	urlParams url.Values,
+	allowedColumns map[string]bool,
+) (err error) {
+	queryStr := urlParams.Get("q")
+
+	if len(queryStr) == 0 {
+		return nil
 	}
 
-	return " " + strings.Join(columns, ", "), nil
+	qs.Where = ""
+
+	parser, err := rsql.NewParser(rsql.Mongo())
+	if err != nil {
+		fmt.Errorf("error while creating parser: %s", err)
+	}
+	s := `status=="A",qty=lt=30`
+	res, err := parser.Process(s)
+	if err != nil {
+		fmt.Errorf("error while parsing: %s", err)
+	}
+	println("result", res)
+
+	println("queryStr", queryStr)
+
+	return err
 }
 
 // validateUrlParamSort validates and processes sort parameters
@@ -228,14 +259,16 @@ func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err e
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
 func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, err error) {
-
-	qs.Columns = " client_id, name, address"
+	qs.Columns = " client_id, name, address" // default columns
 	allowedColumns := map[string]bool{
 		"client_id": true,
 		"name":      true,
 		"address":   true,
 	}
 
+	// TODO fields. I'm punting for now to prevent premature optimization.
+	// should fields add to default list, subrtract from list, or replace list?
+	// wait till I have a use case to implement it.
 	// fields := urlParams.Get("fields")
 	// if fields != "" {
 	// 	qs.Columns, err = validateURLParamFields(fields, allowedColumns)
@@ -247,6 +280,10 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 	qs.Where = ""
 	qs.Args = []any{}
 	// argPosition := 1
+	err = validateUrlParamQuery(&qs, urlParams, allowedColumns)
+	if err != nil {
+		return qs, 0, err
+	}
 
 	qs.OrderBy = "  ORDER BY name ASC" // default sort
 	// based on this limited example I wouldn't normally allow sorting on client_id or address on list client

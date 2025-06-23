@@ -41,6 +41,8 @@ https://piccalil.li/blog/a-more-modern-css-reset/
 
 https://every-layout.dev/
 
+https://www.reddit.com/r/webdev/comments/1l8qmhx/question_from_backend_dev_do_you_actually_write/
+
 ## Decision
 
 

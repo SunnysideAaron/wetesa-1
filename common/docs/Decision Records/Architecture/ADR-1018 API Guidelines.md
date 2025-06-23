@@ -161,27 +161,20 @@ Pick one of the following. I prefer the first. But do we have to escape commas?
 
 
 
-### PENDING MUST use URL parameters for sorting
+### MUST use URL parameters for sorting
 
-
-Option 2
+Selected format
 ```
 GET /posts?sort=id,-views
 ```
 
+We don't need to allow for all fields to be sortable. Only the ones the UI needs.
 
+Note no "+" for ascending. Ascending is the default. "+" gets incoded as a space.
 
-- **sort**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the sort order. To indicate sorting direction, fields may be prefixed with + (ascending) or - (descending), e.g. /sales-orders?sort=+id.
-  - We don't need to allow for all fields to be sortable. Only the ones the UI needs.
-
-Option 1
+Other option if current format causes issues.
 ```
 GET /posts?sort=id:asc&sort=views:desc
-```
-
-Option 2
-```
-GET /posts?sort=id,-views
 ```
 
 ### PENDING MUST use URL parameters for queries
@@ -216,8 +209,7 @@ GET /posts?sort=id,-views
 
 TODO yes i'm trying
 - Commas: I see conflicting information on whether using commas in urls is good or bad.
-I'm going to avoid them. will make the urls more verbose but hopefully will keep
-us from running into % encoding issues.
+I'm going to try them for now to simplfy urls.
 
 
 
@@ -272,6 +264,8 @@ GET /foo?arr[0]=bar
 - [RSQL](https://github.com/jirutka/rsql-parser?tab=readme-ov-file#grammar-and-semantic)
   - slightly more modern version of FIQL
   - [Here.com: RSQL](https://www.here.com/docs/bundle/data-client-library-developer-guide-java-scala/page/client/rsql.html)
+  - https://owasp.org/www-community/attacks/RSQL_Injection
+    - has some usefull other opperators / syntax
 - [json-server](https://github.com/typicode/json-server)
 - [Correct way to pass multiple values for same parameter name in GET request](https://stackoverflow.com/questions/24059773/correct-way-to-pass-multiple-values-for-same-parameter-name-in-get-request)
 
