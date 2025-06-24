@@ -6,7 +6,7 @@
 <form method="get">
   <div>
     <label for="name">Name:</label>
-    <input type='text' id="name" name='name' value='{{.Response.Filters.Name}}' placeholder="* = wildcard">
+    <input type='text' id="name" name='name' value='' placeholder="* = wildcard">
   </div>
   <div>
     <label for="deleted">Show Deleted:</label>
@@ -21,9 +21,19 @@
 <li><a href='/clients/{{.ClientID}}'>{{.Name}}</a> (deleted)</li>
 {{end}}
 </ul>
-{{if .Response.HasNext}}
+{{if or .Response.Previous .Response.Next}}
 <div>
-  <a href='/clients?page=2'>Next</a>
+{{end}}
+{{if .Response.Previous}}
+  <a href='{{.Response.Previous}}'>Previous</a>
+{{end}}
+{{if and .Response.Previous .Response.Next}}
+-
+{{end}}
+{{if .Response.Next}}
+  <a href='{{.Response.Next}}'>Next</a>
+{{end}}
+{{if or .Response.Previous .Response.Next}}
 </div>
 {{end}}
 {{end}}

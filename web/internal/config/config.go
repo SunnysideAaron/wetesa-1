@@ -132,8 +132,11 @@ type WebConfig struct {
 	// RequestMaxBytes is the maximum size of incoming request bodies
 	// RequestMaxBytes int64
 	WebCacheTemplates bool
+	// WebURL is the base URL for the web site.
+	WebURL string
 	// APIURL is where to get this sites data from.
-	WebAPIURL string
+	WebAPIURLInternal string
+	WebAPIURLExternal string
 }
 
 // TODO api config and web config are virtually the same
@@ -153,7 +156,9 @@ func LoadWebConfig() *WebConfig {
 		// common values default is 8k, Other defaults might be 4k, 16k, or 48k.
 		// RequestMaxBytes: 8192,
 		WebCacheTemplates: true,
-		WebAPIURL:         "",
+		WebURL:            "",
+		WebAPIURLInternal: "",
+		WebAPIURLExternal: "",
 	}
 
 	// Read and validate environment variables.
@@ -217,7 +222,9 @@ func LoadWebConfig() *WebConfig {
 		}
 	}
 
-	cnf.WebAPIURL = os.Getenv("WEB_API_URL")
+	cnf.WebURL = os.Getenv("WEB_URL")
+	cnf.WebAPIURLInternal = os.Getenv("WEB_API_URL_INTERNAL")
+	cnf.WebAPIURLExternal = os.Getenv("WEB_API_URL_EXTERNAL")
 
 	return cnf
 }

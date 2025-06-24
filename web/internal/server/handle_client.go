@@ -6,22 +6,26 @@ import (
 	"log"
 	"log/slog"
 	"net/http"
+	"strings"
 	"web/internal/config"
 )
 
 type listClientsTemplateData struct {
 	MainMenu string
 	Response listClientsAPIResponse
-	NextPage int
+}
+
+type MessageAPIResponse struct {
+	Severity string `json:"severity"` // should be INFO, WARN, or ERROR
+	Message  string `json:"message"`
 }
 
 type listClientsAPIResponse struct {
-	Clients []client `json:"clients"`
-	Page    int      `json:"page"`
-	Filters struct {
-		Name string `json:"name"`
-	} `json:"filters"`
-	HasNext bool `json:"hasNext"`
+	Success  bool                 `json:"success"`
+	Messages []MessageAPIResponse `json:"messages"`
+	Previous string               `json:"previous,omitempty"`
+	Next     string               `json:"next,omitempty"`
+	Clients  []client             `json:"clients"`
 }
 
 type client struct {
@@ -61,7 +65,7 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 			// url.Values
 
 			// Other web end points wont be just a pass through. probably?
-			url := cfg.WebAPIURL + "/clients?" + r.URL.RawQuery
+			url := cfg.WebAPIURLInternal + "/clients?" + r.URL.RawQuery
 
 			resp, err := http.Get(url)
 			if err != nil {
@@ -78,6 +82,27 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 			err = json.Unmarshal(body, &responseData)
 			if err != nil {
 				log.Fatal(err)
+			}
+
+			// Convert API URLs to web client URLs in pagination links
+			if responseData.Next != "" {
+				// Replace API base URL with web client base URL
+				responseData.Next = strings.Replace(
+					responseData.Next,
+					cfg.WebAPIURLExternal,
+					cfg.WebURL,
+					1,
+				)
+			}
+
+			if responseData.Previous != "" {
+				// Replace API base URL with web client base URL
+				responseData.Previous = strings.Replace(
+					responseData.Previous,
+					cfg.WebAPIURLExternal,
+					cfg.WebURL,
+					1,
+				)
 			}
 
 			t := "clients_list"
