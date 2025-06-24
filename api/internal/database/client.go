@@ -134,6 +134,13 @@ type QryStrings struct {
 // 	return " " + strings.Join(columns, ", "), nil
 // }
 
+// ***************
+// so this is frustrating. I spent a lot of time working on query params with RSQL
+// but html forms don't submit url query parameters that way. Since this
+// api is really just the data layer for our website it doesn't make sense to
+// convert the form data into rsql to just submit it to the api.
+// keeping here for the moment in case I change my mind.
+
 // validateUrlParamQuery validates and processes query parameters
 func validateUrlParamQuery(
 	ctx context.Context,
@@ -342,7 +349,10 @@ func (pg *Postgres) GetClients(
 ) ([]model.Client, bool, error) {
 	query := `SELECT` + qs.Columns
 	query += ` FROM client`
-	query += " WHERE " + qs.Where
+
+	if qs.Where != "" {
+		query += " WHERE " + qs.Where
+	}
 	query += qs.OrderBy
 	query += qs.Limit
 
