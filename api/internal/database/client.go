@@ -136,11 +136,24 @@ type QryStrings struct {
 
 // validateUrlParamQuery validates and processes query parameters
 func validateUrlParamQuery(
+	ctx context.Context,
 	qs *QryStrings,
 	urlParams url.Values,
 	allowedColumns map[string]bool,
 ) (err error) {
+
+	// Note that ; has to be encoded as %3B or urlParams.Get will treat it as a new parameter.
+	// https://pkg.go.dev/net/url#ParseQuery
+	// "Settings containing a non-URL-encoded semicolon are considered invalid."
+	// this was a security thing in go 1.17.
 	queryStr := urlParams.Get("q")
+
+	slog.LogAttrs(
+		ctx,
+		slog.LevelDebug,
+		"queryStr",
+		slog.String("queryStr", queryStr),
+	)
 
 	if len(queryStr) == 0 {
 		return nil
@@ -177,7 +190,10 @@ func validateUrlParamQuery(
 		fmt.Errorf("error while parsing: %s", err)
 	}
 
-	qs.Where = " WHERE " + res
+	// Don't hard code the "WHERE" word into qs.Where here. This makes this
+	// function more reusable. if the the query string is only part of the WHERE
+	// clause and not all of it.
+	qs.Where = res
 
 	return err
 }
@@ -275,7 +291,7 @@ func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err e
 
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
-func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, err error) {
+func ValidateGetClientsParams(ctx context.Context, urlParams url.Values) (qs QryStrings, page int, err error) {
 	qs.Columns = " client_id, name, address" // default columns
 	allowedColumns := map[string]bool{
 		"client_id": true,
@@ -297,7 +313,7 @@ func ValidateGetClientsParams(urlParams url.Values) (qs QryStrings, page int, er
 	qs.Where = ""
 	qs.Args = []any{}
 	// argPosition := 1
-	err = validateUrlParamQuery(&qs, urlParams, allowedColumns)
+	err = validateUrlParamQuery(ctx, &qs, urlParams, allowedColumns)
 	if err != nil {
 		return qs, 0, err
 	}
@@ -323,8 +339,7 @@ func (pg *Postgres) GetClients(
 ) ([]model.Client, bool, error) {
 	query := `SELECT` + qs.Columns
 	query += ` FROM client`
-
-	query += qs.Where
+	query += " WHERE " + qs.Where
 	query += qs.OrderBy
 	query += qs.Limit
 

@@ -180,6 +180,8 @@ GET /posts?sort=id:asc&sort=views:desc
 ### PENDING MUST use URL parameters for queries
 
 - Aaron encountered "+" being url encoded as spaces. Need to confirm why / how but avoid "+" in urls for now.
+- Aaron encountered ";" has to be encoded as "%3B" or golangs urlParams.Get will treat it as a new parameter. ie query parameter separator. like &. This is something that changed in go 1.17 when they decided ; can't be a param separator.
+
 
 - [Wikipedia: Query String](https://en.wikipedia.org/wiki/Query_string)
   - SPACE is encoded as '+' or '%20'

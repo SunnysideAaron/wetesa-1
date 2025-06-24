@@ -14,7 +14,7 @@ import (
 func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			qs, page, err := database.ValidateGetClientsParams(r.URL.Query())
+			qs, page, err := database.ValidateGetClientsParams(r.Context(), r.URL.Query())
 
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
