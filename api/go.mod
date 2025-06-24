@@ -7,13 +7,10 @@ toolchain go1.24.4
 require (
 	github.com/jackc/pgerrcode v0.0.0-20240316143900-6e2875d9b438
 	github.com/jackc/pgx/v5 v5.7.5
-	github.com/rbicker/go-rsql v0.0.0-00010101000000-000000000000
 // shared-code v0.0.0
 )
 
 // replace shared-code => ./shared-code
-// TODO get our fixes merged into their library.
-replace github.com/rbicker/go-rsql => ./internal/shared-code/go-rsql
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect

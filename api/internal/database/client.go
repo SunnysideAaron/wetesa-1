@@ -12,7 +12,6 @@ import (
 	"github.com/jackc/pgerrcode"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/rbicker/go-rsql"
 
 	"api/internal/shared-code/model"
 )
@@ -120,94 +119,6 @@ type QryStrings struct {
 	Args    []any
 }
 
-// func validateURLParamFields(fields string, allowedColumns map[string]bool) (string, error) {
-// 	fieldParts := strings.Split(fields, ":")
-// 	columns := []string{}
-
-// 	for _, field := range fieldParts {
-// 		if !allowedColumns[field] {
-// 			return "", fmt.Errorf("Invalid field: %s", field)
-// 		}
-// 		columns = append(columns, field)
-// 	}
-
-// 	return " " + strings.Join(columns, ", "), nil
-// }
-
-// ***************
-// so this is frustrating. I spent a lot of time working on query params with RSQL
-// but html forms don't submit url query parameters that way. Since this
-// api is really just the data layer for our website it doesn't make sense to
-// convert the form data into rsql to just submit it to the api.
-// keeping here for the moment in case I change my mind.
-
-// validateUrlParamQuery validates and processes query parameters
-func validateUrlParamQuery(
-	ctx context.Context,
-	qs *QryStrings,
-	urlParams url.Values,
-	allowedColumns map[string]bool,
-) (err error) {
-
-	// Note that ; has to be encoded as %3B or urlParams.Get will treat it as a new parameter.
-	// https://pkg.go.dev/net/url#ParseQuery
-	// "Settings containing a non-URL-encoded semicolon are considered invalid."
-	// this was a security thing in go 1.17.
-	queryStr := urlParams.Get("q")
-
-	slog.LogAttrs(
-		ctx,
-		slog.LevelDebug,
-		"queryStr",
-		slog.String("queryStr", queryStr),
-	)
-
-	if len(queryStr) == 0 {
-		return nil
-	}
-
-	//http://localhost:8080/api/v0.1/clients?q=name=ilike=*A*,address=ilike=b*
-	customOperators := []rsql.Operator{
-		{
-			Operator: "=ilike=",
-			Formatter: func(key, value string, paramIndex *int) (string, []any) {
-				*paramIndex++
-				value = strings.ReplaceAll(value, "*", "%")
-				return fmt.Sprintf(`%s ILIKE $%d`, key, *paramIndex), []any{value}
-			},
-		},
-	}
-
-	var opts []func(*rsql.Parser) error
-	opts = append(opts, rsql.SQL())
-	opts = append(opts, rsql.WithOperators(customOperators...))
-	parser, err := rsql.NewParser(opts...)
-	if err != nil {
-		fmt.Errorf("error while creating parser: %s", err)
-	}
-
-	// Convert allowedColumns map to slice for rsql.SetAllowedKeys
-	// TODO in the future it might make sense to adjust rsql.SetAllowedKeys to take
-	// the map. I believe we are using the map because it's faster? more idomatic?
-	allowedKeys := make([]string, 0, len(allowedColumns))
-	for key := range allowedColumns {
-		allowedKeys = append(allowedKeys, key)
-	}
-
-	res, args, err := parser.Process(queryStr, rsql.SetAllowedKeys(allowedKeys))
-	if err != nil {
-		fmt.Errorf("error while parsing: %s", err)
-	}
-
-	// Don't hard code the "WHERE" word into qs.Where here. This makes this
-	// function more reusable. if the the query string is only part of the WHERE
-	// clause and not all of it.
-	qs.Where = res
-	qs.Args = args
-
-	return err
-}
-
 // validateUrlParamSort validates and processes sort parameters
 func validateUrlParamSort(
 	qs *QryStrings,
@@ -309,24 +220,9 @@ func ValidateGetClientsParams(ctx context.Context, urlParams url.Values) (qs Qry
 		"address":   true,
 	}
 
-	// TODO fields. I'm punting for now to prevent premature optimization.
-	// should fields add to default list, subrtract from list, or replace list?
-	// wait till I have a use case to implement it.
-	// fields := urlParams.Get("fields")
-	// if fields != "" {
-	// 	qs.Columns, err = validateURLParamFields(fields, allowedColumns)
-	// 	if err != nil {
-	// 		return qs, page, err
-	// 	}
-	// }
-
 	qs.Where = ""
 	qs.Args = []any{}
 	// argPosition := 1
-	err = validateUrlParamQuery(ctx, &qs, urlParams, allowedColumns)
-	if err != nil {
-		return qs, 0, err
-	}
 
 	qs.OrderBy = "  ORDER BY name ASC" // default sort
 	// based on this limited example I wouldn't normally allow sorting on client_id or address on list client
