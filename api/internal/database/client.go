@@ -224,6 +224,13 @@ func ValidateGetClientsParams(ctx context.Context, urlParams url.Values) (qs Qry
 	qs.Args = []any{}
 	// argPosition := 1
 
+	nameStr := urlParams.Get("name")
+	if nameStr != "" {
+		qs.Where += " name ILIKE $1"
+		nameStr = strings.ReplaceAll(nameStr, "*", "%")
+		qs.Args = append(qs.Args, nameStr)
+	}
+
 	qs.OrderBy = "  ORDER BY name ASC" // default sort
 	// based on this limited example I wouldn't normally allow sorting on client_id or address on list client
 	// but I want to demonstrate how to do sorting
