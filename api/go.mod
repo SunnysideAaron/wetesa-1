@@ -1,6 +1,8 @@
 module api
 
-go 1.23.5
+go 1.24
+
+toolchain go1.24.4
 
 require (
 	github.com/jackc/pgerrcode v0.0.0-20240316143900-6e2875d9b438
@@ -10,6 +12,8 @@ require (
 )
 
 // replace shared-code => ./shared-code
+// TODO get our fixes merged into their library.
+replace github.com/rbicker/go-rsql => ./internal/shared-code/go-rsql
 
 require (
 	github.com/jackc/pgpassfile v1.0.0 // indirect

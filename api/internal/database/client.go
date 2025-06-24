@@ -120,7 +120,6 @@ type QryStrings struct {
 	Args    []any
 }
 
-// validateURLParamSort validates and processes sort parameters
 // func validateURLParamFields(fields string, allowedColumns map[string]bool) (string, error) {
 // 	fieldParts := strings.Split(fields, ":")
 // 	columns := []string{}
@@ -147,20 +146,38 @@ func validateUrlParamQuery(
 		return nil
 	}
 
-	qs.Where = ""
+	customOperators := []rsql.Operator{
+		{
+			Operator: "=ilike=",
+			Formatter: func(key, value string) string {
+				value = strings.ReplaceAll(value, "*", "%")
+				return fmt.Sprintf(`%s ILIKE %s`, key, value)
+			},
+		},
+	}
 
-	parser, err := rsql.NewParser(rsql.Mongo())
+	var opts []func(*rsql.Parser) error
+	opts = append(opts, rsql.SQL())
+	opts = append(opts, rsql.WithOperators(customOperators...))
+	parser, err := rsql.NewParser(opts...)
 	if err != nil {
 		fmt.Errorf("error while creating parser: %s", err)
 	}
-	s := `status=="A",qty=lt=30`
-	res, err := parser.Process(s)
+
+	// Convert allowedColumns map to slice for rsql.SetAllowedKeys
+	// TODO in the future it might make sense to adjust rsql.SetAllowedKeys to take
+	// the map. I believe we are using the map because it's faster? more idomatic?
+	allowedKeys := make([]string, 0, len(allowedColumns))
+	for key := range allowedColumns {
+		allowedKeys = append(allowedKeys, key)
+	}
+
+	res, err := parser.Process(queryStr, rsql.SetAllowedKeys(allowedKeys))
 	if err != nil {
 		fmt.Errorf("error while parsing: %s", err)
 	}
-	println("result", res)
 
-	println("queryStr", queryStr)
+	qs.Where = " WHERE " + res
 
 	return err
 }
@@ -305,8 +322,7 @@ func (pg *Postgres) GetClients(
 	qs QryStrings,
 ) ([]model.Client, bool, error) {
 	query := `SELECT` + qs.Columns
-	query += ` FROM client
-		 	   WHERE 1=1`
+	query += ` FROM client`
 
 	query += qs.Where
 	query += qs.OrderBy
