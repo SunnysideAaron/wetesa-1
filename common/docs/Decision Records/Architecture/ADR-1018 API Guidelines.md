@@ -140,6 +140,40 @@ Avoid requiring resource URIs more complex than collection/item/collection.
 
 ### PENDING MUST use snake_case (never camelCase) for query parameters
 
+### PENDING URL Character Notes
+
+Several of the following guidelines make use of these notes.
+
+- Aaron's Notes
+  - Encountered "+" being url encoded as spaces. Need to confirm why / how but avoid "+" in urls for now.
+  - Encountered ";" has to be encoded as "%3B" or Gos urlParams.Get will treat it as a new parameter. ie query parameter separator. like &. This is something that changed in go 1.17 when they decided ; can't be a param separator.
+  - Commas: I see conflicting information on whether using commas in urls is
+    good or bad. I'm going to try them for now to simply urls. It doesn't appear
+    that go is having issues with them.
+- [Wikipedia: Query String](https://en.wikipedia.org/wiki/Query_string)
+  - SPACE is encoded as '+' or '%20'
+  - '+' is encoded as %2B
+  - Letters (A–Z and a–z), numbers (0–9) and the characters '~','-','.' and '_' are left as-is
+  - ("~") is permitted in query strings by RFC3986 but required to be percent-encoded in HTML forms to "%7E"
+- [Faceted navigation best (and 5 of the worst) practices](https://developers.google.com/search/blog/2014/02/faceted-navigation-best-and-5-of-worst)
+  - [Google: Do Not Use Commas, Brackets Or Non-Standard URL Encoding For Faceted Navigation](https://www.seroundtable.com/google-commas-brackets-faceted-navigation-32741.html)
+- [Google: URL structure](https://developers.google.com/search/docs/crawling-indexing/url-structure)
+  - Using an equal sign (=) to separate key-value pairs and an ampersand (&) to add additional parameters: 
+    - ```https://example.com/category?category=dresses&sort=low-to-high&sid=789```
+  - DONT USE a colon (:) to separate key-value pairs and brackets ([ ]) to add additional parameters:
+    - ```https://example.com/category?[category:dresses][sort:price-low-to-high][sid:789]```
+  - Using a comma (,) to list multiple values for the same key, an equal sign (=) to separate key-value pairs, and an ampersand (&) to add additional parameters: 
+    - ```https://example.com/category?category=dresses&color=purple,pink,salmon&sort=low-to-high&sid=789```
+    DONT USE a single comma (,) to separate key-value pairs and double commas (,,) to add additional parameters:
+    - ```https://example.com/category?category,dresses,,sort,lowtohigh,,sid,789```
+  - [Google: fragements](https://developers.google.com/search/docs/crawling-indexing/url-structure#fragments)
+  - don't use fragments in URLs
+- [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#page-12)
+  - reserved = gen-delims / sub-delims
+  - gen-delims = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+  - sub-delims  = "!" / "$" / "&" / "'" / "(" / ")" "*" / "+" / "," / ";" / "="
+  - unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+
 ### PENDING MUST define collection format of header and query parameters
 
 Pick one of the following. I prefer the first. But do we have to escape commas?
@@ -179,95 +213,48 @@ GET /posts?sort=id:asc&sort=views:desc
 
 ### PENDING MUST use URL parameters for queries
 
-- Aaron encountered "+" being url encoded as spaces. Need to confirm why / how but avoid "+" in urls for now.
-- Aaron encountered ";" has to be encoded as "%3B" or golangs urlParams.Get will treat it as a new parameter. ie query parameter separator. like &. This is something that changed in go 1.17 when they decided ; can't be a param separator.
+Mostly using [RSQL](https://github.com/jirutka/rsql-parser?tab=readme-ov-file#grammar-and-semantic) by [go-rsql](https://github.com/rbicker/go-rsql) library
+- slightly more modern version of FIQL
+- [Here.com: RSQL](https://www.here.com/docs/bundle/data-client-library-developer-guide-java-scala/page/client/rsql.html)
+- https://owasp.org/www-community/attacks/RSQL_Injection
+  - has some usefull other opperators / syntax
 
+Notes:
+- **q** = query parameter
+- ";" has to be encoded as %3B or urlParams.Get will treat it as a new parameter.
+- Did not code for " AND " or " OR " because urls aren't supposed to have spaces.
 
-- [Wikipedia: Query String](https://en.wikipedia.org/wiki/Query_string)
-  - SPACE is encoded as '+' or '%20'
-  - '+' is encoded as %2B
-  - Letters (A–Z and a–z), numbers (0–9) and the characters '~','-','.' and '_' are left as-is
-  - ("~") is permitted in query strings by RFC3986 but required to be percent-encoded in HTML forms to "%7E"
+| Basic Operator | Description         |
+|----------------|---------------------|
+| ==             | Equal To            |
+| !=             | Not Equal To        |
+| =gt=           | Greater Than        |
+| =ge=           | Greater Or Equal To |
+| =lt=           | Less Than           |
+| =le=           | Less Or Equal To    |
+| =in=           | In                  |
+| =out=          | Not in              |
 
-- [Faceted navigation best (and 5 of the worst) practices](https://developers.google.com/search/blog/2014/02/faceted-navigation-best-and-5-of-worst)
-  - [Google: Do Not Use Commas, Brackets Or Non-Standard URL Encoding For Faceted Navigation](https://www.seroundtable.com/google-commas-brackets-faceted-navigation-32741.html)
-- [Google: URL structure](https://developers.google.com/search/docs/crawling-indexing/url-structure)
-  - Using an equal sign (=) to separate key-value pairs and an ampersand (&) to add additional parameters: 
-    - ```https://example.com/category?category=dresses&sort=low-to-high&sid=789```
-  - DONT USE a colon (:) to separate key-value pairs and brackets ([ ]) to add additional parameters:
-    - ```https://example.com/category?[category:dresses][sort:price-low-to-high][sid:789]```
-  - Using a comma (,) to list multiple values for the same key, an equal sign (=) to separate key-value pairs, and an ampersand (&) to add additional parameters: 
-    - ```https://example.com/category?category=dresses&color=purple,pink,salmon&sort=low-to-high&sid=789```
-    DONT USE a single comma (,) to separate key-value pairs and double commas (,,) to add additional parameters:
-    - ```https://example.com/category?category,dresses,,sort,lowtohigh,,sid,789```
-  - [Google: fragements](https://developers.google.com/search/docs/crawling-indexing/url-structure#fragments)
-  - don't use fragments in URLs
+| Custom Operator | Description         |
+|-----------------|---------------------|
+| =ilike=         | ILIKE               |
 
-- [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#page-12)
-  - reserved = gen-delims / sub-delims
-  - gen-delims = ":" / "/" / "?" / "#" / "[" / "]" / "@"
-  - sub-delims  = "!" / "$" / "&" / "'" / "(" / ")" "*" / "+" / "," / ";" / "="
-  - unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
+| Joining Operator | Description         |
+|------------------|---------------------|
+| ; - must use %3B | Logical AND         |
+| ,                | Logical OR          |
 
-TODO yes i'm trying
-- Commas: I see conflicting information on whether using commas in urls is good or bad.
-I'm going to try them for now to simplfy urls.
+Examples
+```
+.../clients?q=name=ilike=*A*%3Baddress=ilike=*1*
+```
 
-
-
-Conditions
-
-     → ==
-    lt → <
-    lte → <=
-    gt → >
-    gte → >=
-    ne → !=
-
-GET /posts?views_gt=9000
-
-
-
-
-Range
-
-    start
-    end
-    limit
-
-GET /posts?_start=10&_end=20
-GET /posts?_start=10&_limit=10
-
-
-Nested and array fields
-
-    x.y.z...
-    x.y.z[i]...
-
-GET /foo?a.b=bar
-GET /foo?x.y_lt=100
-GET /foo?arr[0]=bar
-
-
-
-- **q**: default query parameter, e.g. used by browser tab completion; should have an entity specific alias, e.g. sku.
-
-- **filter**: comma-separated list of fields (as defined by MUST define collection format of header and query parameters) to define the filter criteria. To indicate filtering direction, fields may be prefixed with + (include) or - (exclude), e.g. /sales-orders?filter=-cancelled.
-
-
-
-
-
+Other options:
 - [stripe: search](https://docs.stripe.com/search#search-query-language)
 - [speakeasy: Filtering Collections](https://www.speakeasy.com/api-design/filtering-responses)
 - [SHOULD design simple query languages using query parameters [236]](https://opensource.zalando.com/restful-api-guidelines/#236)
 - [FIQL](https://datatracker.ietf.org/doc/html/draft-nottingham-atompub-fiql-00)
   - since 2007
-- [RSQL](https://github.com/jirutka/rsql-parser?tab=readme-ov-file#grammar-and-semantic)
-  - slightly more modern version of FIQL
-  - [Here.com: RSQL](https://www.here.com/docs/bundle/data-client-library-developer-guide-java-scala/page/client/rsql.html)
-  - https://owasp.org/www-community/attacks/RSQL_Injection
-    - has some usefull other opperators / syntax
 - [json-server](https://github.com/typicode/json-server)
 - [Correct way to pass multiple values for same parameter name in GET request](https://stackoverflow.com/questions/24059773/correct-way-to-pass-multiple-values-for-same-parameter-name-in-get-request)
 

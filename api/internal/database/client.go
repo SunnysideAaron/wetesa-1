@@ -159,12 +159,14 @@ func validateUrlParamQuery(
 		return nil
 	}
 
+	//http://localhost:8080/api/v0.1/clients?q=name=ilike=*A*,address=ilike=b*
 	customOperators := []rsql.Operator{
 		{
 			Operator: "=ilike=",
-			Formatter: func(key, value string) string {
+			Formatter: func(key, value string, paramIndex *int) (string, []any) {
+				*paramIndex++
 				value = strings.ReplaceAll(value, "*", "%")
-				return fmt.Sprintf(`%s ILIKE %s`, key, value)
+				return fmt.Sprintf(`%s ILIKE $%d`, key, *paramIndex), []any{value}
 			},
 		},
 	}
@@ -185,7 +187,7 @@ func validateUrlParamQuery(
 		allowedKeys = append(allowedKeys, key)
 	}
 
-	res, err := parser.Process(queryStr, rsql.SetAllowedKeys(allowedKeys))
+	res, args, err := parser.Process(queryStr, rsql.SetAllowedKeys(allowedKeys))
 	if err != nil {
 		fmt.Errorf("error while parsing: %s", err)
 	}
@@ -194,6 +196,7 @@ func validateUrlParamQuery(
 	// function more reusable. if the the query string is only part of the WHERE
 	// clause and not all of it.
 	qs.Where = res
+	qs.Args = args
 
 	return err
 }
