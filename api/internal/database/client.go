@@ -154,7 +154,7 @@ func validateUrlParamSort(
 		}
 
 		if !allowedColumns[column] {
-			return fmt.Errorf("Invalid sort field: '%s' allowed fields are: %v", column, allowedColumns)
+			return fmt.Errorf("invalid sort field: '%s' allowed fields are: %v", column, allowedColumns)
 		}
 
 		orderByParts = append(orderByParts, fmt.Sprintf("%s %s", column, order))
@@ -175,7 +175,7 @@ func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err e
 	if pageStr != "" {
 		page, err = strconv.Atoi(pageStr)
 		if err != nil {
-			return 0, errors.New("Invalid page parameter")
+			return 0, errors.New("invalid page parameter")
 		}
 		if page < 0 {
 			page = 0
@@ -188,7 +188,7 @@ func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err e
 	if perPageStr != "" {
 		perPage, err = strconv.Atoi(perPageStr)
 		if err != nil {
-			return 0, errors.New("Invalid per_page parameter")
+			return 0, errors.New("invalid per_page parameter")
 		}
 		// Enforce reasonable size limits
 		if perPage > 100 {
@@ -213,16 +213,12 @@ func validateUrlParamPage(qs *QryStrings, urlParams url.Values) (page int, err e
 // GetClientsParseParams parses the parameters for the GetClients query.
 // any errors from here is a http bad request
 func ValidateGetClientsParams(ctx context.Context, urlParams url.Values) (qs QryStrings, page int, err error) {
-	qs.Columns = " client_id, name, address" // default columns
+	qs.Columns = " client_id, name" // default columns
 	allowedColumns := map[string]bool{
 		"client_id": true,
 		"name":      true,
 		"address":   true,
 	}
-
-	qs.Where = ""
-	qs.Args = []any{}
-	// argPosition := 1
 
 	nameStr := urlParams.Get("name")
 	if nameStr != "" {
