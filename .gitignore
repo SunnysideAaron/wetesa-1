@@ -33,5 +33,7 @@ main
 # OS X generated file
 .DS_Store
 
-#datastore persistence
+#special directories to ignore
 datastore/persistence
+api/internal/shared-code
+web/internal/shared-code

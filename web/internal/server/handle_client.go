@@ -7,13 +7,15 @@ import (
 	"log/slog"
 	"net/http"
 	"strings"
+
 	"web/internal/config"
+	"web/internal/shared-code/model"
 )
 
 type listClientsTemplateData struct {
 	MainMenu string
 	Request  *http.Request
-	Response model.listClientsAPIResponse
+	Response model.ListClientsAPIResponse
 }
 
 func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
@@ -33,7 +35,7 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 				log.Fatal(err)
 			}
 
-			var responseData model.listClientsAPIResponse
+			var responseData model.ListClientsAPIResponse
 			err = json.Unmarshal(body, &responseData)
 			if err != nil {
 				log.Fatal(err)
