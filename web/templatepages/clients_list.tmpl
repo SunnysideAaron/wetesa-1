@@ -6,11 +6,11 @@
 <form method="get">
   <div>
     <label for="name">Name:</label>
-    <input type='text' id="name" name='name' value='' placeholder="* = wildcard">
+    <input type='text' id="name" name='name' value='{{if .Request.URL.Query.Get "name"}}{{.Request.URL.Query.Get "name"}}{{end}}' placeholder="* = wildcard">
   </div>
   <div>
     <label for="deleted">Show Deleted:</label>
-    <input type='checkbox' id="deleted" name='deleted' value='true' checked>
+    <input type='checkbox' id="deleted" name='deleted' value='true' {{if .Request.URL.Query.Get "deleted"}}checked{{end}}>
   </div>
   <div>
     <input type='submit' value='Filter'>

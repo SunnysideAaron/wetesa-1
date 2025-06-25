@@ -12,6 +12,7 @@ import (
 
 type listClientsTemplateData struct {
 	MainMenu string
+	Request  *http.Request
 	Response listClientsAPIResponse
 }
 
@@ -36,34 +37,6 @@ type client struct {
 func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			// // Default values for pagination
-			// page := 0
-
-			// // Parse page from query parameter
-			// if pageStr := r.URL.Query().Get("page"); pageStr != "" {
-			// 	parsedPage, err := strconv.Atoi(pageStr)
-			// 	if err != nil {
-			// 		http.Error(w, "Invalid page parameter", http.StatusBadRequest)
-			// 		return
-			// 	}
-			// 	if parsedPage < 0 {
-			// 		parsedPage = 0
-			// 	}
-			// 	page = parsedPage
-			// }
-
-			// url := cfg.WebAPIURL + "/clients?page=" + strconv.Itoa(page)
-
-			// name := r.URL.Query().Get("name")
-
-			// if name != "" {
-			// 	url += "&name=" + name
-			// }
-
-			// println(r.URL.RawQuery)
-
-			// url.Values
-
 			// Other web end points wont be just a pass through. probably?
 			url := cfg.WebAPIURLInternal + "/clients?" + r.URL.RawQuery
 
@@ -86,7 +59,6 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 
 			// Convert API URLs to web client URLs in pagination links
 			if responseData.Next != "" {
-				// Replace API base URL with web client base URL
 				responseData.Next = strings.Replace(
 					responseData.Next,
 					cfg.WebAPIURLExternal,
@@ -96,7 +68,6 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 			}
 
 			if responseData.Previous != "" {
-				// Replace API base URL with web client base URL
 				responseData.Previous = strings.Replace(
 					responseData.Previous,
 					cfg.WebAPIURLExternal,
@@ -109,8 +80,8 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 
 			data := listClientsTemplateData{
 				MainMenu: "Clients",
+				Request:  r,
 				Response: responseData,
-				// NextPage: page + 1,
 			}
 
 			rendered, err := renderTemplate(cfg, t, data)
