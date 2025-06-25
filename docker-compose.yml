@@ -16,8 +16,6 @@ services:
     volumes:
        - ./datastore/initdb:/docker-entrypoint-initdb.d
        - ./datastore/persistence:/bitnami/postgresql
-       # tried to mount file. doesn't seem to be consistently working.
-       # - ./common/sqlc/01schema.sql:/docker-entrypoint-initdb.d/01schema.sql
   api:
     build:
       context: ./api
@@ -52,7 +50,6 @@ services:
       - '${API_PORT}:${API_PORT}'
     volumes:
       - ./api:/api
-      - ./common/shared-code:/api/internal/shared-code
     working_dir: /api
     command: make watch
   web:

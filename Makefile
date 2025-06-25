@@ -1,3 +1,7 @@
+# shared code copy
+shared:
+	@cp -r ../common/shared-code/ ../api/internal/
+
 # startUP the datastore service
 # NOTE to see logs take off -d flag OR
 # docker logs -f datastore

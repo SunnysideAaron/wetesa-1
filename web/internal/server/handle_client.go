@@ -13,25 +13,7 @@ import (
 type listClientsTemplateData struct {
 	MainMenu string
 	Request  *http.Request
-	Response listClientsAPIResponse
-}
-
-type MessageAPIResponse struct {
-	Severity string `json:"severity"` // should be INFO, WARN, or ERROR
-	Message  string `json:"message"`
-}
-
-type listClientsAPIResponse struct {
-	Success  bool                 `json:"success"`
-	Messages []MessageAPIResponse `json:"messages"`
-	Previous string               `json:"previous,omitempty"`
-	Next     string               `json:"next,omitempty"`
-	Clients  []client             `json:"clients"`
-}
-
-type client struct {
-	ClientID string `json:"client_id"`
-	Name     string `json:"name"`
+	Response model.listClientsAPIResponse
 }
 
 func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
@@ -51,7 +33,7 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 				log.Fatal(err)
 			}
 
-			var responseData listClientsAPIResponse
+			var responseData model.listClientsAPIResponse
 			err = json.Unmarshal(body, &responseData)
 			if err != nil {
 				log.Fatal(err)

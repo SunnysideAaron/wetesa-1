@@ -11,8 +11,8 @@ import (
 // It contains basic information about a client including their unique identifier,
 // name, and optional address.
 type Client struct {
-	ClientID string      `json:"client_id,omitempty"`
-	Name     string      `json:"name,omitempty"`
+	ClientID string      `json:"client_id"`
+	Name     string      `json:"name"`
 	Address  pgtype.Text `json:"address,omitempty"`
 }
 
