@@ -19,7 +19,8 @@ func AddRoutes(
 ) http.Handler {
 	baseMux := http.NewServeMux()
 
-	baseMux.Handle(http.MethodGet+" /clients", handleListClients(cfg, logger))
+	baseMux.Handle(http.MethodGet+" /clients", handleClientsList(cfg, logger))
+	baseMux.Handle(http.MethodGet+" /clients/{id}", handleClientView(cfg, logger))
 	baseMux.Handle(http.MethodGet+" /healthz", handleHealthz(logger))
 	baseMux.Handle(http.MethodGet+" /home", handleTemplate(cfg, logger, "home"))
 	baseMux.Handle(http.MethodGet+" /orders", handleListOrders(cfg, logger))

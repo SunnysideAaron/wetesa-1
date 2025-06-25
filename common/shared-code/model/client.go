@@ -51,3 +51,10 @@ type ListClientsAPIResponse struct {
 	Next     string               `json:"next,omitempty"`
 	Clients  []Client             `json:"clients"`
 }
+
+// GetClientAPIResponse represents the response structure for get client requests
+type GetClientAPIResponse struct {
+	Success  bool                 `json:"success"`
+	Messages []MessageAPIResponse `json:"messages"`
+	Client   Client               `json:"client"`
+}

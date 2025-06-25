@@ -108,7 +108,13 @@ func handleGetClient(logger *slog.Logger, db *database.Postgres) http.Handler {
 				return
 			}
 
-			err = encode(w, r, http.StatusOK, client)
+			response := model.GetClientAPIResponse{
+				Success: true,
+				// Messages
+				Client: client,
+			}
+
+			err = encode(w, r, http.StatusOK, response)
 			if err != nil {
 				logger.LogAttrs(
 					r.Context(),

@@ -12,13 +12,13 @@ import (
 	"web/internal/shared-code/model"
 )
 
-type listClientsTemplateData struct {
+type clientsListTemplateData struct {
 	MainMenu string
 	Request  *http.Request
 	Response model.ListClientsAPIResponse
 }
 
-func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+func handleClientsList(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			// Other web end points wont be just a pass through. probably?
@@ -62,9 +62,63 @@ func handleListClients(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 
 			t := "clients_list"
 
-			data := listClientsTemplateData{
+			data := clientsListTemplateData{
 				MainMenu: "Clients",
 				Request:  r,
+				Response: responseData,
+			}
+
+			rendered, err := renderTemplate(cfg, t, data)
+			if err != nil {
+				logger.LogAttrs(
+					r.Context(),
+					slog.LevelError,
+					"error rendering template",
+					slog.String("template", t),
+					slog.String("error", err.Error()),
+				)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			w.Write([]byte(rendered))
+		},
+	)
+}
+
+type ClientViewTemplateData struct {
+	MainMenu string
+	//Request  *http.Request
+	Response model.GetClientAPIResponse
+}
+
+// handleGetClient handles requests to get a specific client
+func handleClientView(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+	return http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			url := cfg.WebAPIURLInternal + r.URL.Path
+
+			resp, err := http.Get(url)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer resp.Body.Close()
+
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			var responseData model.GetClientAPIResponse
+			err = json.Unmarshal(body, &responseData)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			t := "client_view"
+
+			data := ClientViewTemplateData{
+				MainMenu: "Clients",
+				//Request:  r,
 				Response: responseData,
 			}
 

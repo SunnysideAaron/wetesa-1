@@ -1,0 +1,12 @@
+{{template "base layout" .}}
+
+{{define "title"}}Clients{{end}}
+
+{{define "body"}}
+<div>
+Name: {{.Response.Client.Name}}
+</div>
+<div>
+Address: {{.Response.Client.Address}}
+</div>
+{{end}}
