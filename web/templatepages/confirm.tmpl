@@ -5,7 +5,10 @@
 {{define "body"}}
 <p>{{.Question}}</p>
 <P>
-<a href='{{.YesHref}}'>Yes</a> -
+<form method="post" action="{{.YesHref}}">
+    <input type='hidden' name='HTTPVerb' value='DELETE'>
+    <input type='submit' value='Yes'>
+</form>
 <a href='{{.NoHref}}'>No</a>
 </p>
 {{end}}

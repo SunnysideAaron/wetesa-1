@@ -138,3 +138,58 @@ func handleClientGet(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 		},
 	)
 }
+
+func handleClientPost(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+	return http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			url := cfg.WebAPIURLInternal + r.URL.Path
+			httpVerb := r.FormValue("HTTPVerb")
+			switch httpVerb {
+			case "DELETE":
+				req, err := http.NewRequest(http.MethodDelete, url, nil)
+				if err != nil {
+					logger.LogAttrs(
+						r.Context(),
+						slog.LevelError,
+						"error creating DELETE request",
+						slog.String("error", err.Error()),
+					)
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+
+				client := &http.Client{}
+				resp, err := client.Do(req)
+				if err != nil {
+					logger.LogAttrs(
+						r.Context(),
+						slog.LevelError,
+						"error executing DELETE request",
+						slog.String("error", err.Error()),
+					)
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+				defer resp.Body.Close()
+
+				// Redirect to clients list after successful deletion
+				if resp.StatusCode == http.StatusNoContent {
+					http.Redirect(w, r, "/clients", http.StatusSeeOther)
+					return
+				}
+
+			case "PUT":
+				// // TODO: Implement PUT request handling
+				// url := cfg.WebAPIURLInternal + r.URL.Path
+				// // Read form data and create request body
+
+				// // For now just return not implemented
+				// http.Error(w, "PUT not implemented yet", http.StatusNotImplemented)
+				return
+
+			default: // POST
+				// TODO: Implement POST request handling
+			}
+		},
+	)
+}

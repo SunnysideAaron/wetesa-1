@@ -19,9 +19,11 @@ func AddRoutes(
 ) http.Handler {
 	baseMux := http.NewServeMux()
 
+	// Note: HTML is limited to only GET and POST requests.
+	// Get should NEVER change state.
 	baseMux.Handle(http.MethodGet+" /clients", handleClientsGet(cfg, logger))
 	baseMux.Handle(http.MethodGet+" /clients/{id}", handleClientGet(cfg, logger))
-	// baseMux.Handle(http.MethodDelete+" /clients/{id}", handleClientDelete(cfg, logger))
+	baseMux.Handle(http.MethodPost+" /clients/{id}", handleClientPost(cfg, logger))
 	baseMux.Handle(http.MethodPost+" /confirm", handleConfirmPost(cfg, logger))
 	baseMux.Handle(http.MethodGet+" /healthz", handleHealthz(logger))
 	baseMux.Handle(http.MethodGet+" /home", handleTemplate(cfg, logger, "home"))
