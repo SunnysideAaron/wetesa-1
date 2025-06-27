@@ -11,7 +11,7 @@ import (
 )
 
 // handleListClients handles requests to list all clients
-func handleListClients(logger *slog.Logger, db *database.Postgres) http.Handler {
+func handleGetClients(logger *slog.Logger, db *database.Postgres) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			qs, page, err := database.ValidateGetClientsParams(r.Context(), r.URL.Query())
@@ -138,7 +138,7 @@ func handleGetClient(logger *slog.Logger, db *database.Postgres) http.Handler {
 }
 
 // handleCreateClient handles requests to create a new client
-func handleCreateClient(logger *slog.Logger, db *database.Postgres) http.Handler {
+func handlePostClient(logger *slog.Logger, db *database.Postgres) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			client, problems, err := decode[model.Client](r)
@@ -200,7 +200,7 @@ func handleCreateClient(logger *slog.Logger, db *database.Postgres) http.Handler
 
 // handleUpdateClient handles requests to update an existing client
 // TODO this is for a PUT request. Which is OK but we might want to use PATCH instead.
-func handleUpdateClient(logger *slog.Logger, db *database.Postgres) http.Handler {
+func handlePutClient(logger *slog.Logger, db *database.Postgres) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			id := r.PathValue("id")

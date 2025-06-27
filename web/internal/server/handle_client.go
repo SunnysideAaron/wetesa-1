@@ -12,13 +12,13 @@ import (
 	"web/internal/shared-code/model"
 )
 
-type clientsListTemplateData struct {
+type clientsGetTemplateData struct {
 	MainMenu string
 	Request  *http.Request
 	Response model.ListClientsAPIResponse
 }
 
-func handleClientsList(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+func handleClientsGet(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			// Other web end points wont be just a pass through. probably?
@@ -60,9 +60,9 @@ func handleClientsList(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 				)
 			}
 
-			t := "clients_list"
+			t := "clients_get"
 
-			data := clientsListTemplateData{
+			data := clientsGetTemplateData{
 				MainMenu: "Clients",
 				Request:  r,
 				Response: responseData,
@@ -85,14 +85,16 @@ func handleClientsList(cfg *config.WebConfig, logger *slog.Logger) http.Handler 
 	)
 }
 
-type ClientViewTemplateData struct {
+type ClientGetTemplateData struct {
 	MainMenu string
 	//Request  *http.Request
-	Response model.GetClientAPIResponse
+	Response   model.GetClientAPIResponse
+	EditHref   string
+	DeleteHref string
 }
 
-// handleGetClient handles requests to get a specific client
-func handleClientView(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+// handleClientRead handles requests to read a specific client
+func handleClientGet(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			url := cfg.WebAPIURLInternal + r.URL.Path
@@ -114,9 +116,9 @@ func handleClientView(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 				log.Fatal(err)
 			}
 
-			t := "client_view"
+			t := "client_get"
 
-			data := ClientViewTemplateData{
+			data := ClientGetTemplateData{
 				MainMenu: "Clients",
 				//Request:  r,
 				Response: responseData,

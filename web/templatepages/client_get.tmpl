@@ -7,6 +7,8 @@
 Name: {{.Response.Client.Name}}
 </div>
 <div>
-Address: {{.Response.Client.Address}}
+Address: {{.Response.Client.Address.String}}
 </div>
 {{end}}
+<a href='{{.EditHref}}'>Edit</a> -
+<a href='{{.DeleteHref}}'>Delete</a>

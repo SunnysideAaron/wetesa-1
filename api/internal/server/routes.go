@@ -38,10 +38,10 @@ func AddRoutes(
 	slog.SetDefault(clientLogger)
 
 	v1Mux.Handle(http.MethodGet+" /clients/loglevel/{level}", middleDefaults(handleLogLevel(clientLogger, clientLogLevel)))
-	v1Mux.Handle(http.MethodGet+" /clients", middleDefaults(handleListClients(clientLogger, db)))
+	v1Mux.Handle(http.MethodGet+" /clients", middleDefaults(handleGetClients(clientLogger, db)))
 	v1Mux.Handle(http.MethodGet+" /clients/{id}", middleDefaults(handleGetClient(clientLogger, db)))
-	v1Mux.Handle(http.MethodPost+" /clients", middleDefaults(handleCreateClient(clientLogger, db)))
-	v1Mux.Handle(http.MethodPut+" /clients/{id}", middleDefaults(handleUpdateClient(clientLogger, db)))
+	v1Mux.Handle(http.MethodPost+" /clients", middleDefaults(handlePostClient(clientLogger, db)))
+	v1Mux.Handle(http.MethodPut+" /clients/{id}", middleDefaults(handlePutClient(clientLogger, db)))
 	v1Mux.Handle(http.MethodDelete+" /clients/{id}", middleDefaults(handleDeleteClient(clientLogger, db)))
 
 	// TODO how to do breaking changes to an api. WARNING hot wire topic but something has to be done.
