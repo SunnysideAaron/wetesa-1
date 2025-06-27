@@ -10,6 +10,8 @@ import (
 
 	"web/internal/config"
 	"web/internal/shared-code/model"
+
+	"github.com/jackc/pgx/v5/pgtype"
 )
 
 type clientsGetTemplateData struct {
@@ -188,8 +190,84 @@ func handleClientPost(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 				return
 
 			default: // POST
-				// TODO: Implement POST request handling
+				data := model.Client{
+					Name: r.FormValue("name"),
+					Address: pgtype.Text{
+						String: r.FormValue("address"),
+						Valid:  true,
+					},
+				}
+
+				jsonData, err := json.Marshal(data)
+				if err != nil {
+					logger.LogAttrs(
+						r.Context(),
+						slog.LevelError,
+						"error marshaling client data",
+						slog.String("error", err.Error()),
+					)
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+
+				// Create request to API
+				req, err := http.NewRequest(
+					http.MethodPost,
+					url,
+					strings.NewReader(string(jsonData)),
+				)
+				if err != nil {
+					logger.LogAttrs(
+						r.Context(),
+						slog.LevelError,
+						"error creating POST request",
+						slog.String("error", err.Error()),
+					)
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+
+				req.Header.Set("Content-Type", "application/json")
+
+				client := &http.Client{}
+				resp, err := client.Do(req)
+				if err != nil {
+					logger.LogAttrs(
+						r.Context(),
+						slog.LevelError,
+						"error executing POST request",
+						slog.String("error", err.Error()),
+					)
+					http.Error(w, err.Error(), http.StatusInternalServerError)
+					return
+				}
+				defer resp.Body.Close()
+
+				if resp.StatusCode == http.StatusCreated || resp.StatusCode == http.StatusOK {
+					http.Redirect(w, r, "/clients", http.StatusSeeOther)
+					return
+				}
+
+				// If we got here, something went wrong with the API call
+				body, _ := io.ReadAll(resp.Body)
+				logger.LogAttrs(
+					r.Context(),
+					slog.LevelError,
+					"API returned error",
+					slog.Int("status", resp.StatusCode),
+					slog.String("response", string(body)),
+				)
+				http.Error(w, "Error creating client", http.StatusInternalServerError)
 			}
 		},
 	)
 }
+
+// bla bla
+// func handleClientCreate(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
+// 	return http.HandlerFunc(
+// 		func(w http.ResponseWriter, r *http.Request) {
+// 			println("test")
+// 		},
+// 	)
+// }
