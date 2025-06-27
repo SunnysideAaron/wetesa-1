@@ -88,9 +88,7 @@ func handleClientsGet(cfg *config.WebConfig, logger *slog.Logger) http.Handler {
 type ClientGetTemplateData struct {
 	MainMenu string
 	//Request  *http.Request
-	Response   model.GetClientAPIResponse
-	EditHref   string
-	DeleteHref string
+	Response model.GetClientAPIResponse
 }
 
 // handleClientRead handles requests to read a specific client

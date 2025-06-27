@@ -10,5 +10,10 @@ Name: {{.Response.Client.Name}}
 Address: {{.Response.Client.Address.String}}
 </div>
 {{end}}
-<a href='{{.EditHref}}'>Edit</a> -
-<a href='{{.DeleteHref}}'>Delete</a>
+<a href='/clients/{{.Response.Client.ClientID}}'>Edit</a>
+<form method="post" action="/confirm">
+    <input type='hidden' name='question' value='Are you certain you want to delete {{.Response.Client.Name}}?'>
+    <input type='hidden' name='yes_href' value='/clients/{{.Response.Client.ClientID}}'>
+    <input type='hidden' name='no_href' value='/clients/{{.Response.Client.ClientID}}'>
+    <input type='submit' value='Delete'>
+</form>

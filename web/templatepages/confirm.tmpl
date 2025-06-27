@@ -1,0 +1,11 @@
+{{template "base layout" .}}
+
+{{define "title"}}Confirm{{end}}
+
+{{define "body"}}
+<p>{{.Question}}</p>
+<P>
+<a href='{{.YesHref}}'>Yes</a> -
+<a href='{{.NoHref}}'>No</a>
+</p>
+{{end}}

@@ -21,6 +21,8 @@ func AddRoutes(
 
 	baseMux.Handle(http.MethodGet+" /clients", handleClientsGet(cfg, logger))
 	baseMux.Handle(http.MethodGet+" /clients/{id}", handleClientGet(cfg, logger))
+	// baseMux.Handle(http.MethodDelete+" /clients/{id}", handleClientDelete(cfg, logger))
+	baseMux.Handle(http.MethodPost+" /confirm", handleConfirmPost(cfg, logger))
 	baseMux.Handle(http.MethodGet+" /healthz", handleHealthz(logger))
 	baseMux.Handle(http.MethodGet+" /home", handleTemplate(cfg, logger, "home"))
 	baseMux.Handle(http.MethodGet+" /orders", handleListOrders(cfg, logger))
